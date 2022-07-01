@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  odprti-racuni:
+    build: .
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      PYTHONUNBUFFERED: 1
+      DJANGO_DEBUG: "yes"
+      DJANGO_SETTINGS_MODULE: odprti_racuni.settings
+      DJANGO_SECRET_KEY: make-me-secret
+      DJANGO_DATABASE_HOST: db
+    volumes:
+      - ./:/app
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: odprti-racuni
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
