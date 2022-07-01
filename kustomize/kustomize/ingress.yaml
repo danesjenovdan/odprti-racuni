@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: odprti-racuni
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-sandbox"
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - odprti-racuni.lb.djnd.si
+      secretName: odprti-racuni-tls
+  rules:
+    - host: odprti-racuni.lb.djnd.si
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: odprti-racuni
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: odprti-racuni-nginx
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-sandbox"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*" # TODO
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - files.odprti-racuni.lb.djnd.si
+      secretName: odprti-racuni-nginx-tls
+  rules:
+    - host: files.odprti-racuni.lb.djnd.si
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: odprti-racuni-nginx
+                port:
+                  number: 80

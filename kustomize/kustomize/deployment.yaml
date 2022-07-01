@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odprti-racuni-deployment
+  labels:
+    app: odprti-racuni
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odprti-racuni
+  template:
+    metadata:
+      labels:
+        app: odprti-racuni
+    spec:
+      volumes:
+        - name: odprti-racuni-shared-storage
+          emptyDir: {}
+      initContainers:
+        - name: collectstatic
+          image: odprti-racuni
+          volumeMounts:
+            - name: odprti-racuni-shared-storage
+              mountPath: /pvc
+          command:
+            - python
+            - manage.py
+            - collectstatic
+            - --no-input
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: odprti-racuni_project.settings
+          envFrom:
+            - secretRef:
+                name: odprti-racuni-credentials
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 200m
+            limits:
+              memory: 200Mi
+              cpu: 200m
+        - name: migrate
+          image: odprti-racuni
+          command:
+            - python
+            - manage.py
+            - migrate
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: odprti-racuni_project.settings
+          envFrom:
+            - secretRef:
+                name: odprti-racuni-credentials
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 200m
+            limits:
+              memory: 200Mi
+              cpu: 200m
+      containers:
+        - name: odprti-racuni
+          image: odprti-racuni
+          volumeMounts:
+            - name: odprti-racuni-shared-storage
+              mountPath: /pvc
+          command:
+            - gunicorn
+            - odprti-racuni.wsgi:application
+            - -b
+            - 0.0.0.0:8000
+            - --log-level
+            - DEBUG
+            - --workers
+            - "1"
+            - --threads
+            - "3"
+            - --timeout
+            - "120"
+          ports:
+            - containerPort: 8000
+          envFrom:
+              - secretRef:
+                  name: odprti-racuni-credentials
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: odprti-racuni.settings
+            - name: DJANGO_STATIC_ROOT
+              value: "/pvc/static"
+            - name: DJANGO_STATIC_URL_BASE
+              value: "https://files.odprtiracuni.lb.djnd.si/static/"
+          resources:
+            requests:
+              memory: 400Mi
+              cpu: 200m
+            limits:
+              memory: 400Mi
+              cpu: 200m
+        - name: odprti-racuni-nginx
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          image: nginx:alpine
+          volumeMounts:
+            - name: odprti-racuni-shared-storage
+              mountPath: /usr/share/nginx/html

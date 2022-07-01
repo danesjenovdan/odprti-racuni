@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: odprti-racuni
+spec:
+  selector:
+    app: odprti-racuni
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: odprti-racuni-nginx
+spec:
+  selector:
+    app: odprti-racuni
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
