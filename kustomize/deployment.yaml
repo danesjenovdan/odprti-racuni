@@ -31,6 +31,8 @@ spec:
           env:
             - name: DJANGO_SETTINGS_MODULE
               value: odprti_racuni.settings
+            - name: DJANGO_STATIC_ROOT
+              value: "/pvc/static"
           envFrom:
             - secretRef:
                 name: odprti-racuni-credentials
