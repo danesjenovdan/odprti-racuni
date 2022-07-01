@@ -9,10 +9,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - odprti-racuni.lb.djnd.si
+        - odprtiracuni.lb.djnd.si
       secretName: odprti-racuni-tls
   rules:
-    - host: odprti-racuni.lb.djnd.si
+    - host: odprtiracuni.lb.djnd.si
       http:
         paths:
           - path: /
@@ -38,10 +38,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - files.odprti-racuni.lb.djnd.si
+        - files.odprtiracuni.lb.djnd.si
       secretName: odprti-racuni-nginx-tls
   rules:
-    - host: files.odprti-racuni.lb.djnd.si
+    - host: files.odprtiracuni.lb.djnd.si
       http:
         paths:
           - path: /
