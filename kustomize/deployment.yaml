@@ -30,7 +30,7 @@ spec:
             - --no-input
           env:
             - name: DJANGO_SETTINGS_MODULE
-              value: odprti-racuni.settings
+              value: odprti_racuni.settings
           envFrom:
             - secretRef:
                 name: odprti-racuni-credentials
@@ -49,7 +49,7 @@ spec:
             - migrate
           env:
             - name: DJANGO_SETTINGS_MODULE
-              value: odprti-racuni.settings
+              value: odprti_racuni.settings
           envFrom:
             - secretRef:
                 name: odprti-racuni-credentials
@@ -86,7 +86,7 @@ spec:
                   name: odprti-racuni-credentials
           env:
             - name: DJANGO_SETTINGS_MODULE
-              value: odprti-racuni.settings
+              value: odprti_racuni.settings
             - name: DJANGO_STATIC_ROOT
               value: "/pvc/static"
             - name: DJANGO_STATIC_URL_BASE
