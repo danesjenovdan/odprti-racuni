@@ -68,7 +68,7 @@ spec:
               mountPath: /pvc
           command:
             - gunicorn
-            - odprti-racuni.wsgi:application
+            - odprti_racuni.wsgi:application
             - -b
             - 0.0.0.0:8000
             - --log-level
