@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block extra-head %}
+    <style>
+    </style>
+{% endblock %}
+{% block content %}
+<div class="minicard">
+    {{ organization.name }} <br/>
+    {{ organization.address }} <br/>
+    {{ organization.post_number }} {{ organization.city }} <br/> <br/>
+
+    Davčna številka: {{ organization.tax_number }} <br/>
+    Matična številka: {{ organization.registration_number }} <br/>
+    Kontakt: {{ organization.email }} <br/>
+    Telefon: {{ organization.phone_number }} <br/>
+    TRR: {{ organization.trr }} <br/>
+    {% if organization.is_charity %}
+        Organizacija ima status humanitarne organizacije {% if organization.is_charity and organization.is_for_the_public_good %}
+            in organizacija v javnem interesu na področju {{ organization.is_for_the_public_good }}
+        {% endif %}
+    {% endif %}
+    {% if organization.is_for_the_public_good and not organization.is_charity %}
+        Organizacija je v javnem interesu na področju {{ organization.is_for_the_public_good }}
+    {% endif %} <br/>
+</div>
+<div class="minicard">
+    Letna poročila<br/>
+    {% for document in documents %}
+        <a href="{{document.file.url}}">{{document.category.name}}</a><br/>
+    {% endfor %}
+</div>
+<div class="minicard">
+    Ljudje
+    {% if people.full_time_employees %}
+        Število redno zaposlenih: {{ people.full_time_employees }}
+    {% endif %}
+    {% if people.other_employees %}
+        Število redno zaposlenih: {{ people.other_employees }}
+    {% endif %}
+    {% if people %}
+        Število zapsolenih po spolu:<br/>
+        {% if people.men %}
+            {{ people.men }}% moških<br/>
+        {% endif %}
+        {% if people.women %}
+            {{ people.women }}% žensk<br/>
+        {% endif %}
+        {% if people.nonbinary %}
+            {{ people.nonbinary }}% nebinarnih oseb<br/>
+        {% endif %}
+    {% endif %}
+    {% if people.volunteers %}
+        Število redno zaposlenih: {{ people.volunteers }}
+    {% endif %}
+    {% if people.members %}
+        Število redno zaposlenih: {{ people.members }}
+    {% endif %}
+</div>
+<div class="minicard">
+    Plačilna razmerja<br/>
+
+    Najvišja plača {{payment_ratio.highest_absolute}} {{payment_ratio.lowest}} Najnižja plača<br/>
+    Najvišja plača {{payment_ratio.highest}} {{payment_ratio.average}} Povprečna plača
+</div>
+{% endblock %}

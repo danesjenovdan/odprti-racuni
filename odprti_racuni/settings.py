@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third party apps
+    'mptt',
+    'martor',
     # apps
     'nvo',
 ]
@@ -118,6 +121,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static_files')
+]
+
 STATIC_URL=os.getenv('DJANGO_STATIC_URL_BASE', '/static/')
 
 STATIC_ROOT=os.getenv('DJANGO_STATIC_ROOT', os.path.join(BASE_DIR, '../static'))
@@ -128,6 +135,8 @@ MEDIA_URL=os.getenv('DJANGO_MEDIA_URL_BASE', '/media/')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'nvo.User'
 
 # DJANGO STORAGE SETTINGS
 if os.getenv('ENABLE_S3', False):
@@ -141,3 +150,12 @@ if os.getenv('ENABLE_S3', False):
     AWS_S3_REGION_NAME = os.getenv('AWS_REGION_NAME', 'fr-par')
     AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL', 'https://s3.fr-par.scw.cloud')
     AWS_S3_SIGNATURE_VERSION = os.getenv('AWS_S3_SIGNATURE_VERSION', 's3v4')
+
+# Global martor settings
+# Input: string boolean, `true/false`
+MARTOR_ENABLE_CONFIGS = {
+    'jquery': 'true',       # to include/revoke jquery (require for admin default django)
+    'living': 'true',       # to enable/disable live updates in preview
+}
+
+MARTOR_ENABLE_LABEL = True

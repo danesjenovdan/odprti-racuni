@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load martortags %}
+{% load static %}
+{% block extra-head %}
+    <style>
+        div.level {
+            margin-left: 20px;
+        }
+        img.icon {
+            max-width: 50px;
+            max-height: 50px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    {% for project in projects %}
+        <div class="minicard">
+            <h3>{{ project.name }}</h3>
+            {{ project.description|safe_markdown }}<br/>
+            <i>Predvideni rezultati in učinki</i><br/>
+            {{ project.outcomes_and_impacts|safe_markdown }}<br/>
+
+        </div>
+        <div class="minicard">
+            <h3>{{ project.org_share }} / {{ project.value }}<h3>
+
+            <i>Trajanje projekta</i><br/>
+            {% if project.duration.years %}
+                {{ project.duration.years }} leto<br/>
+            {% endif %}
+            {% if project.duration.months %}
+                {{ project.duration.months }} mesecev<br/>
+            {% endif %}
+            {% if project.duration.days %}
+                {{ project.duration.days }} dni<br/>
+            {% endif %}
+            {{ project.start_date }} - {{ project.end_date }}<br/>
+            <br/>
+
+            {% if project.partners.all %}
+                <i>Partnerji</i><br/>
+                {% for partner in project.partners.all %}
+                    <a href="{{ partner.url }}">{{ partner.name }}</a><br/>
+                {% endfor %}
+            {% endif %}
+            {% if project.financers.all %}
+                <i>Financerji</i><br/>
+                {% for financer in project.financers.all %}
+                    <a href="{{ financer.url }}">{{ financer.name }}</a><br/>
+                {% endfor %}
+            {% endif %}
+            {% if project.cofinancers.all %}
+                <i>Sofinancerji</i><br/>
+                {% for cofinancer in project.cofinancers.all %}
+                    <a href="{{ cofinancer.url }}">{{ cofinancer.name }}</a><br/>
+                {% endfor %}
+            {% endif %}
+            {% if project.donators.all %}
+                <i>Donatorji</i><br/>
+                {% for donator in project.donators.all %}
+                    <a href="{{ donator.url }}">{{ donator.name }}</a><br/>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="minicard">
+            {% for icon in project.icons %}
+                <img src="{{ icon }}" class="icon">
+            {% endfor %}
+
+        </div>
+    {% endfor %}
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+

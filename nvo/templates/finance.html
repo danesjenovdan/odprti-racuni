@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block extra-head %}
+    <style>
+        div.level {
+            margin-left: 20px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<div class="minicard">
+    <h3>Prihodki</h3>
+    {% for revenue in revenues%}
+        <div class="level">
+        {{ revenue.name }}: {{ revenue.amount }} <br/>
+        {% for revenue_level_1 in revenue.children %}
+            <div class="level">
+            {{ revenue_level_1.name }}: {{ revenue_level_1.amount }} <br/>
+            {% for revenue_level_2 in revenue_level_1.children %}
+                <div class="level">
+                {{ revenue_level_2.name }}: {{ revenue_level_2.amount }} <br/>
+                {% for revenue_level_3 in revenue_level_2.children %}
+                    <div class="level">
+                    {{ revenue_level_3.name }}: {{ revenue_level_3.amount }} <br/>
+                    </div>
+                {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+    <br/><br/>
+    <h3>Odhodki</h3>
+    {% for expense in expenses%}
+        <div class="level">
+        {{ expense.name }}: {{ expense.amount }} <br/>
+        {% for expense_level_1 in expense.children %}
+            <div class="level">
+            {{ expense_level_1.name }}: {{ expense_level_1.amount }} <br/>
+            {% for expense_level_2 in expense_level_1.children %}
+                <div class="level">
+                {{ expense_level_2.name }}: {{ expense_level_2.amount }} <br/>
+                {% for expense_level_3 in expense_level_2.children %}
+                    <div class="level">
+                    {{ expense_level_3.name }}: {{ expense_level_3.amount }} <br/>
+                    </div>
+                {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
