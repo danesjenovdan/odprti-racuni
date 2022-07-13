@@ -2,13 +2,14 @@ from functools import partial
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
-from django.forms import modelformset_factory
 from django import forms
 
 from mptt.admin import MPTTModelAdmin
 
+
 from nvo.models import (Organization, DocumentCategory, Document, People,
-    Employee, User, RevenueCategory, ExpensesCategory, FinancialYear, PaymentRatio
+    Employee, User, RevenueCategory, ExpensesCategory, FinancialYear, PaymentRatio,
+    Project, Financer, CoFinancer, Partner, Donator
 )
 # Register your models here.
 
@@ -50,7 +51,7 @@ class OrganizationAdmin(admin.ModelAdmin):
         return qs.filter(id=request.user.organization.id)
 
 
-
+# basic info
 class DocumentCategoryAdmin(admin.ModelAdmin):
     list_display = [
         'name'
@@ -95,13 +96,11 @@ class FinanceChangeListForm(forms.ModelForm):
         super(FinanceChangeListForm, self).__init__(*args, **kwargs)
         instance = kwargs.get('instance')
         if instance:
-            # self.fields['book'].queryset = Book.objects.filter(
-            #     size=instance.size
-            # )
             if not instance.allow_additional_name:
                 self.fields['additional_name'].widget.attrs['hidden'] = 'hidden'
 
 
+# finance
 class FinancialCategoryMPTTModelAdmin(MPTTModelAdmin):
     # specify pixel amount for this ModelAdmin only:
     mptt_level_indent = 20
@@ -124,6 +123,44 @@ class RevenueCategoryAdmin(FinancialCategoryMPTTModelAdmin):
 class ExpensesCategoryAdmin(FinancialCategoryMPTTModelAdmin):
     pass
 
+
+# projects
+
+class FinancerInlineAdmin(admin.TabularInline):
+    model = Financer
+    extra = 0
+
+
+class CoFinancerInlineAdmin(admin.TabularInline):
+    model = CoFinancer
+    extra = 0
+
+
+class PartnerInlineAdmin(admin.TabularInline):
+    model = Partner
+    extra = 0
+
+
+class DonatorInlineAdmin(admin.TabularInline):
+    model = Donator
+    extra = 0
+
+class ProjectAdmin(LimitedAdmin):
+    list_display = [
+        'name',
+        'year'
+    ]
+    inlines = [
+        FinancerInlineAdmin,
+        CoFinancerInlineAdmin,
+        PartnerInlineAdmin,
+        DonatorInlineAdmin
+    ]
+    class Media:
+        css = {
+             'all': ('css/admin-extra.css',)
+        }
+
 admin.site.register(RevenueCategory, RevenueCategoryAdmin)
 admin.site.register(ExpensesCategory, ExpensesCategoryAdmin)
 
@@ -135,4 +172,5 @@ admin.site.register(People, PeopleAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(FinancialYear)
 admin.site.register(PaymentRatio, PaymentRatioAdmin)
+admin.site.register(Project, ProjectAdmin)
 

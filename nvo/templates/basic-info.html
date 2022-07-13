@@ -1,14 +1,6 @@
 {% extends "base.html" %}
 {% block extra-head %}
     <style>
-        div.minicard {
-            border-style: solid;
-            border-color: black;
-            border-width: 1px;
-            padding: 2px;
-            margin: 5px;
-            width: 45%;
-        }
     </style>
 {% endblock %}
 {% block content %}
@@ -46,7 +38,16 @@
         Število redno zaposlenih: {{ people.other_employees }}
     {% endif %}
     {% if people %}
-        Število zapsolenih po spolu: ?
+        Število zapsolenih po spolu:<br/>
+        {% if people.men %}
+            {{ people.men }}% moških<br/>
+        {% endif %}
+        {% if people.women %}
+            {{ people.women }}% žensk<br/>
+        {% endif %}
+        {% if people.nonbinary %}
+            {{ people.nonbinary }}% nebinarnih oseb<br/>
+        {% endif %}
     {% endif %}
     {% if people.volunteers %}
         Število redno zaposlenih: {{ people.volunteers }}
@@ -56,9 +57,9 @@
     {% endif %}
 </div>
 <div class="minicard">
-    Plačilna razmerja
+    Plačilna razmerja<br/>
 
-    Najvišja plača 1 1 Najnižja plača
-    Najvišja plača 1 1 Povprečna plača 
+    Najvišja plača {{payment_ratio.highest_absolute}} {{payment_ratio.lowest}} Najnižja plača<br/>
+    Najvišja plača {{payment_ratio.highest}} {{payment_ratio.average}} Povprečna plača
 </div>
 {% endblock %}

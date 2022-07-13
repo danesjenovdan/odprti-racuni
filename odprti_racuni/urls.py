@@ -20,4 +20,5 @@ urlpatterns = [
     path('', include('nvo.urls')),
     path('admin/', admin.site.urls),
     path('_nested_admin/', include('nested_admin.urls')),
-]
+    path('martor/', include('martor.urls')),
+] 
