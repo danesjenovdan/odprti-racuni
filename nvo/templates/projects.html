@@ -1,14 +1,10 @@
 {% extends "base.html" %}
-{% load martortags %}
 {% load static %}
+{% load martortags %}
 {% block extra-head %}
     <style>
         div.level {
             margin-left: 20px;
-        }
-        img.icon {
-            max-width: 50px;
-            max-height: 50px;
         }
     </style>
 {% endblock %}
@@ -17,6 +13,7 @@
         <div class="minicard">
             <h3>{{ project.name }}</h3>
             {{ project.description|safe_markdown }}<br/>
+            {{ project.description }}<br/>
             <i>Predvideni rezultati in učinki</i><br/>
             {{ project.outcomes_and_impacts|safe_markdown }}<br/>
 
