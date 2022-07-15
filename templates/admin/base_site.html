@@ -1,0 +1,61 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% load martortags %}
+
+{% block extrahead %}
+    <style>
+        .instruction_collapsible {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+          }
+          /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+          .instruction_active, .instruction_collapsible:hover {
+            background-color: #ccc;
+          }
+          /* Style the collapsible content. Note: hidden by default */
+          .instructions {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+          }
+    </style>
+{% endblock %}
+
+ {% block branding %}
+     {{ block.super }}
+ {% endblock %}
+
+ {% block messages %}
+    {% if messages %}
+    <ul class="messagelist">{% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+    {% endfor %}</ul>
+    {% endif %}
+    {% block instructions %}
+        <button type="button" class="instruction_collapsible">Prikaži pomoč</button>
+        <div class="instructions instruction_content">
+        {{ instructions|safe_markdown }}<br/>
+        </div>
+    {% endblock %}
+{% endblock messages %}
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+        django.jQuery('.instruction_collapsible').on('click', function(){
+            django.jQuery('.instruction_content').slideToggle('fast');
+        });
+    </script>
+{% endblock %}

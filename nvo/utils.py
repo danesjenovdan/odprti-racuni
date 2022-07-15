@@ -1,4 +1,5 @@
 from nvo.models import RevenueCategory, ExpensesCategory
+
 revenue_data = {
     'model': RevenueCategory,
     'nodes': [
@@ -16,8 +17,7 @@ revenue_data = {
         {'name': 'Zasebne fundacije', 'order': 3, 'parent': 4, 'allow_additional_name': False},
         {'name': 'Članarine', 'order': 4, 'parent': 4, 'allow_additional_name': False},
         {'name': 'Drugo', 'order': 5, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo poleg texta Drugo <vaš text>', 'parent': 4, 'allow_additional_name': True},
-        {'name': 'Drugi prihodki', 'order': 4, 'allow_additional_name': False},
-        {'name': '----', 'order': 1, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo', 'parent': 14, 'allow_additional_name': True},
+        {'name': 'Drugi prihodki', 'order': 4, 'allow_additional_name': True, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo'},
 ]}
 
 expenses_data = {
@@ -28,14 +28,12 @@ expenses_data = {
         {'name': 'Redno delovanje', 'order': 1, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Zunanje storitve in izvajalci', 'order': 2, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Potni stroški', 'order': 3, 'parent': 1, 'allow_additional_name': False},
-        {'name': 'Drugo (blabla)', 'order': 4, 'parent': 1, 'allow_additional_name': False},
+        {'name': 'Drugo {}', 'order': 4, 'parent': 1, 'allow_additional_name': True},
         {'name': 'Delo', 'order': 3, 'allow_additional_name': False},
         {'name': 'Plače', 'order': 1, 'parent': 6, 'allow_additional_name': False},
         {'name': 'Pokojninska in druga socialna zavarovanja', 'order': 2, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Drugo', 'order': 3, 'parent': 6, 'allow_additional_name': True},
-        {'name': 'Drugi odhodki', 'order': 4, 'allow_additional_name': False},
-        {'name': '----', 'order': 1, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo', 'parent': 10, 'allow_additional_name': True},
-       
+        {'name': 'Drugo', 'order': 3, 'parent': 6, 'allow_additional_name': False},
+        {'name': 'Drugi odhodki', 'order': 4, 'allow_additional_name': True, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo'},
 ]}
 financial_data = [revenue_data, expenses_data]
 

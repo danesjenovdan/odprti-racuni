@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load martortags %}
+{% load static %}
+{% block extra-head %}
+    <style>
+        div.level {
+            margin-left: 20px;
+        }
+        img.icon {
+            max-width: 50px;
+            max-height: 50px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="minicard">
+        <h3>Višina zbranih donacij fizičnih oseb {{ donation.personal_donations_amount }} EUR</h3>
+        Število donatorjev: {{ donation.number_of_personal_donations }}<br/>
+
+        {% if donation.personal_donators.all %}
+            <i>Poimenski seznam donatorjev</i><br/>
+            {% for donator in donation.personal_donators.all %}
+                <hr>
+                {{ donator.name }} -> {{ donator.amount }}<br/>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+    <div class="minicard">
+        <h3>Višina zbranih donacij pravnih oseb {{ donation.organization_donations_amount }} EUR</h3>
+        Število donatorjev: {{ donation.number_of_organization_donations }}<br/>
+
+        {% if donation.personal_donators.all %}
+            <i>Poimenski seznam donatorjev</i><br/>
+            {% for donator in donation.organiaztion_donators.all %}
+                <hr>
+                {{ donator.name }} -> {{ donator.amount }}<br/>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="minicard">
+        <h3>Višina zbranih donacij z 1% dohodnine {{ donation.one_percent_income_tax }} EUR</h3>
+    </div>
+    <div class="minicard">
+        <div><h3>Kako smo porabili dohodnine</h3></div>
+        <div>{{ donation.purpose_of_donations|safe_markdown }}</div>
+
+    </div>
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+

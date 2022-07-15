@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
 
 from mptt.models import MPTTModel, TreeForeignKey
 from martor.models import MartorField
@@ -21,14 +22,23 @@ class User(AbstractUser, Timestampable):
         verbose_name=_('Organization'))
 
 
-class FinancialYear(MPTTModel):
+class FinancialYear(models.Model):
     name = models.TextField()
     start_time = models.DateField()
     end_time = models.DateField()
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='none')
 
     def __str__(self):
         return self.name
+
+
+class OrganizationFinacialYear(models.Model):
+    financial_year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='organiaztion_through')
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='financial_year_through')
+    is_active = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('financial_year', 'organization',)
+
 
 
 # organization info
@@ -46,6 +56,8 @@ class Organization(models.Model):
     representative = models.TextField(null=True)
     is_charity = models.BooleanField(default=False)
     is_for_the_public_good = models.TextField(default=None, null=True, blank=True)
+
+    financial_years = models.ManyToManyField(FinancialYear, related_name='organizations', through='OrganizationFinacialYear')
 
     def __str__(self):
         return self.name
@@ -103,7 +115,6 @@ class Employee(models.Model):
 
 # finance
 
-
 class FinancialCategory(MPTTModel):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='%(class)s_related')
     year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE,null=True, blank=True, related_name='%(class)s_related')
@@ -146,9 +157,9 @@ class Project(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='projects')
     year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='projects')
     name = models.TextField()
-    description = MartorField(verbose_name='Project\'s description')
-    outcomes_and_impacts = MartorField(verbose_name='Project\'s outcomes and impacts')
-    link = models.URLField(null=True, blank=True, verbose_name='Project\'s link')
+    description = MartorField(verbose_name=_('Project\'s description'))
+    outcomes_and_impacts = MartorField(verbose_name=_('Project\'s outcomes and impacts'))
+    link = models.URLField(null=True, blank=True, verbose_name=_('Project\'s link'))
     value = models.IntegerField()
     organization_share = models.IntegerField()
     start_date = models.DateField()
@@ -184,17 +195,71 @@ class Financer(models.Model):
 class CoFinancer(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='cofinancers')
     name = models.TextField()
-    link = models.URLField(null=True, blank=True, verbose_name='CoFinancer\'s link')
+    link = models.URLField(null=True, blank=True, verbose_name=_('CoFinancer\'s link'))
     logo = models.FileField(null=True, blank=True)
 
 
 class Partner(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='partners')
     name = models.TextField()
-    link = models.URLField(null=True, blank=True, verbose_name='Partners\'s link')
+    link = models.URLField(null=True, blank=True, verbose_name=_('Partners\'s link'))
 
 
 class Donator(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='donators')
     name = models.TextField()
-    link = models.URLField(null=True, blank=True, verbose_name='Donators\'s link')
+    link = models.URLField(null=True, blank=True, verbose_name=_('Donators\'s link'))
+
+
+# donations
+class Donations(models.Model):
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='donations')
+    year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='donations')
+    personal_donations_amount = models.IntegerField(default=0)
+    number_of_personal_donations = models.IntegerField(default=0)
+    organization_donations_amount = models.IntegerField(default=0)
+    number_of_organization_donations = models.IntegerField(default=0)
+    one_percent_income_tax = models.DecimalField(default=0.0, max_digits=10, decimal_places=2)
+    purpose_of_donations = MartorField(verbose_name='Donation purpose')
+
+class PersonalDonator(models.Model):
+    project = models.ForeignKey('Donations', on_delete=models.CASCADE, related_name='personal_donators')
+    name = models.TextField()
+    amount = models.IntegerField(default=0)
+
+class OrganiaztionDonator(models.Model):
+    project = models.ForeignKey('Donations', on_delete=models.CASCADE, related_name='organiaztion_donators')
+    name = models.TextField()
+    amount = models.IntegerField(default=0)
+
+
+# info text
+
+class InfoText(models.Model):
+    class CardTypes(models.TextChoices):
+        BASICINFO = 'BI', _('BasicInfo')
+        PROJECTS = 'PR', _('Projects')
+        DONATIONS = 'DO', _('Donations')
+        FINANCE = 'FI', _('Finance')
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='info_texts')
+    year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='info_texts')
+    card =  models.CharField(
+        max_length=2,
+        choices=CardTypes.choices,
+        default=CardTypes.BASICINFO,
+    )
+    text = models.TextField(default='')
+
+
+# settings
+class Instructions(models.Model):
+    model = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE)
+    list_instructions = MartorField(null=True, blank=True, verbose_name=_('Instructions for list of objects'))
+    add_instructions = MartorField(null=True, blank=True, verbose_name=_('Instructions for adding object'))
+    edit_instructions = MartorField(null=True, blank=True, verbose_name=_('Instructions for edit single object'))
+
+    def __str__(self):
+        if self.model:
+            return f'{self.model}'
+        else:
+            return 'Landing'
