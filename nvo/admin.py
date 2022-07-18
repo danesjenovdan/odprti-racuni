@@ -32,6 +32,8 @@ class UserAdmin(UserAdmin):
 
 
 class LimitedAdmin(admin.ModelAdmin):
+    exclude = ['organization']
+    readonly_fields = ['year']
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -77,6 +79,14 @@ class DocumentAdmin(LimitedAdmin):
         'year',
         'organization',
     ]
+    readonly_fields = []
+
+    def save_model(self, request, obj, form, change):
+        if not obj.id:
+            user = User.objects.get(id=request.user.id)
+            organization = user.organization
+            obj.organization_id = organization.id
+        super().save_model(request, obj, form, change)
 
 
 class PeopleAdmin(LimitedAdmin):
@@ -216,6 +226,7 @@ class ProjectYearListFilter(admin.SimpleListFilter):
             return queryset
 
 class ProjectAdmin(LimitedAdmin):
+    readonly_fields = []
     list_display = [
         'name',
         'start_date',
@@ -228,6 +239,14 @@ class ProjectAdmin(LimitedAdmin):
         PartnerInlineAdmin,
         DonatorInlineAdmin
     ]
+
+    def save_model(self, request, obj, form, change):
+        if not obj.id:
+            user = User.objects.get(id=request.user.id)
+            organization = user.organization
+            obj.organization_id = organization.id
+        super().save_model(request, obj, form, change)
+
     class Media:
         css = {
              'all': ('css/admin-extra.css',)
@@ -277,11 +296,18 @@ class InfoTextAdmin(admin.ModelAdmin):
 class MyAdminSite(admin.AdminSite):
     site_header = 'Odprti računi'
     #index_template = 'admin/base_site.html'
+    def __init__(self, *args, **kwargs):
+        super(MyAdminSite, self).__init__(*args, **kwargs)
+        self._registry.update(admin.site._registry)  # PART 2
+
     def each_context(self, request):
         url_attrs = []
 
         # show misisng data as error
-        organization = request.user.organization
+        try:
+            organization = request.user.organization
+        except:
+            organization = None
         if organization:
             for year in organization.financial_years.all():
                 if not Document.objects.filter(organization=organization, year=year):
