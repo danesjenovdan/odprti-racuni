@@ -193,11 +193,35 @@ class DonatorInlineAdmin(admin.TabularInline):
     model = Donator
     extra = 0
 
+
+class ProjectYearListFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = _('By financial year')
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'year'
+
+    def lookups(self, request, model_admin):
+        years = request.user.organization.financial_years.all()
+        return [(year.id, year.name) for year in years]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            year = FinancialYear.objects.get(id=self.value())
+            this_year_projects = year.get_projects()
+            queryset = queryset.filter(id__in=this_year_projects)
+            return queryset
+        else:
+            return queryset
+
 class ProjectAdmin(LimitedAdmin):
     list_display = [
         'name',
-        'year'
+        'start_date',
+        'end_date',
     ]
+    list_filter = [ProjectYearListFilter]
     inlines = [
         FinancerInlineAdmin,
         CoFinancerInlineAdmin,
