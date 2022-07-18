@@ -24,11 +24,17 @@ class User(AbstractUser, Timestampable):
 
 class FinancialYear(models.Model):
     name = models.TextField()
-    start_time = models.DateField()
-    end_time = models.DateField()
+    start_date = models.DateField()
+    end_date = models.DateField()
 
     def __str__(self):
         return self.name
+
+    def get_projects(self):
+        return Project.objects.filter(
+            start_date__lte=self.end_date,
+            end_date__gte=self.start_date
+        )
 
 
 class OrganizationFinacialYear(models.Model):
@@ -155,7 +161,6 @@ class ExpensesCategory(FinancialCategory):
 
 class Project(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='projects')
-    year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='projects')
     name = models.TextField()
     description = MartorField(verbose_name=_('Project\'s description'))
     outcomes_and_impacts = MartorField(verbose_name=_('Project\'s outcomes and impacts'))

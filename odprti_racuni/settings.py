@@ -162,3 +162,19 @@ MARTOR_ENABLE_CONFIGS = {
 }
 
 MARTOR_ENABLE_LABEL = True
+
+if sentry_url := os.getenv('DJANGO_SENTRY_URL', False):
+    # imports should only happen if necessary
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        sentry_url,
+        integrations=[DjangoIntegration()],
+
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        # We recommend adjusting this value in production.
+        traces_sample_rate=0.1,
+        send_default_pii=True,
+    )

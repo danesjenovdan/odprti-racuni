@@ -78,7 +78,7 @@ def get_projects(request, organization_id, year):
     organization = get_object_or_404(Organization, pk=organization_id)
     year = get_object_or_404(FinancialYear, name=year)
 
-    projects = Project.objects.filter(year=year, organization=organization)
+    projects = year.get_projects().filter(organization=organization)
 
     info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.PROJECTS).first()
 
