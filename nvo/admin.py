@@ -45,8 +45,10 @@ class LimitedAdmin(admin.ModelAdmin):
 
 
 class FinancialYearInline(admin.TabularInline):
+    readonly_fields = ['financial_year']
     model = Organization.financial_years.through
     extra = 0
+    ordering = ("financial_year__name",)
 
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = [

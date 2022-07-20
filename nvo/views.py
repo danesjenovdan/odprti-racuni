@@ -1,12 +1,28 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseNotFound
 
-from nvo.models import (Organization, FinancialYear, Document, People, PaymentRatio, RevenueCategory,
+from nvo.models import (Organization, FinancialYear, Document, OrganizationFinacialYear, People, PaymentRatio, RevenueCategory,
     ExpensesCategory, Donations, InfoText)
 # Create your views here.
+
+def index(request, organization_id):
+    organization = get_object_or_404(Organization, pk=organization_id)
+    financial_year_through = organization.financial_year_through.filter(is_active=True).last()
+    if financial_year_through:
+        return redirect('info', organization_id=organization_id, year=financial_year_through.financial_year.name)
+    else:
+        return HttpResponseNotFound('')
 
 def organization_basic_info(request, organization_id, year):
     organization = get_object_or_404(Organization, pk=organization_id)
     year = get_object_or_404(FinancialYear, name=year)
+
+    get_object_or_404(
+        OrganizationFinacialYear,
+        organization=organization,
+        financial_year=year,
+        is_active=True
+    )
 
     documents = Document.objects.filter(year=year)
 
@@ -31,6 +47,13 @@ def get_finance(request, organization_id, year):
     organization = get_object_or_404(Organization, pk=organization_id)
     year = get_object_or_404(FinancialYear, name=year)
 
+    get_object_or_404(
+        OrganizationFinacialYear,
+        organization=organization,
+        financial_year=year,
+        is_active=True
+    )
+
     revenues = RevenueCategory.objects.filter(year=year, organization=organization, level=0).order_by('order')
     expenses = ExpensesCategory.objects.filter(year=year, organization=organization, level=0).order_by('order')
 
@@ -51,6 +74,13 @@ def get_projects(request, organization_id, year):
     organization = get_object_or_404(Organization, pk=organization_id)
     year = get_object_or_404(FinancialYear, name=year)
 
+    get_object_or_404(
+        OrganizationFinacialYear,
+        organization=organization,
+        financial_year=year,
+        is_active=True
+    )
+
     projects = year.get_projects().filter(organization=organization)
 
     info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.PROJECTS).first()
@@ -69,6 +99,13 @@ def get_projects(request, organization_id, year):
 def get_donations(request, organization_id, year):
     organization = get_object_or_404(Organization, pk=organization_id)
     year = get_object_or_404(FinancialYear, name=year)
+
+    get_object_or_404(
+        OrganizationFinacialYear,
+        organization=organization,
+        financial_year=year,
+        is_active=True
+    )
 
     donations = get_object_or_404(Donations, year=year, organization=organization)
 

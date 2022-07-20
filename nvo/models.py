@@ -27,9 +27,9 @@ class User(AbstractUser, Timestampable):
 
 
 class FinancialYear(models.Model):
-    name = models.TextField()
-    start_date = models.DateField()
-    end_date = models.DateField()
+    name = models.TextField(verbose_name=_('Name'))
+    start_date = models.DateField(verbose_name=_('Start date'))
+    end_date = models.DateField(verbose_name=_('End date'))
 
     def __str__(self):
         return self.name
@@ -46,9 +46,9 @@ class FinancialYear(models.Model):
 
 
 class OrganizationFinacialYear(models.Model):
-    financial_year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='organiaztion_through')
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='financial_year_through')
-    is_active = models.BooleanField(default=False)
+    financial_year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='organiaztion_through', verbose_name=_('Financial year'))
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='financial_year_through', verbose_name=_('Organiaztion'))
+    is_active = models.BooleanField(default=False, verbose_name=_('Is active'))
 
     class Meta:
         unique_together = ('financial_year', 'organization',)
