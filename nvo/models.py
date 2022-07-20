@@ -126,6 +126,20 @@ class People(models.Model):
     def __str__(self):
         return f'{self.year.name} - {self.organization.name}'
 
+    def get_statistics(self):
+        num_of_men = self.number_of_men
+        num_of_women = self.number_of_women
+        num_of_nonbinary = self.number_of_non_binary
+        all_people = num_of_men + num_of_women + num_of_nonbinary
+        if all_people == 0:
+            return {}
+        else:
+            return {
+                'men': round(num_of_men * 100 / all_people, 2),
+                'women': round(num_of_women * 100 / all_people, 2),
+                'nonbinary': round(num_of_nonbinary * 100 / all_people, 2)
+            }
+
     class Meta:
         verbose_name = _('Perople')
         verbose_name_plural = _('People')
@@ -134,6 +148,23 @@ class People(models.Model):
 class PaymentRatio(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='payment_ratios', verbose_name=_('Organiaztion'))
     year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='payment_ratios', verbose_name=_('Year'))
+
+    def get_statistics(self):
+        employees = self.employees.all()
+        normalized_salaries = [employee.average_gross_salary / employee.job_share * 100 for employee in employees]
+        if normalized_salaries == []:
+            return {}
+        else:
+            average = sum(normalized_salaries) / len(normalized_salaries)
+            min_salary = min(normalized_salaries)
+            max_salary = max(normalized_salaries)
+
+            return {
+                'highest_absolute': round(max_salary / min_salary, 2),
+                'lowest': 1,
+                'highest': round(max_salary / average, 2),
+                'average': 1
+            }
 
     class Meta:
         verbose_name = _('Payment ratio')
