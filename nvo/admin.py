@@ -159,10 +159,38 @@ class FinanceYearListFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         return queryset.filter(year_id=self.value())
 
+class FinacialFormSet(forms.BaseModelFormSet):
+    """
+    This formset is used for validate amounts in finance admin view
+    """
+    def clean(self):
+        form_set = self.cleaned_data
+        root_node = form_set[0]['id']
+
+        # create pairs from formset {node_id: node_amount, ...}
+        self.enumerated_amounts = {
+            node['id'].id: node['amount'] for node in form_set
+        }
+        self.clean_branch(root_node)
+
+        return form_set
+
+    def clean_branch(self, root_node):
+        children = root_node.get_children()
+        if children:
+            # get node amount from formset
+            childen_amount = sum([self.enumerated_amounts[child.id] for child in children])
+            root_amount = self.enumerated_amounts[root_node.id]
+            if root_amount != childen_amount:
+                raise forms.ValidationError(_('Item amount of ') + root_node.name + _(' and its children is not valid.') + f'{root_amount} != {childen_amount}')
+            for child in children:
+                self.clean_branch(child)
+
+
 class FinancialCategoryMPTTModelAdmin(MPTTModelAdmin):
     # specify pixel amount for this ModelAdmin only:
     mptt_level_indent = 20
-    list_display = ['name', 'amount', 'year', 'additional_name']
+    list_display = ['name', 'amount', 'year', 'additional_name', 'order']
     list_editable = ['amount', 'additional_name']
     list_filter = [FinanceYearListFilter]
 
@@ -174,6 +202,13 @@ class FinancialCategoryMPTTModelAdmin(MPTTModelAdmin):
 
     def get_changelist_form(self, request, **kwargs):
         return FinanceChangeListForm
+
+    def get_changelist_formset(self, request, **kwargs):
+        kwargs['formset'] = FinacialFormSet
+        changelist_formset = super().get_changelist_formset(request, **kwargs)
+        print(vars(changelist_formset.form))
+
+        return changelist_formset
 
 class RevenueCategoryAdmin(FinancialCategoryMPTTModelAdmin):
     pass
@@ -290,11 +325,13 @@ class InfoTextAdmin(admin.ModelAdmin):
         'year',
         'card'
     ]
+    readonly_fields = ['year', 'card']
+    exclude = ['organization']
 
 
 
 class MyAdminSite(admin.AdminSite):
-    site_header = 'Odprti računi'
+    site_header = _('Odprti računi')
     #index_template = 'admin/base_site.html'
     def __init__(self, *args, **kwargs):
         super(MyAdminSite, self).__init__(*args, **kwargs)

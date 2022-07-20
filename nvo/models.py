@@ -21,6 +21,10 @@ class User(AbstractUser, Timestampable):
         on_delete=models.SET_NULL,
         verbose_name=_('Organization'))
 
+    class Meta:
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
+
 
 class FinancialYear(models.Model):
     name = models.TextField()
@@ -36,6 +40,10 @@ class FinancialYear(models.Model):
             end_date__gte=self.start_date
         )
 
+    class Meta:
+        verbose_name = _('Financial year')
+        verbose_name_plural = _('Financial years')
+
 
 class OrganizationFinacialYear(models.Model):
     financial_year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='organiaztion_through')
@@ -45,95 +53,123 @@ class OrganizationFinacialYear(models.Model):
     class Meta:
         unique_together = ('financial_year', 'organization',)
 
+        verbose_name = _('Organiaztion financial year')
+        verbose_name_plural = _('Organiaztion financial years')
+
 
 
 # organization info
 class Organization(models.Model):
-    name = models.TextField()
-    logo = models.ImageField(null=True)
-    address = models.TextField(null=True)
-    city = models.TextField(null=True)
-    post_number = models.TextField(null=True)
-    tax_number = models.CharField(max_length=10, null=True)
-    registration_number = models.TextField(null=True)
-    email = models.EmailField(null=True)
-    phone_number = models.CharField(max_length=13, null=True, blank=True)
-    trr = models.TextField(null=True)
-    representative = models.TextField(null=True)
-    is_charity = models.BooleanField(default=False)
-    is_for_the_public_good = models.TextField(default=None, null=True, blank=True)
+    name = models.TextField(verbose_name=_('Name'))
+    logo = models.ImageField(null=True, verbose_name=_('Logo'))
+    address = models.TextField(null=True, verbose_name=_('Address'))
+    city = models.TextField(null=True, verbose_name=_('Post'))
+    post_number = models.TextField(null=True, verbose_name=_('Post number'))
+    tax_number = models.CharField(max_length=10, null=True, verbose_name=_('TAX number'))
+    registration_number = models.TextField(null=True, verbose_name=_('Registration number'))
+    email = models.EmailField(null=True, verbose_name=_('Email'))
+    phone_number = models.CharField(max_length=13, null=True, blank=True, verbose_name=_('Phone number'))
+    trr = models.TextField(null=True, verbose_name=_('TRR'))
+    representative = models.TextField(null=True, verbose_name=_('representative'))
+    is_charity = models.BooleanField(default=False, verbose_name=_('is charity'))
+    is_for_the_public_good = models.TextField(default=None, null=True, blank=True, verbose_name=_('Is organization for public good'))
 
-    financial_years = models.ManyToManyField(FinancialYear, related_name='organizations', through='OrganizationFinacialYear')
+    financial_years = models.ManyToManyField(FinancialYear, related_name='organizations', through='OrganizationFinacialYear', verbose_name=_('Financial years'))
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('Organiaztion')
+        verbose_name_plural = _('Ogranizations')
 
 
 class DocumentCategory(models.Model):
-    name = models.TextField()
+    name = models.TextField(verbose_name=_('Name'))
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('Document category')
+        verbose_name_plural = _('Document categories')
+
 
 class Document(models.Model):
-    file = models.FileField()
-    category = models.ForeignKey('DocumentCategory', on_delete=models.CASCADE)
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='documents')
-    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='documents')
+    file = models.FileField(verbose_name=_('File'))
+    category = models.ForeignKey('DocumentCategory', on_delete=models.CASCADE, verbose_name=_('Category'))
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='documents', verbose_name=_('Organiaztion'))
+    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='documents', verbose_name=_('Year'))
 
     def __str__(self):
         return f'{self.year.name} - {self.category.name}'
 
+    class Meta:
+        verbose_name = _('Document')
+        verbose_name_plural = _('Documents')
+
 
 class People(models.Model):
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='people')
-    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='people')
-    full_time_employees = models.IntegerField(default=0)
-    other_employees = models.IntegerField(default=0)
-    volunteers = models.IntegerField(default=0)
-    members = models.IntegerField(default=0)
-    number_of_men = models.IntegerField(default=0)
-    number_of_women = models.IntegerField(default=0)
-    number_of_non_binary = models.IntegerField(default=0)
-    employees_by_hours = models.IntegerField(default=0)
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='people', verbose_name=_('Organiaztion'))
+    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='people', verbose_name=_('Year'))
+    full_time_employees = models.IntegerField(default=0, verbose_name=_('Full time employees'))
+    other_employees = models.IntegerField(default=0, verbose_name=_('Other employees'))
+    volunteers = models.IntegerField(default=0, verbose_name=_('Volunteers'))
+    members = models.IntegerField(default=0, verbose_name=_('Members'))
+    number_of_men = models.IntegerField(default=0, verbose_name=_('Number of men'))
+    number_of_women = models.IntegerField(default=0, verbose_name=_('Number of women'))
+    number_of_non_binary = models.IntegerField(default=0, verbose_name=_('Number of non binary'))
 
     def __str__(self):
         return f'{self.year.name} - {self.organization.name}'
 
+    class Meta:
+        verbose_name = _('Perople')
+        verbose_name_plural = _('People')
+
 
 class PaymentRatio(models.Model):
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='payment_ratios')
-    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='payment_ratios')
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='payment_ratios', verbose_name=_('Organiaztion'))
+    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='payment_ratios', verbose_name=_('Year'))
+
+    class Meta:
+        verbose_name = _('Payment ratio')
+        verbose_name_plural = _('Payment ratios')
+
 
 class Employee(models.Model):
     payment_ratio = models.ForeignKey('PaymentRatio', on_delete=models.CASCADE, related_name='employees')
-    note = models.TextField()
-    average_gross_salary = models.DecimalField(decimal_places=2, max_digits=10)
+    note = models.TextField(verbose_name=_('Node'))
+    average_gross_salary = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=_('Average gross selary'))
     job_share = models.IntegerField(
         default=100,
         validators=[
             MaxValueValidator(100),
             MinValueValidator(1)
-            ]
+            ],
+            verbose_name=_('job share')
         )
+
+    class Meta:
+        verbose_name = _('Employee')
+        verbose_name_plural = _('Employees')
 
 
 # finance
 
 class FinancialCategory(MPTTModel):
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='%(class)s_related')
-    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE,null=True, blank=True, related_name='%(class)s_related')
-    name = models.CharField(max_length=256)
-    additional_name = models.CharField(max_length=256, null=True, blank=True)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='categories_children')
-    amount = models.DecimalField(decimal_places=2, max_digits=10, default=0.0)
-    order = models.IntegerField()
-    instructions = models.TextField()
-    allow_additional_name = models.BooleanField(default=False)
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='%(class)s_related', verbose_name=_('Organiaztion'))
+    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE,null=True, blank=True, related_name='%(class)s_related', verbose_name=_('Year'))
+    name = models.CharField(max_length=256, verbose_name=_('Name'))
+    additional_name = models.CharField(max_length=256, null=True, blank=True, verbose_name=_('Additional name'))
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='categories_children', verbose_name=_('Parent'))
+    amount = models.DecimalField(decimal_places=2, max_digits=10, default=0.0, verbose_name=_('Amount'))
+    order = models.IntegerField(verbose_name=_('Order'))
+    instructions = models.TextField(verbose_name=_('Instructions'))
+    allow_additional_name = models.BooleanField(default=False, verbose_name=_('Allow additional name'))
 
     def __str__(self):
-        return self.name
+        return self.name + ' ' + self.year.name
 
     def get_json_tree(self):
         return {
@@ -150,25 +186,29 @@ class FinancialCategory(MPTTModel):
 
 
 class RevenueCategory(FinancialCategory):
-    pass
+    class Meta:
+        verbose_name = _('Revenue')
+        verbose_name_plural = _('Revenues')
 
 
 class ExpensesCategory(FinancialCategory):
-    pass
+    class Meta:
+        verbose_name = _('Expense')
+        verbose_name_plural = _('Expenses')
 
 
 # projekt
 
 class Project(models.Model):
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='projects')
-    name = models.TextField()
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='projects', verbose_name=_('Organization'))
+    name = models.TextField(verbose_name=_('Name'))
     description = MartorField(verbose_name=_('Project\'s description'))
     outcomes_and_impacts = MartorField(verbose_name=_('Project\'s outcomes and impacts'))
     link = models.URLField(null=True, blank=True, verbose_name=_('Project\'s link'))
-    value = models.IntegerField()
-    organization_share = models.IntegerField()
-    start_date = models.DateField()
-    end_date = models.DateField()
+    value = models.IntegerField(verbose_name=_('Total value'))
+    organization_share = models.IntegerField(verbose_name=_('Organization share'))
+    start_date = models.DateField(verbose_name=_('Start date'))
+    end_date = models.DateField(verbose_name=_('End date'))
 
     @property
     def org_share(self):
@@ -189,53 +229,87 @@ class Project(models.Model):
             'years': r.years,
         }
 
+    class Meta:
+        verbose_name = _('Project')
+        verbose_name_plural = _('Projects')
+
 
 class Financer(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='financers')
-    name = models.TextField()
+    name = models.TextField(verbose_name=_('Name'))
     link = models.URLField(null=True, blank=True, verbose_name='Financer\'s link')
-    logo = models.FileField(null=True, blank=True)
+    logo = models.FileField(null=True, blank=True, verbose_name=_('Logo'))
+
+    class Meta:
+        verbose_name = _('Financer')
+        verbose_name_plural = _('Financers')
 
 
 class CoFinancer(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='cofinancers')
-    name = models.TextField()
+    name = models.TextField(verbose_name=_('Name'))
     link = models.URLField(null=True, blank=True, verbose_name=_('CoFinancer\'s link'))
-    logo = models.FileField(null=True, blank=True)
+    logo = models.FileField(null=True, blank=True, verbose_name=_('Logo'))
+
+    class Meta:
+        verbose_name = _('Cofinancer')
+        verbose_name_plural = _('Cofinancers')
 
 
 class Partner(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='partners')
-    name = models.TextField()
+    name = models.TextField(verbose_name=_('Name'))
     link = models.URLField(null=True, blank=True, verbose_name=_('Partners\'s link'))
+
+    class Meta:
+        verbose_name = _('Partner')
+        verbose_name_plural = _('Partners')
 
 
 class Donator(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='donators')
-    name = models.TextField()
+    name = models.TextField(verbose_name=_('Name'))
     link = models.URLField(null=True, blank=True, verbose_name=_('Donators\'s link'))
+
+    class Meta:
+        verbose_name = _('Donator')
+        verbose_name_plural = _('Donators')
 
 
 # donations
 class Donations(models.Model):
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='donations')
-    year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='donations')
-    personal_donations_amount = models.IntegerField(default=0)
-    number_of_personal_donations = models.IntegerField(default=0)
-    organization_donations_amount = models.IntegerField(default=0)
-    number_of_organization_donations = models.IntegerField(default=0)
-    one_percent_income_tax = models.DecimalField(default=0.0, max_digits=10, decimal_places=2)
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='donations', verbose_name=_('Organization'))
+    year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='donations', verbose_name=_('Year'))
+    personal_donations_amount = models.IntegerField(default=0, verbose_name=_('Personal donation amount'))
+    number_of_personal_donations = models.IntegerField(default=0, verbose_name=_('Number of personal donations'))
+    organization_donations_amount = models.IntegerField(default=0, verbose_name=_('Organization donations amount'))
+    number_of_organization_donations = models.IntegerField(default=0, verbose_name=_('Number od organization donations'))
+    one_percent_income_tax = models.DecimalField(default=0.0, max_digits=10, decimal_places=2, verbose_name=_('1 percent income tax'))
     purpose_of_donations = MartorField(verbose_name='Donation purpose')
+
+    class Meta:
+        verbose_name = _('Donations')
+        verbose_name_plural = _('Donations')
+
 
 class PersonalDonator(models.Model):
     project = models.ForeignKey('Donations', on_delete=models.CASCADE, related_name='personal_donators')
-    name = models.TextField()
-    amount = models.IntegerField(default=0)
+    name = models.TextField(verbose_name=_('Name'))
+    amount = models.IntegerField(default=0, verbose_name=_('Amount'))
+
+    class Meta:
+        verbose_name = _('PersonalDonator')
+        verbose_name_plural = _('PersonalDonators')
+
 
 class OrganiaztionDonator(models.Model):
     project = models.ForeignKey('Donations', on_delete=models.CASCADE, related_name='organiaztion_donators')
-    name = models.TextField()
-    amount = models.IntegerField(default=0)
+    name = models.TextField(verbose_name=_('Name'))
+    amount = models.IntegerField(default=0, verbose_name=_('Amount'))
+
+    class Meta:
+        verbose_name = _('OrganiaztionDonator')
+        verbose_name_plural = _('OrganiaztionDonators')
 
 
 # info text
@@ -246,19 +320,24 @@ class InfoText(models.Model):
         PROJECTS = 'PR', _('Projects')
         DONATIONS = 'DO', _('Donations')
         FINANCE = 'FI', _('Finance')
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='info_texts')
-    year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='info_texts')
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='info_texts', verbose_name=_('Organization'))
+    year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='info_texts', verbose_name=_('Year'))
     card =  models.CharField(
         max_length=2,
         choices=CardTypes.choices,
         default=CardTypes.BASICINFO,
+        verbose_name=_('Card')
     )
-    text = models.TextField(default='')
+    text = models.TextField(default='', verbose_name=_('Text'))
+
+    class Meta:
+        verbose_name = _('Info Text')
+        verbose_name_plural = _('Info Texts')
 
 
 # settings
 class Instructions(models.Model):
-    model = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE)
+    model = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE, verbose_name=_('Model'))
     list_instructions = MartorField(null=True, blank=True, verbose_name=_('Instructions for list of objects'))
     add_instructions = MartorField(null=True, blank=True, verbose_name=_('Instructions for adding object'))
     edit_instructions = MartorField(null=True, blank=True, verbose_name=_('Instructions for edit single object'))
@@ -268,3 +347,7 @@ class Instructions(models.Model):
             return f'{self.model}'
         else:
             return 'Landing'
+
+    class Meta:
+        verbose_name = _('Instructions')
+        verbose_name_plural = _('Instructions')
