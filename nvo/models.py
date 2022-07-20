@@ -79,6 +79,9 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+    def get_years(self):
+        return self.financial_years.filter(organiaztion_through__is_active=True).values_list("name", flat=True).order_by("name")
+
     class Meta:
         verbose_name = _('Organiaztion')
         verbose_name_plural = _('Ogranizations')
