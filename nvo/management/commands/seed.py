@@ -48,7 +48,7 @@ class Command(BaseCommand):
         nvo_group.permissions.add(*permissions)
 
         ct = ContentType.objects.get_for_model(models.OrganizationFinacialYear)
-        permissions = self.get_permissions('organizationfinacialyear', ct, self.edit_create_options)
+        permissions = self.get_permissions('organizationfinacialyear', ct, self.edit_options)
         nvo_group.permissions.add(*permissions)
 
         ct = ContentType.objects.get_for_model(models.DocumentCategory)
