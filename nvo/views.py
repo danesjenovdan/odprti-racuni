@@ -51,7 +51,7 @@ def organization_basic_info(request, organization_id, year):
             'documents': documents,
             'people': people,
             'payment_ratio': payment_ratio,
-            'info_text': info_text
+            'info_text': info_text,
         })
 
 def get_finance(request, organization_id, year):
@@ -61,7 +61,7 @@ def get_finance(request, organization_id, year):
     revenues = RevenueCategory.objects.filter(year=year, organization=organization, level=0).order_by('order')
     expenses = ExpensesCategory.objects.filter(year=year, organization=organization, level=0).order_by('order')
 
-    info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoInfoText.CardTypesText.FINANCE).first()
+    info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.FINANCE).first()
 
     return render(
         request,
@@ -70,7 +70,7 @@ def get_finance(request, organization_id, year):
             'revenues': [revenue.get_json_tree() for revenue in revenues if revenue.amount],
             'expenses': [expense.get_json_tree() for expense in expenses if expense.amount],
             'organization': organization,
-            'info_text': info_text
+            'info_text': info_text,
         })
 
 
@@ -88,7 +88,7 @@ def get_projects(request, organization_id, year):
         {
             'projects': projects,
             'organization': organization,
-            'info_text': info_text
+            'info_text': info_text,
         }
     )
 
@@ -107,6 +107,6 @@ def get_donations(request, organization_id, year):
         {
             'donation': donations,
             'organization': organization,
-            'info_text': info_text
+            'info_text': info_text,
         }
     )

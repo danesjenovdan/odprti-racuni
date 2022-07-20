@@ -30,6 +30,9 @@
                 margin-right: auto;
                 max-width: 50px;
             }
+            .current-page {
+                background-color: yellow;
+            }
         </style>
         {% block extra-head %}
         {% endblock %}
@@ -37,7 +40,23 @@
     <body>
         <div class="card">
             <div class="card header">
+                <div class="">
+                    <img src="{% static '/images/OR-logo.png' %}" alt="Odprti računi">
+                </div>
+                <div class="">
+                    <select id="year-select" name="years">
+                        {% for year in organization.get_years %}
+                            <option value="{% url request.resolver_match.url_name organization.id year %}" {% if year == request.resolver_match.kwargs.year %} selected {% endif %}>{{year}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 <img src="{{ organization.logo.url }}" class="icon">
+                <div class="">
+                    <a href="{% url 'info' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'info' %}current-page{% endif %}">Osebna izkaznica</a>
+                    <a href="{% url 'finance' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'finance' %}current-page{% endif %}">Finance</a>
+                    <a href="{% url 'projects' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'projects' %}current-page{% endif %}">Projekti</a>
+                    <a href="{% url 'donations' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'donations' %}current-page{% endif %}">Donacije</a>
+                </div>
             </div>
             {% block content %}
             {% endblock %}
@@ -52,6 +71,9 @@
             $('.martor-preview pre').each(function(i, block){
                 hljs.highlightBlock(block);
             });
+            $( "#year-select" ).change(function() {
+                location.href = this.value;
+              });
         </script>
         {% block js %}
         {% endblock %}
