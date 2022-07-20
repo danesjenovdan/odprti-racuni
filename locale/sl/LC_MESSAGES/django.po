@@ -37,7 +37,7 @@ msgstr "Vrednost postavke "
 
 #: nvo/admin.py:185
 msgid " and its children is not valid."
-msgstr " in vrednost njenih podpostavk in enaka."
+msgstr " in vrednost njenih podpostavk ni enaka."
 
 #: nvo/admin.py:334
 msgid "Odprti računi"

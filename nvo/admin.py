@@ -114,6 +114,7 @@ class PaymentRatioAdmin(LimitedAdmin):
         EmployeeAdmin,
     ]
 
+# finance
 class FinanceChangeListForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FinanceChangeListForm, self).__init__(*args, **kwargs)
@@ -123,7 +124,6 @@ class FinanceChangeListForm(forms.ModelForm):
                 self.fields['additional_name'].widget.attrs['hidden'] = 'hidden'
 
 
-# finance
 class FinanceYearListFilter(admin.SimpleListFilter):
     # Human-readable title which will be displayed in the
     # right admin sidebar just above the filter options.
@@ -136,7 +136,6 @@ class FinanceYearListFilter(admin.SimpleListFilter):
         super().__init__(request, params, model, model_admin)
         last_year_id = request.user.organization.financial_years.last().id
         if self.used_parameters and 'year' in self.used_parameters.keys():
-            # self.used_parameters[self.lookup_kwarg] = bool(int(self.used_parameters[self.lookup_kwarg]))
             pass
         else:
             self.used_parameters = {'year': last_year_id}
@@ -187,7 +186,7 @@ class FinacialFormSet(forms.BaseModelFormSet):
                 self.clean_branch(child)
 
 
-class FinancialCategoryMPTTModelAdmin(MPTTModelAdmin):
+class FinancialCategoryMPTTModelAdmin(LimitedAdmin, MPTTModelAdmin):
     # specify pixel amount for this ModelAdmin only:
     mptt_level_indent = 20
     list_display = ['name', 'amount', 'year', 'additional_name', 'order']
@@ -314,6 +313,7 @@ class DonationsAdmin(LimitedAdmin):
 
 class InstructionsAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
+        # TODO
         # if Instructions.objects.filter(model=obj.model):
         #     messages.add_message(request, messages.ERROR, 'Instrucations for this model alredy exists')
         # else:
@@ -330,12 +330,11 @@ class InfoTextAdmin(admin.ModelAdmin):
 
 
 
-class MyAdminSite(admin.AdminSite):
+class AdminSite(admin.AdminSite):
     site_header = _('Odprti računi')
-    #index_template = 'admin/base_site.html'
     def __init__(self, *args, **kwargs):
-        super(MyAdminSite, self).__init__(*args, **kwargs)
-        self._registry.update(admin.site._registry)  # PART 2
+        super(AdminSite, self).__init__(*args, **kwargs)
+        self._registry.update(admin.site._registry)
 
     def each_context(self, request):
         url_attrs = []
@@ -384,7 +383,7 @@ class MyAdminSite(admin.AdminSite):
         })
         return context
 
-admin_site = MyAdminSite(name='Odprti računi')
+admin_site = AdminSite(name='Odprti računi')
 
 admin_site.register(RevenueCategory, RevenueCategoryAdmin)
 admin_site.register(ExpensesCategory, ExpensesCategoryAdmin)
