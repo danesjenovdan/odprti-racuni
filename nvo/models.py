@@ -43,6 +43,8 @@ class FinancialYear(models.Model):
     class Meta:
         verbose_name = _('Financial year')
         verbose_name_plural = _('Financial years')
+        ordering = ['name']
+
 
 
 class OrganizationFinacialYear(models.Model):
@@ -84,7 +86,7 @@ class Organization(models.Model):
 
     class Meta:
         verbose_name = _('Organiaztion')
-        verbose_name_plural = _('Ogranizations')
+        verbose_name_plural = _('Organization')
 
 
 class DocumentCategory(models.Model):
@@ -173,7 +175,7 @@ class PaymentRatio(models.Model):
 
 class Employee(models.Model):
     payment_ratio = models.ForeignKey('PaymentRatio', on_delete=models.CASCADE, related_name='employees')
-    note = models.TextField(verbose_name=_('Node'))
+    note = models.TextField(verbose_name=_('Note'))
     average_gross_salary = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=_('Average gross selary'))
     job_share = models.IntegerField(
         default=100,
