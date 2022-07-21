@@ -183,7 +183,7 @@ class Employee(models.Model):
             MaxValueValidator(100),
             MinValueValidator(1)
             ],
-            verbose_name=_('job share')
+        verbose_name=_('job share')
         )
 
     class Meta:
@@ -242,7 +242,13 @@ class Project(models.Model):
     outcomes_and_impacts = MartorField(verbose_name=_('Project\'s outcomes and impacts'))
     link = models.URLField(null=True, blank=True, verbose_name=_('Project\'s link'))
     value = models.IntegerField(verbose_name=_('Total value'))
-    organization_share = models.IntegerField(verbose_name=_('Organization share'))
+    organization_share = models.IntegerField(
+        verbose_name=_('Organization share'),
+        validators=[
+            MaxValueValidator(100),
+            MinValueValidator(1)
+            ],
+    )
     start_date = models.DateField(verbose_name=_('Start date'))
     end_date = models.DateField(verbose_name=_('End date'))
 
@@ -321,7 +327,7 @@ class Donations(models.Model):
     organization_donations_amount = models.IntegerField(default=0, verbose_name=_('Organization donations amount'))
     number_of_organization_donations = models.IntegerField(default=0, verbose_name=_('Number od organization donations'))
     one_percent_income_tax = models.DecimalField(default=0.0, max_digits=10, decimal_places=2, verbose_name=_('1 percent income tax'))
-    purpose_of_donations = MartorField(verbose_name='Donation purpose')
+    purpose_of_donations = MartorField(verbose_name=_('Donation purpose'))
 
     class Meta:
         verbose_name = _('Donations')
