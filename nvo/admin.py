@@ -1,5 +1,6 @@
 from functools import partial
 from django.contrib import admin
+from django.db import models
 from django.contrib.admin.apps import AdminConfig
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import messages
@@ -63,7 +64,7 @@ class OrganizationAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(OrganizationAdmin, self).get_queryset(request)
-        if not request.user.organization:
+        if not request.user.organization or request.user.is_superuser:
             return qs
         return qs.filter(id=request.user.organization.id)
 
@@ -106,6 +107,9 @@ class EmployeeAdmin(admin.TabularInline):
     ]
     model = Employee
     extra = 0
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
+    }
 
 
 class PaymentRatioAdmin(LimitedAdmin):
@@ -143,16 +147,22 @@ class FinanceYearListFilter(admin.SimpleListFilter):
             self.used_parameters = {'year': last_year_id}
 
     def choices(self, changelist):
+        value = self.value()
+        if not value:
+            value = FinancialYear.objects.first().id
         for lookup, title in self.lookup_choices:
             yield {
-                'selected': self.value() == str(lookup),
+                'selected': str(value) == str(lookup),
                 'query_string': changelist.get_query_string({self.parameter_name: lookup}),
                 'display': title,
             }
 
 
     def lookups(self, request, model_admin):
-        years = request.user.organization.financial_years.all()
+        if request.user.is_superuser:
+            years = FinancialYear.objects.all()
+        else:
+            years = request.user.organization.financial_years.all()
         return (
             (year.id, year.name) for year in years
         )
@@ -191,7 +201,7 @@ class FinacialFormSet(forms.BaseModelFormSet):
 class FinancialCategoryMPTTModelAdmin(LimitedAdmin, MPTTModelAdmin):
     # specify pixel amount for this ModelAdmin only:
     mptt_level_indent = 20
-    list_display = ['name', 'amount', 'year', 'additional_name', 'order']
+    list_display = ['name', 'amount', 'year', 'additional_name']
     list_editable = ['amount', 'additional_name']
     list_filter = [FinanceYearListFilter]
 
@@ -207,8 +217,6 @@ class FinancialCategoryMPTTModelAdmin(LimitedAdmin, MPTTModelAdmin):
     def get_changelist_formset(self, request, **kwargs):
         kwargs['formset'] = FinacialFormSet
         changelist_formset = super().get_changelist_formset(request, **kwargs)
-        print(vars(changelist_formset.form))
-
         return changelist_formset
 
 class RevenueCategoryAdmin(FinancialCategoryMPTTModelAdmin):
@@ -223,21 +231,33 @@ class ExpensesCategoryAdmin(FinancialCategoryMPTTModelAdmin):
 class FinancerInlineAdmin(admin.TabularInline):
     model = Financer
     extra = 0
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
+    }
 
 
 class CoFinancerInlineAdmin(admin.TabularInline):
     model = CoFinancer
     extra = 0
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
+    }
 
 
 class PartnerInlineAdmin(admin.TabularInline):
     model = Partner
     extra = 0
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
+    }
 
 
 class DonatorInlineAdmin(admin.TabularInline):
     model = Donator
     extra = 0
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
+    }
 
 
 class ProjectYearListFilter(admin.SimpleListFilter):
@@ -292,11 +312,17 @@ class ProjectAdmin(LimitedAdmin):
 class PersonalDonatorInlineAdmin(admin.TabularInline):
     model = PersonalDonator
     extra = 0
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
+    }
 
 
 class OrganiaztionDonatorInlineAdmin(admin.TabularInline):
     model = OrganiaztionDonator
     extra = 0
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
+    }
 
 
 class DonationsAdmin(LimitedAdmin):
@@ -322,11 +348,12 @@ class InstructionsAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
-class InfoTextAdmin(admin.ModelAdmin):
+class InfoTextAdmin(LimitedAdmin):
     list_display = [
         'year',
         'card'
     ]
+    list_filter = ['year']
     readonly_fields = ['year', 'card']
     exclude = ['organization']
 
@@ -347,9 +374,9 @@ class AdminSite(admin.AdminSite):
         except:
             organization = None
         if organization:
-            for year in organization.financial_years.all():
-                if not Document.objects.filter(organization=organization, year=year):
-                    messages.add_message(request, messages.WARNING, _('You need add at least one document for financial year ') + year.name)
+            for financial_year_through in organization.financial_year_through.filter(is_active=True):
+                if not Document.objects.filter(organization=organization, year=financial_year_through.financial_year):
+                    messages.add_message(request, messages.WARNING, _('You need add at least one document for financial year ') + financial_year_through.financial_year.name)
 
         context = super().each_context(request)
 
@@ -357,7 +384,6 @@ class AdminSite(admin.AdminSite):
 
         url_name = request.resolver_match.url_name
         url_attrs = url_name.split('_')
-        print(url_attrs)
 
         instructions = ''
         if len(url_attrs) == 1:
@@ -384,6 +410,50 @@ class AdminSite(admin.AdminSite):
             "instructions": instructions,
         })
         return context
+
+    def get_app_list(self, request):
+        """
+        Return a sorted list of all the installed apps that have been
+        registered in this site.
+        """
+        ordering = {
+            "Skupine": 1,
+            "Finančna leta": 2,
+            "Uporabniki": 3,
+            "Navodila": 4,
+            "Kategorije dokumentov": 5,
+            "Organizacija": 6,
+            "Ljudje": 7,
+            "Plačilna razmerja": 8,
+            "Dokumenti": 9,
+            "Donacije": 10,
+            "Odhodki": 11,
+            "Prihodki": 12,
+            "Projekt": 13,
+            "Info texti": 14,
+        }
+
+        app_dict = self._build_app_dict(request)
+        app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
+
+        # Sort the models alphabetically within each app.
+        for app in app_list:
+            delete_idx = []
+            app['models'].sort(key=lambda x: ordering[x['name']])
+            if not request.user.is_superuser:
+                for idx, model in enumerate(app['models']):
+                    # find indexes of models for remove
+                    if model['name'] in ['Finančna leta', 'Kategorije dokumentov']:
+                        app['models'].remove(model)
+                        delete_idx.append(idx)
+                    # add id of users organization to organiaztion url
+                    if model['name'] == 'Organizacija':
+                        user_organization_id = request.user.organization_id
+                        model['admin_url'] = model['admin_url'] + str(user_organization_id)
+            # delete models from list for Nvo users
+            for idx in reversed(delete_idx):
+                app['models'].pop(idx)
+        return app_list
 
 admin_site = AdminSite(name='Odprti računi')
 

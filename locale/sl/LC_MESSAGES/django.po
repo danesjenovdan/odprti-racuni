@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-20 15:15+0200\n"
+"POT-Creation-Date: 2022-07-21 15:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,37 +19,38 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
 "%100==4 ? 2 : 3);\n"
 
-#: nvo/admin.py:27
+#: nvo/admin.py:28
 msgid "Personal info"
 msgstr "Osebni podatki"
 
-#: nvo/admin.py:28
+#: nvo/admin.py:29
 msgid "Permissions"
 msgstr "Dovoljenja"
 
-#: nvo/admin.py:131 nvo/admin.py:245
+#: nvo/admin.py:136 nvo/admin.py:265
 msgid "By financial year"
 msgstr "Po finančnem letu"
 
-#: nvo/admin.py:185
+#: nvo/admin.py:193
 msgid "Item amount of "
 msgstr "Vrednost postavke "
 
-#: nvo/admin.py:185
+#: nvo/admin.py:193
 msgid " and its children is not valid."
 msgstr " in vrednost njenih podpostavk ni enaka."
 
-#: nvo/admin.py:335
+#: nvo/admin.py:361
 msgid "Odprti računi"
 msgstr "Odprti računi"
 
-#: nvo/admin.py:351
+#: nvo/admin.py:377
 msgid "You need add at least one document for financial year "
 msgstr "Dodati je potrebno vsaj en dokument za finančno leto "
 
-#: nvo/models.py:22 nvo/models.py:237 nvo/models.py:315 nvo/models.py:357
+#: nvo/models.py:22 nvo/models.py:87 nvo/models.py:237 nvo/models.py:315
+#: nvo/models.py:357
 msgid "Organization"
-msgstr "Organiazcija"
+msgstr "Organizacija"
 
 #: nvo/models.py:25
 msgid "User"
@@ -84,7 +85,7 @@ msgstr "Finančna leta"
 #: nvo/models.py:50 nvo/models.py:86 nvo/models.py:104 nvo/models.py:116
 #: nvo/models.py:149 nvo/models.py:195
 msgid "Organiaztion"
-msgstr "Organiazcija"
+msgstr "Organizacija"
 
 #: nvo/models.py:51
 msgid "Is active"
@@ -108,7 +109,7 @@ msgstr "Naslov"
 
 #: nvo/models.py:66
 msgid "Post"
-msgstr "Poštna številka"
+msgstr "Pošta"
 
 #: nvo/models.py:67
 msgid "Post number"
@@ -145,10 +146,6 @@ msgstr "Humanitarna organizacija"
 #: nvo/models.py:75
 msgid "Is organization for public good"
 msgstr "Organizacija v javnem interesu na področju"
-
-#: nvo/models.py:87
-msgid "Ogranizations"
-msgstr "Organiazcije"
 
 #: nvo/models.py:97
 msgid "Document category"
@@ -224,8 +221,8 @@ msgid "Payment ratios"
 msgstr "Plačilna razmerja"
 
 #: nvo/models.py:176
-msgid "Node"
-msgstr "Vozlišče"
+msgid "Note"
+msgstr "Opis"
 
 #: nvo/models.py:177
 msgid "Average gross selary"
@@ -269,11 +266,11 @@ msgstr "Dovoli dodatno ime"
 
 #: nvo/models.py:224
 msgid "Revenue"
-msgstr "Prohodkek"
+msgstr "Prihodek"
 
 #: nvo/models.py:225
 msgid "Revenues"
-msgstr "Prohodki"
+msgstr "Prihodki"
 
 #: nvo/models.py:230
 msgid "Expense"
@@ -365,11 +362,11 @@ msgstr "Število donacij fizičnih oseb"
 
 #: nvo/models.py:319
 msgid "Organization donations amount"
-msgstr "Znesek donacij podjetij"
+msgstr "Znesek pravnih donacij"
 
 #: nvo/models.py:320
 msgid "Number od organization donations"
-msgstr "Število donacij podjetij"
+msgstr "Število Pravnih donacij"
 
 #: nvo/models.py:321
 msgid "1 percent income tax"
@@ -389,11 +386,11 @@ msgstr "Fizične osebe donatorji"
 
 #: nvo/models.py:345
 msgid "OrganiaztionDonator"
-msgstr "Podjetje donator"
+msgstr "Pravni donator"
 
 #: nvo/models.py:346
 msgid "OrganiaztionDonators"
-msgstr "Podjetni donatorji"
+msgstr "Pravne osebe donatorji"
 
 #: nvo/models.py:353
 msgid "BasicInfo"
@@ -438,6 +435,9 @@ msgstr "Navodila za urejanje objekta"
 #: templates/admin/nav_sidebar.html:2
 msgid "Toggle navigation"
 msgstr "Preklopi navigacijo"
+
+#~ msgid "Ogranizations"
+#~ msgstr "Organiazcije"
 
 #~ msgid "Employees by hours"
 #~ msgstr "Zaposleni po urah"
