@@ -10,4 +10,4 @@ resources:
 images:
   - name: odprti-racuni
     newName: rg.fr-par.scw.cloud/djnd/odprti-racuni
-    newTag: '186f3b13683b391ec1cf1f4a646a58e3f6ec59d0'
+    newTag: '1007e055ae36e39e0f111c872240d63ea537e775'
