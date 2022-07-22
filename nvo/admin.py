@@ -389,10 +389,13 @@ class AdminSite(admin.AdminSite):
         url_attrs = url_name.split('_')
 
         instructions = ''
-        if len(url_attrs) == 1:
-            instructions = Instructions.objects.filter(model=None)
-            if instructions:
-                instructions = instructions[0].list_instructions
+        print(url_attrs)
+        if url_attrs[0] == 'login':
+            pass
+        elif len(url_attrs) == 1:
+            instructions = Instructions.objects.filter(model=None).first()
+            if instructions and instructions.list_instructions:
+                instructions = instructions.list_instructions
             else:
                 instructions = ''
         elif len(url_attrs) == 3:
