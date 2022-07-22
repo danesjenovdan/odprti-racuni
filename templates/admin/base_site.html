@@ -16,8 +16,9 @@
             font-size: 15px;
           }
           /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-          .instruction_active, .instruction_collapsible:hover {
+          .instruction_active, .instruction_collapsible {
             background-color: #ccc;
+            width:100px;
           }
           /* Style the collapsible content. Note: hidden by default */
           .instructions {
@@ -43,19 +44,26 @@
         <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
     {% endfor %}</ul>
     {% endif %}
-    {% block instructions %}
-        <button type="button" class="instruction_collapsible">Prikaži pomoč</button>
-        <div class="instructions instruction_content">
+    {% if instructions %}
+        <button type="button" onclick="toogle_instructions()" id="instraction-button" class="instruction_collapsible">Prikaži pomoč</button>
+        <div id="instruction_content" class="instructions">
         {{ instructions|safe_markdown }}<br/>
         </div>
-    {% endblock %}
+    {% endif %}
 {% endblock messages %}
 
 {% block footer %}
     {{ block.super }}
     <script>
-        django.jQuery('.instruction_collapsible').on('click', function(){
-            django.jQuery('.instruction_content').slideToggle('fast');
-        });
+        function toogle_instructions() {
+            var x = document.getElementById("instruction_content");
+            if (x.style.display === "none") {
+              x.style.display = "block";
+              document.getElementById("instraction-button").textContent = "Skrij pomoč"
+            } else {
+              x.style.display = "none";
+              document.getElementById("instraction-button").textContent = "Prikaži pomoč"
+            }
+          }
     </script>
 {% endblock %}
