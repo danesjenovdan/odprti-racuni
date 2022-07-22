@@ -140,7 +140,9 @@ class FinanceYearListFilter(admin.SimpleListFilter):
     def __init__(self, request, params, model, model_admin):
         # set default filter
         super().__init__(request, params, model, model_admin)
-        last_year_id = request.user.organization.financial_years.last().id
+
+        last_year_id = FinancialYear.objects.all().last().id
+
         if self.used_parameters and 'year' in self.used_parameters.keys():
             pass
         else:
@@ -269,7 +271,8 @@ class ProjectYearListFilter(admin.SimpleListFilter):
     parameter_name = 'year'
 
     def lookups(self, request, model_admin):
-        years = request.user.organization.financial_years.all()
+
+        years = FinancialYear.objects.all()
         return [(year.id, year.name) for year in years]
 
     def queryset(self, request, queryset):
@@ -417,20 +420,20 @@ class AdminSite(admin.AdminSite):
         registered in this site.
         """
         ordering = {
-            "Skupine": 1,
-            "Finančna leta": 2,
-            "Uporabniki": 3,
-            "Navodila": 4,
-            "Kategorije dokumentov": 5,
-            "Organizacija": 6,
-            "Ljudje": 7,
-            "Plačilna razmerja": 8,
-            "Dokumenti": 9,
-            "Donacije": 10,
-            "Odhodki": 11,
-            "Prihodki": 12,
-            "Projekt": 13,
-            "Info texti": 14,
+            "Group": 1,
+            "FinancialYear": 2,
+            "User": 3,
+            "Instructions": 4,
+            "DocumentCategory": 5,
+            "Organization": 6,
+            "People": 7,
+            "PaymentRatio": 8,
+            "Document": 9,
+            "Donations": 10,
+            "ExpensesCategory": 11,
+            "RevenueCategory": 12,
+            "Project": 13,
+            "InfoText": 14,
         }
 
         app_dict = self._build_app_dict(request)
@@ -439,15 +442,16 @@ class AdminSite(admin.AdminSite):
         # Sort the models alphabetically within each app.
         for app in app_list:
             delete_idx = []
-            app['models'].sort(key=lambda x: ordering[x['name']])
+            app['models'].sort(key=lambda x: ordering[x['object_name']])
             if not request.user.is_superuser:
                 for idx, model in enumerate(app['models']):
                     # find indexes of models for remove
-                    if model['name'] in ['Finančna leta', 'Kategorije dokumentov']:
+                    print(model)
+                    if model['object_name'] in ['FinancialYear', 'DocumentCategory']:
                         app['models'].remove(model)
                         delete_idx.append(idx)
                     # add id of users organization to organiaztion url
-                    if model['name'] == 'Organizacija':
+                    if model['object_name'] == 'Organization':
                         user_organization_id = request.user.organization_id
                         model['admin_url'] = model['admin_url'] + str(user_organization_id)
             # delete models from list for Nvo users
