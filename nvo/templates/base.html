@@ -5,65 +5,46 @@
         <title>Odprti računi</title>
         <link href="{% static 'plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet" />
         <link href="{% static 'martor/css/martor.bootstrap.min.css' %}" type="text/css" media="all" rel="stylesheet" />
-        <style>
-            div.card {
-                max-width: 640px;
-            }
-            div.minicard {
-                border-style: solid;
-                border-color: black;
-                border-width: 1px;
-                padding: 2px;
-                margin: 5px;
-                width: 100%;
-            }
-            img.icon {
-                max-width: 50px;
-                max-height: 50px;
-            }
-            div.header {
-                width: 100%;
-            }
-            div.header > img {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 50px;
-            }
-            .current-page {
-                background-color: yellow;
-            }
-        </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
         {% block extra-head %}
         {% endblock %}
     </head>
     <body>
         <div class="card">
-            <div class="card header">
-                <div class="">
-                    <img src="{% static '/images/OR-logo.png' %}" alt="Odprti računi">
-                </div>
-                <div class="">
+            <div class="header">
+                <div class="header-left">
+                    <div class="or-logo">
+                        <img src="{% static '/images/OR-logo.png' %}" alt="Odprti računi">
+                    </div>
                     <select id="year-select" name="years">
                         {% for year in organization.get_years %}
                             <option value="{% url request.resolver_match.url_name organization.id year %}" {% if year == request.resolver_match.kwargs.year %} selected {% endif %}>{{year}}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <img src="{{ organization.logo.url }}" class="icon">
-                <div class="">
+                <div class="organization-logo">
+                    <img src="{{ organization.logo.url }}">
+                </div>
+                <div class="header-menu">
                     <a href="{% url 'info' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'info' %}current-page{% endif %}">Osebna izkaznica</a>
                     <a href="{% url 'finance' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'finance' %}current-page{% endif %}">Finance</a>
                     <a href="{% url 'projects' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'projects' %}current-page{% endif %}">Projekti</a>
                     <a href="{% url 'donations' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'donations' %}current-page{% endif %}">Donacije</a>
                 </div>
             </div>
-            {% block content %}
-            {% endblock %}
-            <div class="minicard">
-                {{ info_text.text }}
+            <div class="body">
+                {% block content %}
+                {% endblock %}
+                <div class="footer">
+                    <button><span>i</span>Več informacij</button>
+                        <!-- {{ info_text.text }} -->
+                    <button><span>i</span>Deli</button>
+                        <!-- href="{{ request.get_full_path }}" -->
+                </div>
             </div>
-            <a href="{{ request.get_full_path }}">Share button</a>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script type="text/javascript" src="{% static 'plugins/js/highlight.min.js' %}"></script>

@@ -1,0 +1,181 @@
+body {
+    padding: 10px;
+    color: #39444e;
+}
+
+.card {
+    /* max-width: 640px; */
+    font-family: 'Roboto', sans-serif;
+    border: 1px solid #d1d7df;
+    background-color: #ffffff;
+    border-radius: 13px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid #d1d7df;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    flex: 1 1 0;
+}
+
+.header-left select {
+    border: 1px solid #39444e;
+    border-radius: 30px;
+    background-color: transparent;
+    padding: 4px 12px;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 30px;
+    color: #39444e;
+    margin: 0 15px;
+}
+
+.or-logo img {
+    max-height: 30px;
+}
+
+.organization-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.organization-logo img {
+    max-height: 50px;
+}
+
+.header-menu {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    flex: 1 1 0;
+}
+
+.header-menu a {
+    border: 1px solid transparent;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 30px;
+    text-decoration: none;
+    color: #616971;
+}
+
+.header-menu a:not(:first-of-type) {
+    margin-left: 10px;
+}
+
+.header-menu a.current-page {
+    border: 1px solid #39444e;
+    background-color: #39444e;
+    border-radius: 30px;
+    color: #ffffff;
+    padding: 4px 16px;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+}
+
+.footer button {
+    border-radius: 10px;
+    border: 0;
+    background-color: #eaf7d6;
+    color: #39444e;
+    padding: 8px 12px;
+    margin: 0 5px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.body {
+    padding: 20px;
+}
+
+.body-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.body-column:first-child {
+    margin-right: 10px;
+}
+
+.body-column:last-child {
+    margin-left: 10px;
+}
+
+.body-column {
+    flex: 1 1 0;
+}
+
+.minicard {
+    padding: 20px;
+    box-shadow: 0 0 29px rgba(57, 68, 78, 0.1);
+    border-radius: 13px;
+    margin-bottom: 20px;
+}
+
+.minicard h4 {
+    margin: 0;
+    line-height: 24px;
+}
+
+.minicard h4.mb-10 {
+    margin-bottom: 10px;
+}
+
+.minicard p {
+    font-size: 15px;
+    line-height: 20px;
+    margin: 0 0 12px 0;
+}
+
+.minicard p i {
+    font-size: 14px;
+}
+
+.minicard hr {
+    border-color: #f5f7f9;
+}
+
+.inline-block {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.payment-ratio-card .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.payment-ratio-card .row p {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    flex: 1 1 0;
+}
+
+.payment-ratio-card .row p:first-child {
+    justify-content: end;
+}
+
+.payment-ratio-card .row .tag {
+    font-weight: 700;
+    background-color: #ebf1f8;
+    border-radius: 20px;
+    width: 60px;
+    height: 36px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+}

@@ -38,7 +38,8 @@ def organization_basic_info(request, organization_id, year):
         {
             'organization': organization,
             'documents': documents,
-            'people': people.get_statistics(),
+            'people': people,
+            'people_statistics': people.get_statistics(),
             'payment_ratio': payment_ratio.get_statistics(),
             'info_text': info_text,
         })
