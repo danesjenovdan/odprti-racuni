@@ -39,9 +39,15 @@
                 {% block content %}
                 {% endblock %}
                 <div class="footer">
-                    <button><span>i</span>Več informacij</button>
+                    <button>
+                        <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                        <span>Več informacij</span>
+                    </button>
                         <!-- {{ info_text.text }} -->
-                    <button><span>i</span>Deli</button>
+                    <button>
+                        <img src="{% static '/images/icons/deli.svg' %}" alt="Ikona za deljenje" />
+                        <span>Deli</span>
+                    </button>
                         <!-- href="{{ request.get_full_path }}" -->
                 </div>
             </div>

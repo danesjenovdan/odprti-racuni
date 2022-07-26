@@ -1,6 +1,18 @@
+.no-margin {
+    margin: 0 !important;
+}
+
 body {
     padding: 10px;
     color: #39444e;
+}
+
+i {
+    font-size: 14px;
+}
+
+ul {
+    margin: 0;
 }
 
 .card {
@@ -34,6 +46,11 @@ body {
     line-height: 30px;
     color: #39444e;
     margin: 0 15px;
+}
+
+.or-logo {
+    display: flex;
+    align-items: center;
 }
 
 .or-logo img {
@@ -88,10 +105,37 @@ body {
     border: 0;
     background-color: #eaf7d6;
     color: #39444e;
-    padding: 8px 12px;
+    padding: 8px 24px;
     margin: 0 5px;
     font-size: 14px;
     font-weight: 700;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.footer button img {
+    max-height: 20px;
+    max-width: 20px;
+    margin-right: 10px;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f7f9;
+    border-radius: 7px;
+    margin-right: 10px;
+}
+
+.icon img {
+    max-width: 25px;
+    max-height: 25px;
 }
 
 .body {
@@ -111,6 +155,10 @@ body {
     margin-left: 10px;
 }
 
+.body-column:first-child:last-child {
+    margin: 0;
+}
+
 .body-column {
     flex: 1 1 0;
 }
@@ -120,6 +168,16 @@ body {
     box-shadow: 0 0 29px rgba(57, 68, 78, 0.1);
     border-radius: 13px;
     margin-bottom: 20px;
+    display: flex;
+}
+
+.card-with-sidebar {
+    display: flex;
+}
+
+.card-with-sidebar .sidebar {
+    width: 400px;
+    min-width: 400px;
 }
 
 .minicard h4 {
@@ -131,14 +189,14 @@ body {
     margin-bottom: 10px;
 }
 
-.minicard p {
+.minicard p, li {
     font-size: 15px;
-    line-height: 20px;
+    line-height: 22px;
     margin: 0 0 12px 0;
 }
 
-.minicard p i {
-    font-size: 14px;
+.minicard a {
+    color: #486ed9;
 }
 
 .minicard hr {
@@ -148,6 +206,10 @@ body {
 .inline-block {
     display: inline-block;
     vertical-align: top;
+}
+
+.show-hide-button {
+    width: 20px;
 }
 
 .payment-ratio-card .row {
@@ -178,4 +240,64 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0 10px;
+}
+
+.description li {
+    margin-bottom: 0;
+}
+
+.minicard .sidebar a {
+    color: #39444e;
+}
+
+.vertical-separator {
+    width: 1px;
+    background-color: #f5f7f9;
+    margin: -20px 20px;
+}
+
+.minicard-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.minicard-footer-separator {
+    border: 1px solid #f5f7f9;
+    margin: 20px 0;
+}
+
+.logo {
+    max-width: 160px;
+    margin: 0 10px;
+}
+
+.minicard-donations-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.minicard-donations-title h4 {
+    white-space: nowrap;
+    margin-right: 30px;
+}
+
+.minicard-donations-title p {
+    font-size: 16px;
+}
+
+.donator-list-element {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f5f7f9;
+    padding: 10px 0;
+}
+
+.donator-list-element p {
+    margin-bottom: 0;
+}
+
+.donator-list-element span {
+    font-size: 14px;
 }

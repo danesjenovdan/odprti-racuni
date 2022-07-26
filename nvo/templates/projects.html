@@ -2,70 +2,96 @@
 {% load static %}
 {% load martortags %}
 {% block extra-head %}
-    <style>
-        div.level {
-            margin-left: 20px;
-        }
-    </style>
 {% endblock %}
 {% block content %}
+<div class="body-row">
+    <div class="body-column">
     {% for project in projects %}
-        <div class="minicard">
-            <h3>{{ project.name }}</h3>
-            {{ project.description|safe_markdown }}<br/>
-            {{ project.description }}<br/>
-            <i>Predvideni rezultati in učinki</i><br/>
-            {{ project.outcomes_and_impacts|safe_markdown }}<br/>
-
-        </div>
-        <div class="minicard">
-            <h3>{{ project.org_share }} / {{ project.value }}<h3>
-
-            <i>Trajanje projekta</i><br/>
-            {% if project.duration.years %}
-                {{ project.duration.years }} leto<br/>
-            {% endif %}
-            {% if project.duration.months %}
-                {{ project.duration.months }} mesecev<br/>
-            {% endif %}
-            {% if project.duration.days %}
-                {{ project.duration.days }} dni<br/>
-            {% endif %}
-            {{ project.start_date }} - {{ project.end_date }}<br/>
-            <br/>
-
-            {% if project.partners.all %}
-                <i>Partnerji</i><br/>
-                {% for partner in project.partners.all %}
-                    <a href="{{ partner.url }}">{{ partner.name }}</a><br/>
+        <div class="minicard" style="display: block;">
+            <div class="card-with-sidebar">
+                <div class="main">
+                    <div class="inline-block">
+                        <img src="{% static '/images/icons/projekti-puscica.svg' %}" class="show-hide-button" alt="Ikona za deljenje" />
+                    </div>
+                    <h4 class="inline-block mb-10">{{ project.name }}</h4>
+                    <div class="description">
+                        {{ project.description|safe_markdown }}
+                    </div>
+                    <i>Predvideni rezultati in učinki</i>
+                    <div class="description">
+                        {{ project.outcomes_and_impacts|safe_markdown }}
+                    </div>
+                </div>
+                <div class="vertical-separator"></div>
+                <div class="sidebar">
+                    <p>{{ project.org_share }} / {{ project.value }}</p>
+                    <i>Trajanje projekta</i>
+                    {% if project.duration.years %}
+                        <!-- {{ project.duration.years }}  -->
+                    {% endif %}
+                    {% if project.duration.months %}
+                    <p>
+                        <b>{{ project.duration.months }} mesecev</b><br/>
+                        <b>{{ project.start_date }}–{{ project.end_date }}</b>
+                    </p>
+                    {% endif %}
+                    {% if project.duration.days %}
+                        <!-- {{ project.duration.days }} dni<br/> -->
+                    {% endif %}
+                    {% if project.partners.all %}
+                    <p>
+                        <i>Partnerji</i><br/>
+                        {% for partner in project.partners.all %}
+                            <b><a href="{{ partner.url }}">{{ partner.name }}</a></b><br/>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    {% if project.financers.all %}
+                    <p>
+                        <i>Financerji</i><br/>
+                        {% for financer in project.financers.all %}
+                            <b><a href="{{ financer.url }}">{{ financer.name }}</a></b><br/>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    {% if project.cofinancers.all %}
+                    <p>
+                        <i>Sofinancerji</i><br/>
+                        {% for cofinancer in project.cofinancers.all %}
+                            <b><a href="{{ cofinancer.url }}">{{ cofinancer.name }}</a></b><br/>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    <p>
+                        <i>Lastni vložek</i><br/>
+                        <b>{{ project.org_share }}</b><br/>
+                    </p>
+                    {% if project.donators.all %}
+                    <p>
+                        <i>Donatorji</i><br/>
+                        {% for donator in project.donators.all %}
+                            <b><a href="{{ donator.url }}">{{ donator.name }}</a></b><br/>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    {% if project.link %}
+                    <p>
+                        <i>Projektno spletno mesto</i><br/>
+                        <b><a href="{{ project.link }}" target="_blank">{{ project.link }}</a></b><br/>
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+            <hr class="minicard-footer-separator" />
+            <div class="minicard-footer">
+                {% for icon in project.icons %}
+                    <img src="{{ icon }}" class="logo">
                 {% endfor %}
-            {% endif %}
-            {% if project.financers.all %}
-                <i>Financerji</i><br/>
-                {% for financer in project.financers.all %}
-                    <a href="{{ financer.url }}">{{ financer.name }}</a><br/>
-                {% endfor %}
-            {% endif %}
-            {% if project.cofinancers.all %}
-                <i>Sofinancerji</i><br/>
-                {% for cofinancer in project.cofinancers.all %}
-                    <a href="{{ cofinancer.url }}">{{ cofinancer.name }}</a><br/>
-                {% endfor %}
-            {% endif %}
-            {% if project.donators.all %}
-                <i>Donatorji</i><br/>
-                {% for donator in project.donators.all %}
-                    <a href="{{ donator.url }}">{{ donator.name }}</a><br/>
-                {% endfor %}
-            {% endif %}
-        </div>
-        <div class="minicard">
-            {% for icon in project.icons %}
-                <img src="{{ icon }}" class="icon">
-            {% endfor %}
-
+            </div>
         </div>
     {% endfor %}
+    </div>
+</div>
 {% endblock %}
 {% block js %}
 
