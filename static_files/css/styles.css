@@ -140,6 +140,7 @@ ul {
 
 .body {
     padding: 20px;
+    background-image: url(../images/NVO_ozadje.png); 
 }
 
 .body-row {
@@ -166,9 +167,14 @@ ul {
 .minicard {
     padding: 20px;
     box-shadow: 0 0 29px rgba(57, 68, 78, 0.1);
+    background-color: #FFFFFF;
     border-radius: 13px;
     margin-bottom: 20px;
     display: flex;
+}
+
+.minicard > div:last-child {
+    flex-grow: 1;
 }
 
 .card-with-sidebar {
@@ -240,6 +246,102 @@ ul {
     justify-content: center;
     align-items: center;
     margin: 0 10px;
+}
+
+.finances-card {
+    display: block;
+}
+
+.finances-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.finances-header-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 72px;
+    height: 26px;
+    border: 1px solid #39444e;
+    border-radius: 13px;
+    background-color: #f4f6f8;
+}
+
+.finances-header-button img {
+    max-width: 15px;
+    max-height: 15px;
+    width: 15px;
+    height: 15px;
+}
+
+.finances-header-income,
+.finances-header-expense {
+    display: flex;
+}
+
+.finances-header-expense .icon {
+    margin: 0 0 0 10px;
+}
+
+.finance-tree {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.finance-tree li > div {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #d1d7df;
+    padding: 6px 0;
+}
+
+.finance-tree li > div span:first-child {
+    font-size: 12px;
+    font-style: italic;
+    line-height: 22px;
+}
+
+.finance-tree li > div span:first-child {
+    font-size: 14px;
+}
+
+.finance-tree.income-tree {
+    padding-left: 50px;
+    margin-right: 20px;
+}
+
+.finance-tree.expense-tree {
+    padding-right: 50px;
+    margin-left: 20px;
+}
+
+.finance-tree-element {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.finance-tree-element li {
+    margin: 0;
+}
+
+.finance-tree-element li > div {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #d1d7df;
+    padding: 6px 0;
+}
+
+.finance-tree-element li > div span:first-child {
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 22px;
+}
+
+.finance-tree li > div span:last-child {
+    font-size: 14px;
 }
 
 .description li {
