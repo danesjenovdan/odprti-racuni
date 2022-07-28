@@ -9,6 +9,8 @@ body {
 
 i {
     font-size: 14px;
+    line-height: 14px;
+    font-weight: 300;
 }
 
 ul {
@@ -40,12 +42,19 @@ ul {
     border: 1px solid #39444e;
     border-radius: 30px;
     background-color: transparent;
-    padding: 4px 12px;
-    font-size: 22px;
+    padding: 5px 20px 5px 10px;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 30px;
+    line-height: 22px;
     color: #39444e;
     margin: 0 15px;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%2339444e" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: 4px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 .or-logo {
@@ -54,7 +63,7 @@ ul {
 }
 
 .or-logo img {
-    max-height: 30px;
+    max-height: 22px;
 }
 
 .organization-logo {
@@ -76,9 +85,9 @@ ul {
 
 .header-menu a {
     border: 1px solid transparent;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
-    line-height: 30px;
+    line-height: 22px;
     text-decoration: none;
     color: #616971;
 }
@@ -88,9 +97,9 @@ ul {
 }
 
 .header-menu a.current-page {
-    border: 1px solid #39444e;
+    /* border: 1px solid #39444e; */
     background-color: #39444e;
-    border-radius: 30px;
+    border-radius: 20px;
     color: #ffffff;
     padding: 4px 16px;
 }
@@ -107,7 +116,7 @@ ul {
     color: #39444e;
     padding: 8px 24px;
     margin: 0 5px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     white-space: nowrap;
     display: flex;
@@ -117,25 +126,25 @@ ul {
 }
 
 .footer button img {
-    max-height: 20px;
-    max-width: 20px;
+    max-height: 16px;
+    max-width: 16px;
     margin-right: 10px;
 }
 
 .icon {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #f5f7f9;
-    border-radius: 7px;
-    margin-right: 10px;
+    border-radius: 5px;
+    margin-right: 15px;
 }
 
 .icon img {
-    max-width: 25px;
-    max-height: 25px;
+    max-width: 21px;
+    max-height: 21px;
 }
 
 .body {
@@ -168,7 +177,7 @@ ul {
     padding: 20px;
     box-shadow: 0 0 29px rgba(57, 68, 78, 0.1);
     background-color: #FFFFFF;
-    border-radius: 13px;
+    border-radius: 10px;
     margin-bottom: 20px;
     display: flex;
 }
@@ -181,14 +190,52 @@ ul {
     display: flex;
 }
 
+.card-with-sidebar .main {
+    display: flex;
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.card-with-sidebar .main .show-hide-wrapper {
+    width: 28px;
+    min-width: 28px;
+    text-align: center;
+    margin-top: 4px;
+}
+
+.show-hide-button {
+    width: 18px;
+    transition: transform 0.25s ease-out;
+}
+
 .card-with-sidebar .sidebar {
-    width: 400px;
-    min-width: 400px;
+    width: 270px;
+    min-width: 270px;
+}
+
+.card-with-sidebar .main > div:nth-child(2) {
+    padding-right: 50px;
+}
+
+.card-with-sidebar .sidebar i {
+    font-size: 11px;
+    line-height: 11px;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.card-with-sidebar .sidebar b {
+    font-size: 12px;
+    line-height: 14px;
+    margin-bottom: 5px;
+    display: block;
 }
 
 .minicard h4 {
-    margin: 0;
-    line-height: 24px;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 4px 0 0 0;
+    line-height: 22px;
 }
 
 .minicard h4.mb-10 {
@@ -196,7 +243,7 @@ ul {
 }
 
 .minicard p, li {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 22px;
     margin: 0 0 12px 0;
 }
@@ -206,16 +253,18 @@ ul {
 }
 
 .minicard hr {
-    border-color: #f5f7f9;
+    border-top: 1px solid #f5f7f9;
+    margin: 20px 0;
+}
+
+.minicard .note {
+    font-size: 14px;
+    line-height: 16px;
 }
 
 .inline-block {
     display: inline-block;
     vertical-align: top;
-}
-
-.show-hide-button {
-    width: 20px;
 }
 
 .payment-ratio-card .row {
@@ -261,18 +310,54 @@ ul {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 72px;
-    height: 26px;
+    width: 80px;
+    height: 24px;
     border: 1px solid #39444e;
     border-radius: 13px;
     background-color: #f4f6f8;
+    position: relative;
 }
 
-.finances-header-button img {
-    max-width: 15px;
-    max-height: 15px;
-    width: 15px;
-    height: 15px;
+#finances-active-presentation {
+    position: absolute;
+    width: 40px;
+    height: 24px;
+    background-color: #39444e;
+    border: 1px solid #39444e;
+    border-radius: 13px;
+    right: 0;
+    transition: all 0.25s ease-out;
+    -webkit-transition: all 0.25s ease-out;
+}
+
+#finances-active-presentation.graph {
+    /* left: 0; */
+    transform: translateX(-40px); /* for the transition animation to work */
+}
+
+.finances-header-button svg {
+    max-width: 14px;
+    max-height: 14px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.finances-header-button svg path {
+    fill: #39444e;
+}
+
+.finances-header-button svg.active path {
+    fill: white;
+}
+
+.finances-presentation {
+    display: none;
+}
+
+.finances-presentation.active {
+    display: block;
 }
 
 .finances-header-income,
@@ -281,7 +366,7 @@ ul {
 }
 
 .finances-header-expense .icon {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 15px;
 }
 
 .finance-tree {
@@ -344,9 +429,29 @@ ul {
     font-size: 14px;
 }
 
+.description p, li {
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.description ul {
+    list-style: none;
+    padding: 0;
+}
+
 .description li {
     margin-bottom: 0;
+    padding-left: 15px;
+    position: relative;
 }
+
+.description li:before {
+    content: "‣";
+    color: #486ed9;
+    font-size: 30px;
+    position: absolute;
+    left: 0;
+  }
 
 .minicard .sidebar a {
     color: #39444e;
@@ -371,22 +476,97 @@ ul {
 
 .logo {
     max-width: 160px;
+    max-height: 50px;
     margin: 0 10px;
+}
+
+.instructions-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.instructions-line p:first-child {
+    margin-left: 50px;
+    margin-bottom: 0;
+}
+
+.instructions-line p:last-child {
+    width: 310px; /* has to be 40px more than .siderbar */
+    margin-bottom: 0;
+}
+
+.instructions-line p i {
+    font-size: 11px;
+    line-height: 11px;
+}
+
+.instructions-line p:last-child i {
+    padding-left: 20px;
+}
+
+.project {
+    display: block;
+}
+
+.project .more {
+    display: none;
+}
+
+.project.show .more {
+    display: block;
+}
+
+.project.show .show-hide-button {
+    transform: rotate(90deg);
 }
 
 .minicard-donations-title {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
-.minicard-donations-title h4 {
+.minicard-donations-title h4,
+.minicard-donations-title-long h4 {
     white-space: nowrap;
-    margin-right: 30px;
+    margin: 4px 0;
 }
 
-.minicard-donations-title p {
-    font-size: 16px;
+.minicard-donations-title-long {
+    display: flex;
+    justify-content: space-between;
 }
+
+.minicard-donations-title-long h4 {
+    margin-right: 40px;
+}
+
+.minicard-donations-title-long > div p,
+.minicard-donations-title-long > div li {
+    margin: 4px 0;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.minicard-donations-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.minicard-donations-body p {
+    margin-right: 40px;
+    margin-top: 12px;
+}
+
+.minicard-donations-body span {
+    font-size: 12px;
+}
+
+/* .minicard-donations-title p {
+    font-size: 16px;
+} */
 
 .donator-list-element {
     display: flex;
@@ -401,5 +581,5 @@ ul {
 }
 
 .donator-list-element span {
-    font-size: 14px;
+    font-size: 12px;
 }

@@ -12,7 +12,7 @@
                     <img src="{% static '/images/icons/donacije-fizicne.svg' %}" alt="Ikona za deljenje" />
                 </div>
             </div>
-            <div style="flex-grow: 1;">
+            <div>
                 <div class="minicard-donations-title">
                     <h4>Višina zbranih donacij fizičnih oseb</h4>
                     <p>{{ donation.personal_donations_amount }} EUR</p>
@@ -36,7 +36,7 @@
                 <img src="{% static '/images/icons/donacije-poslovne.svg' %}" alt="Ikona za deljenje" />
             </div>
         </div>
-        <div style="flex-grow: 1;">
+        <div>
             <div class="minicard-donations-title">
                 <h4>Višina zbranih donacij pravnih oseb</h4>
                 <p>{{ donation.organization_donations_amount }} EUR</p>
@@ -60,7 +60,7 @@
                 <img src="{% static '/images/icons/donacije-1procent.svg' %}" alt="Ikona za deljenje" />
             </div>
         </div>
-        <div style="flex-grow: 1;">
+        <div>
             <div class="minicard-donations-title">
                 <h4>Višina zbranih donacij z 1% dohodnine</h4>
                 <p>{{ donation.one_percent_income_tax }} EUR</p>
@@ -73,8 +73,8 @@
                 <img src="{% static '/images/icons/donacije-poraba.svg' %}" alt="Ikona za deljenje" />
             </div>
         </div>
-        <div style="flex-grow: 1;">
-            <div class="minicard-donations-title">
+        <div>
+            <div class="minicard-donations-title-long">
                 <h4>Kako smo porabili dohodnine</h4>
                 <div>{{ donation.purpose_of_donations|safe_markdown }}</div>
             </div>

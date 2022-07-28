@@ -11,7 +11,7 @@
                     <img src="{% static '/images/icons/info-1.svg' %}" alt="Ikona za deljenje" />
                 </div>
             </div>
-            <div style="flex-grow: 1;">
+            <div>
                 <h4>{{ organization.name }}</h4>
                 <p>
                     {{ organization.address }} <br/>
@@ -34,12 +34,16 @@
                 <hr />
                 
                 {% if organization.is_charity %}
-                    Organizacija ima status humanitarne organizacije {% if organization.is_charity and organization.is_for_the_public_good %}
-                        in organizacija v javnem interesu na področju {{ organization.is_for_the_public_good }}
+                    <p class="note">
+                        <i>Organizacija ima status</i> humanitarne organizacije {% if organization.is_for_the_public_good %}
+                        <i>in</i> organizacija v javnem interesu na področju: {{ organization.is_for_the_public_good }}.
                     {% endif %}
+                    </p>
                 {% endif %}
                 {% if organization.is_for_the_public_good and not organization.is_charity %}
-                    Organizacija je v javnem interesu na področju {{ organization.is_for_the_public_good }}
+                    <p class="note">
+                        Organizacija je v javnem interesu na področju: {{ organization.is_for_the_public_good }}.
+                    </p>
                 {% endif %}
             </div>
         </div>
@@ -112,7 +116,7 @@
                     <img src="{% static '/images/icons/info-place.svg' %}" alt="Ikona za deljenje" />
                 </div>
             </div>
-            <div style="flex-grow: 1;">
+            <div>
                 <h4 class="mb-10">Plačilna razmerja</h4>
                 <div class="payment-ratio-card">
                     <div class="row">
@@ -124,6 +128,21 @@
                         <p><span class="tag">{{ payment_ratio.average }}</span><i>Povprečna plača</i></p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="body-row">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                {{ info_text.text }}
             </div>
         </div>
     </div>

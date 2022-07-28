@@ -19,8 +19,9 @@
                     </div>
                 </div>
                 <div class="finances-header-button">
-                    <img src="{% static '/images/icons/finance-graf.svg' %}" alt="Ikona za deljenje" />
-                    <img src="{% static '/images/icons/finance-tabela.svg' %}" alt="Ikona za deljenje" />
+                    <div id="finances-active-presentation" class="graph"></div>
+                    <svg id="finances-graph-button" class="active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90"><g id="Layer_1-2"><g><path class="cls-1" d="M0,35.8V17.1C29.7,17.1,60.3,0,90,0V18.7C60.3,18.7,29.7,35.8,0,35.8"/><path class="cls-1" d="M0,54.2c29.7,0,60.3,17.1,90,17.1v18.7c-29.7,0-60.3-17.1-90-17.1v-18.7"/><path class="cls-1" d="M0,54.2v-18.4H90v18.4c-29.7,0-60.3,0-90,0"/></g></g></svg>
+                    <svg id="finances-table-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.4 75.1"><g id="Layer_1-2"><path class="cls-1" d="M75,0H9.4C4.2,0,0,4.2,0,9.4v56.3c0,5.2,4.2,9.4,9.4,9.4H75c5.2,0,9.4-4.2,9.4-9.4V9.4c.1-5.2-4.2-9.4-9.4-9.4ZM32.4,45.5v-15.8c0-.2,0-.5-.1-.7h20.2c-.1,.2-.1,.5-.1,.7v15.8h-20Zm20,6.3v17.1h-20v-17.1h20ZM6.3,29H26.2c-.1,.2-.1,.5-.1,.7v15.8H6.3V29Zm52.3,0h19.6v16.6h-19.5v-15.9c0-.3,0-.5-.1-.7ZM9.4,6.3H75c1.7,0,3.1,1.4,3.1,3.1v13.2H6.3V9.4c0-1.7,1.4-3.1,3.1-3.1Zm-3.1,59.5v-14H26.1v17.1H9.4c-1.7,0-3.1-1.4-3.1-3.1Zm68.7,3.1h-16.3v-17.1h19.5v13.9c0,1.8-1.4,3.2-3.2,3.2Z"/></g></svg>
                 </div>
                 <div class="finances-header-expense">
                     <div>
@@ -35,28 +36,40 @@
                 </div>
             </div>
 
-            <div class="body-row">
-                <ul class="finance-tree income-tree body-column">
-                    {% for revenue in revenues %}
-                    <li>
-                        <div>
-                            <span>{{ revenue.name }}</span><span>{{ revenue.amount }}</span>
+            <div id="finances-graph" class="finances-presentation active">
+                <div class="body-row">
+                    <div class="body-column">
+                        <div style="font-size: 100px; text-align: center;">
+                            TUKAJ BO GRAF
                         </div>
-                        {% include "includes/finance-tree-element.html" with revenues=revenue.children %}
-                    </li>
-                    {% endfor %}
-                </ul>
-    
-                <ul class="finance-tree expense-tree body-column">
-                    {% for revenue in expenses %}
-                    <li>
-                        <div>
-                            <span>{{ revenue.name }}</span><span>{{ revenue.amount }}</span>
-                        </div>
-                        {% include "includes/finance-tree-element.html" with revenues=revenue.children %}
-                    </li>
-                    {% endfor %}
-                </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="finances-table" class="finances-presentation">
+                <div class="body-row">
+                    <ul class="finance-tree income-tree body-column">
+                        {% for revenue in revenues %}
+                        <li>
+                            <div>
+                                <span>{{ revenue.name }}</span><span>{{ revenue.amount }}</span>
+                            </div>
+                            {% include "includes/finance-tree-element.html" with revenues=revenue.children %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+        
+                    <ul class="finance-tree expense-tree body-column">
+                        {% for revenue in expenses %}
+                        <li>
+                            <div>
+                                <span>{{ revenue.name }}</span><span>{{ revenue.amount }}</span>
+                            </div>
+                            {% include "includes/finance-tree-element.html" with revenues=revenue.children %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
 
         </div>
@@ -71,8 +84,10 @@
                 </div>
             </div>
             <div>
-                <h4 class="inline-block">Vrednost prostovoljskega dela</h4>
-                <div class="inline-block">45.000,00 EUR</div>
+                <div class="minicard-donations-title">
+                    <h4>Vrednost prostovoljskega dela</h4>
+                    <div>45.000,00 EUR</div>
+                </div>
             </div>
         </div>
         <div class="minicard">
@@ -82,7 +97,10 @@
                 </div>
             </div>
             <div>
-                <h4>Izplačila projektnim partnerjem </h4>
+                <div class="minicard-donations-title">
+                    <h4>Izplačila projektnim partnerjem</h4>
+                    <div>50.000,00 EUR</div>
+                </div>
             </div>
         </div>
     </div>
@@ -94,9 +112,48 @@
                 </div>
             </div>
             <div>
-                <h4>Vplačila v proračun RS</h4>
+                <div class="minicard-donations-title">
+                    <h4>Vplačila v proračun RS</h4>
+                    <div>67.000,00 EUR</div>
+                </div>
+                <div class="minicard-donations-body">
+                    <p>
+                        <i>Razlika med vplačanimi in pridobljenimi proračunskimi sredstvi v RS</i>
+                    </p>
+                    <span>-22.000,00 EUR</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function() {
+    $("#finances-graph-button").click((e) => {
+        console.log( "graph!" );
+        // move the slider
+        $("#finances-active-presentation").addClass("graph");
+        // change button icon colors
+        $("#finances-graph-button").addClass("active");
+        $("#finances-table-button").removeClass("active");
+        // show the right finances presentation
+        $("#finances-graph").addClass("active");
+        $("#finances-table").removeClass("active");
+    });
+
+    $("#finances-table-button").click((e) => {
+        console.log( "table!" );
+        // move the slider
+        $("#finances-active-presentation").removeClass("graph");
+        // change button icon colors
+        $("#finances-table-button").addClass("active");
+        $("#finances-graph-button").removeClass("active");
+        // show the right finances presentation
+        $("#finances-table").addClass("active");
+        $("#finances-graph").removeClass("active");
+    });
+    
+});
+</script>
 {% endblock %}
