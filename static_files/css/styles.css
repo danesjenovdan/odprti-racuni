@@ -18,12 +18,22 @@ ul {
 }
 
 .card {
-    /* max-width: 640px; */
+    max-width: 980px;
     font-family: 'Roboto', sans-serif;
     border: 1px solid #d1d7df;
     background-color: #ffffff;
     border-radius: 13px;
 }
+
+@media (min-width: 576px) {}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {}
+
+@media (min-width: 1200px) {}
+
+@media (min-width: 1400px) {}
 
 .header {
     display: flex;
@@ -150,6 +160,8 @@ ul {
 .body {
     padding: 20px;
     background-image: url(../images/NVO_ozadje.png); 
+    background-repeat: repeat-y;
+    background-size: 100% auto;
 }
 
 .body-row {
