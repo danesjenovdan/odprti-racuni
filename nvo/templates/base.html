@@ -39,12 +39,16 @@
                 {% block content %}
                 {% endblock %}
                 <div class="footer">
-                    <button>
+                    <button id="footer-info-button">
                         <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
                         <span>Več informacij</span>
                     </button>
+                    <button id="footer-close-button" style="display: none;">
+                        <img src="{% static '/images/icons/zapri.svg' %}" alt="Ikona za deljenje" />
+                        <span>Zapri</span>
+                    </button>
                         <!-- {{ info_text.text }} -->
-                    <button>
+                    <button id="footer-share-button">
                         <img src="{% static '/images/icons/deli.svg' %}" alt="Ikona za deljenje" />
                         <span>Deli</span>
                     </button>
@@ -55,11 +59,50 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script type="text/javascript" src="{% static 'plugins/js/highlight.min.js' %}"></script>
         <script>
+            $(document).ready(function() {
+                $("#share-url").val(window.location.href);
+
+                $("#share-url").click((e) => {
+                    $("#share-url").select();
+                    document.execCommand("copy");
+                });
+            });
+
             $('.martor-preview pre').each(function(i, block){
                 hljs.highlightBlock(block);
             });
             $( "#year-select" ).change(function() {
                 location.href = this.value;
+            });
+            $("#footer-info-button").click((e) => {
+                // show the right content
+                $(".info").addClass("active");
+                $(".share").removeClass("active");
+                $(".content").removeClass("active");
+                // show the right buttons
+                $("#footer-info-button").hide();
+                $("#footer-close-button").show();
+                $("#footer-share-button").show();
+            });
+            $("#footer-share-button").click((e) => {
+                // show the right content
+                $(".info").removeClass("active");
+                $(".share").addClass("active");
+                $(".content").removeClass("active");
+                // show the right buttons
+                $("#footer-info-button").show();
+                $("#footer-close-button").show();
+                $("#footer-share-button").hide();
+            });
+            $("#footer-close-button").click((e) => {
+                // show the right content
+                $(".info").removeClass("active");
+                $(".share").removeClass("active");
+                $(".content").addClass("active");
+                // show the right buttons
+                $("#footer-info-button").show();
+                $("#footer-close-button").hide();
+                $("#footer-share-button").show();
             });
         </script>
         {% block js %}

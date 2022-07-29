@@ -3,7 +3,7 @@
 {% endblock %}
 {% block content %}
 {% load static %}
-<div class="body-row">
+<div class="body-row content active">
     <div class="body-column">
         <div class="minicard">
             <div>
@@ -133,7 +133,7 @@
     </div>
 </div>
 
-<div class="body-row">
+<div class="body-row info">
     <div class="body-column">
         <div class="minicard">
             <div>
@@ -142,7 +142,49 @@
                 </div>
             </div>
             <div>
-                {{ info_text.text }}
+                <h4>Osebna izkaznica</h4>
+                <div class="info-content">
+                    <i>Osnovni podatki</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Letna poročila</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Ljudje</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Plačna razmerja</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="body-row share">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Deli povezavo do zavihka Osnovne informacije</h4>
+                <div class="info-content">
+                    <p style="margin-bottom: 5px;">
+                        Kopiraj povezavo
+                    </p>
+                    <input type="text" id="share-url">
+                </div>
             </div>
         </div>
     </div>

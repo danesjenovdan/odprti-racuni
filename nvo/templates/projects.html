@@ -4,7 +4,7 @@
 {% block extra-head %}
 {% endblock %}
 {% block content %}
-<div class="body-row">
+<div class="body-row content active">
     <div class="body-column">
         <div class="instructions-line">
             <p><i>Projekt</i></p>
@@ -118,6 +118,63 @@
             </div>
         </div>
         {% endfor %}
+    </div>
+</div>
+
+<div class="body-row info">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Osebna izkaznica</h4>
+                <div class="info-content">
+                    <i>Osnovni podatki</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Letna poročila</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Ljudje</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Plačna razmerja</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="body-row share">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Deli povezavo do zavihka Projekti</h4>
+                <div class="info-content">
+                    <p style="margin-bottom: 5px;">
+                        Kopiraj povezavo
+                    </p>
+                    <input type="text" id="share-url">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

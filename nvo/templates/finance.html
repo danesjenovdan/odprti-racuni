@@ -3,7 +3,7 @@
 {% endblock %}
 {% block content %}
 {% load static %}
-<div class="body-row">
+<div class="body-row content active">
     <div class="body-column">
         <div class="minicard finances-card">
             <div class="finances-header">
@@ -75,7 +75,7 @@
         </div>
     </div>
 </div>
-<div class="body-row">
+<div class="body-row content active">
     <div class="body-column">
         <div class="minicard">
             <div>
@@ -126,12 +126,68 @@
         </div>
     </div>
 </div>
+
+<div class="body-row info">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Osebna izkaznica</h4>
+                <div class="info-content">
+                    <i>Osnovni podatki</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Letna poročila</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Ljudje</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Plačna razmerja</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="body-row share">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Deli povezavo do zavihka Finance</h4>
+                <div class="info-content">
+                    <p style="margin-bottom: 5px;">
+                        Kopiraj povezavo
+                    </p>
+                    <input type="text" id="share-url">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block js %}
 <script>
 $(document).ready(function() {
     $("#finances-graph-button").click((e) => {
-        console.log( "graph!" );
         // move the slider
         $("#finances-active-presentation").addClass("graph");
         // change button icon colors
@@ -143,7 +199,6 @@ $(document).ready(function() {
     });
 
     $("#finances-table-button").click((e) => {
-        console.log( "table!" );
         // move the slider
         $("#finances-active-presentation").removeClass("graph");
         // change button icon colors
