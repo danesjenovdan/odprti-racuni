@@ -143,7 +143,7 @@ class People(models.Model):
             }
 
     class Meta:
-        verbose_name = _('Perople')
+        verbose_name = _('People')
         verbose_name_plural = _('People')
 
 

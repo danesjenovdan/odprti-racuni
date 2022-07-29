@@ -1,55 +1,214 @@
 {% extends "base.html" %}
 {% block extra-head %}
-    <style>
-        div.level {
-            margin-left: 20px;
-        }
-    </style>
 {% endblock %}
 {% block content %}
-<div class="minicard">
-    <h3>Prihodki</h3>
-    {% for revenue in revenues%}
-        <div class="level">
-        {{ revenue.name }} {{ revenue.additional_name }}: {{ revenue.amount }} <br/>
-        {% for revenue_level_1 in revenue.children %}
-            <div class="level">
-            {{ revenue_level_1.name }} {{ revenue_level_1.additional_name }}: {{ revenue_level_1.amount }} <br/>
-            {% for revenue_level_2 in revenue_level_1.children %}
-                <div class="level">
-                {{ revenue_level_2.name }} {{ revenue_level_2.additional_name }}: {{ revenue_level_2.amount }} <br/>
-                {% for revenue_level_3 in revenue_level_2.children %}
-                    <div class="level">
-                    {{ revenue_level_3.name }} {{ revenue_level_3.additional_name }}: {{ revenue_level_3.amount }} <br/>
+{% load static %}
+<div class="body-row content active">
+    <div class="body-column">
+        <div class="minicard finances-card">
+            <div class="finances-header">
+                <div class="finances-header-income">
+                    <div>
+                        <div class="icon">
+                            <img src="{% static '/images/icons/prihodki.svg' %}" alt="Ikona za deljenje" />
+                        </div>
                     </div>
-                {% endfor %}
-                </div>
-            {% endfor %}
-            </div>
-        {% endfor %}
-        </div>
-    {% endfor %}
-    <br/><br/>
-    <h3>Odhodki</h3>
-    {% for expense in expenses%}
-        <div class="level">
-        {{ expense.name }} {{ expende.additional_name }}: {{ expense.amount }} <br/>
-        {% for expense_level_1 in expense.children %}
-            <div class="level">
-            {{ expense_level_1.name }} {{ expense_level_1.additional_name }}: {{ expense_level_1.amount }} <br/>
-            {% for expense_level_2 in expense_level_1.children %}
-                <div class="level">
-                {{ expense_level_2.name }} {{ expense_level_2.additional_name }}: {{ expense_level_2.amount }} <br/>
-                {% for expense_level_3 in expense_level_2.children %}
-                    <div class="level">
-                    {{ expense_level_3.name }} {{ expense_level_3.additional_name }}: {{ expense_level_3.amount }} <br/>
+                    <div>
+                        <h4>{{ total_income.name }}</h4>
+                        <p>{{ total_income.amount }} EUR</p>
                     </div>
-                {% endfor %}
                 </div>
-            {% endfor %}
+                <div class="finances-header-button">
+                    <div id="finances-active-presentation" class="graph"></div>
+                    <svg id="finances-graph-button" class="active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90"><g id="Layer_1-2"><g><path class="cls-1" d="M0,35.8V17.1C29.7,17.1,60.3,0,90,0V18.7C60.3,18.7,29.7,35.8,0,35.8"/><path class="cls-1" d="M0,54.2c29.7,0,60.3,17.1,90,17.1v18.7c-29.7,0-60.3-17.1-90-17.1v-18.7"/><path class="cls-1" d="M0,54.2v-18.4H90v18.4c-29.7,0-60.3,0-90,0"/></g></g></svg>
+                    <svg id="finances-table-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.4 75.1"><g id="Layer_1-2"><path class="cls-1" d="M75,0H9.4C4.2,0,0,4.2,0,9.4v56.3c0,5.2,4.2,9.4,9.4,9.4H75c5.2,0,9.4-4.2,9.4-9.4V9.4c.1-5.2-4.2-9.4-9.4-9.4ZM32.4,45.5v-15.8c0-.2,0-.5-.1-.7h20.2c-.1,.2-.1,.5-.1,.7v15.8h-20Zm20,6.3v17.1h-20v-17.1h20ZM6.3,29H26.2c-.1,.2-.1,.5-.1,.7v15.8H6.3V29Zm52.3,0h19.6v16.6h-19.5v-15.9c0-.3,0-.5-.1-.7ZM9.4,6.3H75c1.7,0,3.1,1.4,3.1,3.1v13.2H6.3V9.4c0-1.7,1.4-3.1,3.1-3.1Zm-3.1,59.5v-14H26.1v17.1H9.4c-1.7,0-3.1-1.4-3.1-3.1Zm68.7,3.1h-16.3v-17.1h19.5v13.9c0,1.8-1.4,3.2-3.2,3.2Z"/></g></svg>
+                </div>
+                <div class="finances-header-expense">
+                    <div>
+                        <h4>{{ total_expense.name }}</h4>
+                        <p>{{ total_expense.amount }} EUR</p>
+                    </div>
+                    <div>
+                        <div class="icon">
+                            <img src="{% static '/images/icons/odhodki.svg' %}" alt="Ikona za deljenje" />
+                        </div>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
+
+            <div id="finances-graph" class="finances-presentation active">
+                <div class="body-row">
+                    <div class="body-column">
+                        <div style="font-size: 100px; text-align: center;">
+                            TUKAJ BO GRAF
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="finances-table" class="finances-presentation">
+                <div class="body-row">
+                    <ul class="finance-tree income-tree body-column">
+                        {% for revenue in revenues %}
+                        <li>
+                            <div>
+                                <span>{{ revenue.name }}</span><span>{{ revenue.amount }}</span>
+                            </div>
+                            {% include "includes/finance-tree-element.html" with revenues=revenue.children %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+        
+                    <ul class="finance-tree expense-tree body-column">
+                        {% for revenue in expenses %}
+                        <li>
+                            <div>
+                                <span>{{ revenue.name }}</span><span>{{ revenue.amount }}</span>
+                            </div>
+                            {% include "includes/finance-tree-element.html" with revenues=revenue.children %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
         </div>
-    {% endfor %}
+    </div>
 </div>
+<div class="body-row content active">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/finance-prostovoljci.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <div class="minicard-donations-title">
+                    <h4>Vrednost prostovoljskega dela</h4>
+                    <div>45.000,00 EUR</div>
+                </div>
+            </div>
+        </div>
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/finance-partnerji.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <div class="minicard-donations-title">
+                    <h4>Izplačila projektnim partnerjem</h4>
+                    <div>50.000,00 EUR</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/finance-proracun.png' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <div class="minicard-donations-title">
+                    <h4>Vplačila v proračun RS</h4>
+                    <div>67.000,00 EUR</div>
+                </div>
+                <div class="minicard-donations-body">
+                    <p>
+                        <i>Razlika med vplačanimi in pridobljenimi proračunskimi sredstvi v RS</i>
+                    </p>
+                    <span>-22.000,00 EUR</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="body-row info">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Osebna izkaznica</h4>
+                <div class="info-content">
+                    <i>Osnovni podatki</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Letna poročila</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Ljudje</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Plačna razmerja</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="body-row share">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Deli povezavo do zavihka Finance</h4>
+                <div class="info-content">
+                    <p style="margin-bottom: 5px;">
+                        Kopiraj povezavo
+                    </p>
+                    <input type="text" id="share-url">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function() {
+    $("#finances-graph-button").click((e) => {
+        // move the slider
+        $("#finances-active-presentation").addClass("graph");
+        // change button icon colors
+        $("#finances-graph-button").addClass("active");
+        $("#finances-table-button").removeClass("active");
+        // show the right finances presentation
+        $("#finances-graph").addClass("active");
+        $("#finances-table").removeClass("active");
+    });
+
+    $("#finances-table-button").click((e) => {
+        // move the slider
+        $("#finances-active-presentation").removeClass("graph");
+        // change button icon colors
+        $("#finances-table-button").addClass("active");
+        $("#finances-graph-button").removeClass("active");
+        // show the right finances presentation
+        $("#finances-table").addClass("active");
+        $("#finances-graph").removeClass("active");
+    });
+    
+});
+</script>
 {% endblock %}

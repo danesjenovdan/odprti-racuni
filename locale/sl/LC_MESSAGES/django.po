@@ -72,7 +72,7 @@ msgstr "Datum začetka"
 
 #: nvo/models.py:32 nvo/models.py:253
 msgid "End date"
-msgstr "Datim zaključka"
+msgstr "Datum zaključka"
 
 #: nvo/models.py:44 nvo/models.py:51
 msgid "Financial year"

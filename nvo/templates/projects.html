@@ -2,72 +2,195 @@
 {% load static %}
 {% load martortags %}
 {% block extra-head %}
-    <style>
-        div.level {
-            margin-left: 20px;
-        }
-    </style>
 {% endblock %}
 {% block content %}
-    {% for project in projects %}
-        <div class="minicard">
-            <h3>{{ project.name }}</h3>
-            {{ project.description|safe_markdown }}<br/>
-            {{ project.description }}<br/>
-            <i>Predvideni rezultati in učinki</i><br/>
-            {{ project.outcomes_and_impacts|safe_markdown }}<br/>
-
+<div class="body-row content active">
+    <div class="body-column">
+        <div class="instructions-line">
+            <p><i>Projekt</i></p>
+            <p><i>Vrednost projekta (delež organizacije / celota)</i></p>
         </div>
-        <div class="minicard">
-            <h3>{{ project.org_share }} / {{ project.value }}<h3>
-
-            <i>Trajanje projekta</i><br/>
-            {% if project.duration.years %}
-                {{ project.duration.years }} leto<br/>
-            {% endif %}
-            {% if project.duration.months %}
-                {{ project.duration.months }} mesecev<br/>
-            {% endif %}
-            {% if project.duration.days %}
-                {{ project.duration.days }} dni<br/>
-            {% endif %}
-            {{ project.start_date }} - {{ project.end_date }}<br/>
-            <br/>
-
-            {% if project.partners.all %}
-                <i>Partnerji</i><br/>
-                {% for partner in project.partners.all %}
-                    <a href="{{ partner.url }}">{{ partner.name }}</a><br/>
-                {% endfor %}
-            {% endif %}
-            {% if project.financers.all %}
-                <i>Financerji</i><br/>
-                {% for financer in project.financers.all %}
-                    <a href="{{ financer.url }}">{{ financer.name }}</a><br/>
-                {% endfor %}
-            {% endif %}
-            {% if project.cofinancers.all %}
-                <i>Sofinancerji</i><br/>
-                {% for cofinancer in project.cofinancers.all %}
-                    <a href="{{ cofinancer.url }}">{{ cofinancer.name }}</a><br/>
-                {% endfor %}
-            {% endif %}
-            {% if project.donators.all %}
-                <i>Donatorji</i><br/>
-                {% for donator in project.donators.all %}
-                    <a href="{{ donator.url }}">{{ donator.name }}</a><br/>
-                {% endfor %}
-            {% endif %}
+        {% for project in projects %}
+        <div id="sidebar-card-{{ forloop.counter }}" class="minicard project">
+            <div class="card-with-sidebar">
+                <div class="main" onclick="showHide('{{ forloop.counter }}')">
+                    <div class="show-hide-wrapper">
+                        <img src="{% static '/images/icons/projekti-puscica.svg' %}" class="show-hide-button" alt="Ikona za deljenje" />
+                    </div>
+                    <div>
+                        <h4 class="inline-block mb-10">{{ project.name }}</h4>
+                        <div class="more">
+                            <div class="description">
+                                {{ project.description|safe_markdown }}
+                            </div>
+                            <i>Predvideni rezultati in učinki</i>
+                            <div class="description">
+                                {{ project.outcomes_and_impacts|safe_markdown }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="vertical-separator"></div>
+                <div class="sidebar">
+                    <p>{{ project.org_share }} / {{ project.value }} EUR</p>
+                    <div class="more">
+                        <i>Trajanje projekta</i>
+                        {% if project.duration.years %}
+                            <!-- {{ project.duration.years }}  -->
+                        {% endif %}
+                        {% if project.duration.months %}
+                        <p>
+                            <b>{{ project.duration.months }} mesecev</b>
+                            <b>{{ project.start_date }}–{{ project.end_date }}</b>
+                        </p>
+                        {% endif %}
+                        {% if project.duration.days %}
+                            <!-- {{ project.duration.days }} dni<br/> -->
+                        {% endif %}
+                        {% if project.partners.all %}
+                        <p>
+                            <i>Partnerji</i>
+                            {% for partner in project.partners.all %}
+                                {% if partner.link %}
+                                    <b><a href="{{ partner.link }}" target="_blank">{{ partner.name }}</a></b>
+                                {% else %}
+                                    <b>{{ partner.name }}</b>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                        {% endif %}
+                        {% if project.financers.all %}
+                        <p>
+                            <i>Financerji</i>
+                            {% for financer in project.financers.all %}
+                                {% if financer.link %}
+                                    <b><a href="{{ financer.link }}" target="_blank">{{ financer.name }}</a></b>
+                                {% else %}
+                                    <b>{{ financer.name }}</b>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                        {% endif %}
+                        {% if project.cofinancers.all %}
+                        <p>
+                            <i>Sofinancerji</i>
+                            {% for cofinancer in project.cofinancers.all %}
+                                {% if cofinancer.link %}
+                                    <b><a href="{{ cofinancer.link }}" target="_blank">{{ cofinancer.name }}</a></b>
+                                {% else %}
+                                    <b>{{ cofinancer.name }}</b>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                        {% endif %}
+                        <p>
+                            <i>Lastni vložek</i>
+                            <b>{{ project.org_share }}</b>
+                        </p>
+                        {% if project.donators.all %}
+                        <p>
+                            <i>Donatorji</i>
+                            {% for donator in project.donators.all %}
+                                {% if donator.link %}
+                                    <b><a href="{{ donator.link }}" target="_blank">{{ donator.name }}</a></b>
+                                {% else %}
+                                    <b>{{ donator.name }}</b>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                        {% endif %}
+                        {% if project.link %}
+                        <p>
+                            <i>Projektno spletno mesto</i>
+                            <b><a href="{{ project.link }}" target="_blank">{{ project.link }}</a></b>
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="more">
+                <hr class="minicard-footer-separator" />
+                <div class="minicard-footer">
+                    {% for icon in project.icons %}
+                        <img src="{{ icon }}" class="logo">
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-        <div class="minicard">
-            {% for icon in project.icons %}
-                <img src="{{ icon }}" class="icon">
-            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
 
+<div class="body-row info">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Osebna izkaznica</h4>
+                <div class="info-content">
+                    <i>Osnovni podatki</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Letna poročila</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Ljudje</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Plačna razmerja</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                </div>
+            </div>
         </div>
-    {% endfor %}
+    </div>
+</div>
+
+<div class="body-row share">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Deli povezavo do zavihka Projekti</h4>
+                <div class="info-content">
+                    <p style="margin-bottom: 5px;">
+                        Kopiraj povezavo
+                    </p>
+                    <input type="text" id="share-url">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block js %}
+<script>
 
+function showHide(elNumber) {
+    $("#sidebar-card-" + elNumber).toggleClass("show");
+}
+
+$( document ).ready(function() {
+    // $(".project .main").click((e) => {
+    //     $(e.target).parent().parent().addClass("show");
+    //     console.log($(e.target).parent().parent())
+    // })
+});
+</script>
 {% endblock %}
 

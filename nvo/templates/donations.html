@@ -2,50 +2,143 @@
 {% load martortags %}
 {% load static %}
 {% block extra-head %}
-    <style>
-        div.level {
-            margin-left: 20px;
-        }
-        img.icon {
-            max-width: 50px;
-            max-height: 50px;
-        }
-    </style>
 {% endblock %}
 {% block content %}
-    <div class="minicard">
-        <h3>Višina zbranih donacij fizičnih oseb {{ donation.personal_donations_amount }} EUR</h3>
-        Število donatorjev: {{ donation.number_of_personal_donations }}<br/>
-
-        {% if donation.personal_donators.all %}
-            <i>Poimenski seznam donatorjev</i><br/>
-            {% for donator in donation.personal_donators.all %}
-                <hr>
-                {{ donator.name }} -> {{ donator.amount }}<br/>
-            {% endfor %}
-        {% endif %}
-
+<div class="body-row content active">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/donacije-fizicne.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <div class="minicard-donations-title">
+                    <h4>Višina zbranih donacij fizičnih oseb</h4>
+                    <p>{{ donation.personal_donations_amount }} EUR</p>
+                </div>
+                <p>
+                    <i>Število donatorjev:</i> {{ donation.number_of_personal_donations }}
+                </p>
+                {% if donation.personal_donators.all %}
+                    <i>Poimenski seznam donatorjev</i><br/>
+                    {% for donator in donation.personal_donators.all %}
+                    <div class="donator-list-element">
+                        <p>{{ donator.name }}</p><span>{{ donator.amount }} EUR</span>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/donacije-poslovne.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <div class="minicard-donations-title">
+                    <h4>Višina zbranih donacij pravnih oseb</h4>
+                    <p>{{ donation.organization_donations_amount }} EUR</p>
+                </div>
+                <p>
+                    <i>Število donatorjev:</i> {{ donation.number_of_organization_donations }}
+                </p>
+                {% if donation.organiaztion_donators.all %}
+                    <i>Poimenski seznam donatorjev</i><br/>
+                    {% for donator in donation.organiaztion_donators.all %}
+                    <div class="donator-list-element">
+                        <p>{{ donator.name }}</p><span>{{ donator.amount }} EUR</span>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/donacije-1procent.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <div class="minicard-donations-title">
+                    <h4>Višina zbranih donacij z 1% dohodnine</h4>
+                    <p>{{ donation.one_percent_income_tax }} EUR</p>
+                </div>
+            </div>
+        </div>
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/donacije-poraba.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <div class="minicard-donations-title-long">
+                    <h4>Kako smo porabili dohodnine</h4>
+                    <div>{{ donation.purpose_of_donations|safe_markdown }}</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="minicard">
-        <h3>Višina zbranih donacij pravnih oseb {{ donation.organization_donations_amount }} EUR</h3>
-        Število donatorjev: {{ donation.number_of_organization_donations }}<br/>
+</div>
 
-        {% if donation.personal_donators.all %}
-            <i>Poimenski seznam donatorjev</i><br/>
-            {% for donator in donation.organiaztion_donators.all %}
-                <hr>
-                {{ donator.name }} -> {{ donator.amount }}<br/>
-            {% endfor %}
-        {% endif %}
+<div class="body-row info">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Osebna izkaznica</h4>
+                <div class="info-content">
+                    <i>Osnovni podatki</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Letna poročila</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Ljudje</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                    <hr />
+                    <i>Plačna razmerja</i>
+                    <p>
+                        {{ info_text.text }}
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="minicard">
-        <h3>Višina zbranih donacij z 1% dohodnine {{ donation.one_percent_income_tax }} EUR</h3>
-    </div>
-    <div class="minicard">
-        <div><h3>Kako smo porabili dohodnine</h3></div>
-        <div>{{ donation.purpose_of_donations|safe_markdown }}</div>
+</div>
 
+<div class="body-row share">
+    <div class="body-column">
+        <div class="minicard">
+            <div>
+                <div class="icon">
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                </div>
+            </div>
+            <div>
+                <h4>Deli povezavo do zavihka Donacije</h4>
+                <div class="info-content">
+                    <p style="margin-bottom: 5px;">
+                        Kopiraj povezavo
+                    </p>
+                    <input type="text" id="share-url">
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}
 {% block js %}
 

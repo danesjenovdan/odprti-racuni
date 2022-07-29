@@ -1,0 +1,12 @@
+<ul class="finance-tree-element">
+    {% for revenue in revenues %}
+    <li>
+        <div>
+            <span>{{ revenue.name }}</span><span>{{ revenue.amount }}</span>
+        </div>
+        {% if revenue.children %}
+            {% include "includes/finance-tree-element.html" with revenues=revenue.children %}
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>

@@ -38,7 +38,8 @@ def organization_basic_info(request, organization_id, year):
         {
             'organization': organization,
             'documents': documents,
-            'people': people.get_statistics(),
+            'people': people,
+            'people_statistics': people.get_statistics(),
             'payment_ratio': payment_ratio.get_statistics(),
             'info_text': info_text,
         })
@@ -54,8 +55,10 @@ def get_finance(request, organization_id, year):
         is_active=True
     )
 
-    revenues = RevenueCategory.objects.filter(year=year, organization=organization, level=0).order_by('order')
-    expenses = ExpensesCategory.objects.filter(year=year, organization=organization, level=0).order_by('order')
+    total_income = RevenueCategory.objects.get(year=year, organization=organization, level=0)
+    total_expense = ExpensesCategory.objects.get(year=year, organization=organization, level=0)
+    revenues = RevenueCategory.objects.filter(year=year, organization=organization, level=1).order_by('order')
+    expenses = ExpensesCategory.objects.filter(year=year, organization=organization, level=1).order_by('order')
 
     info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.FINANCE).first()
 
@@ -65,6 +68,8 @@ def get_finance(request, organization_id, year):
         {
             'revenues': [revenue.get_json_tree() for revenue in revenues if revenue.amount],
             'expenses': [expense.get_json_tree() for expense in expenses if expense.amount],
+            'total_income': total_income,
+            'total_expense': total_expense,
             'organization': organization,
             'info_text': info_text,
         })
