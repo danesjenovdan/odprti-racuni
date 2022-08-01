@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotFound
 
-from nvo.models import (Organization, FinancialYear, Document, OrganizationFinacialYear, People, PaymentRatio, RevenueCategory,
+from nvo.models import (Organization, FinancialYear, Document, OrganizationFinancialYear, People, PaymentRatio, RevenueCategory,
     ExpensesCategory, Donations, InfoText)
 # Create your views here.
 
@@ -18,7 +18,7 @@ def organization_basic_info(request, organization_id, year):
     year = get_object_or_404(FinancialYear, name=year)
 
     get_object_or_404(
-        OrganizationFinacialYear,
+        OrganizationFinancialYear,
         organization=organization,
         financial_year=year,
         is_active=True
@@ -49,7 +49,7 @@ def get_finance(request, organization_id, year):
     year = get_object_or_404(FinancialYear, name=year)
 
     get_object_or_404(
-        OrganizationFinacialYear,
+        OrganizationFinancialYear,
         organization=organization,
         financial_year=year,
         is_active=True
@@ -80,7 +80,7 @@ def get_projects(request, organization_id, year):
     year = get_object_or_404(FinancialYear, name=year)
 
     get_object_or_404(
-        OrganizationFinacialYear,
+        OrganizationFinancialYear,
         organization=organization,
         financial_year=year,
         is_active=True
@@ -106,7 +106,7 @@ def get_donations(request, organization_id, year):
     year = get_object_or_404(FinancialYear, name=year)
 
     get_object_or_404(
-        OrganizationFinacialYear,
+        OrganizationFinancialYear,
         organization=organization,
         financial_year=year,
         is_active=True

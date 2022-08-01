@@ -35,7 +35,7 @@ class Command(BaseCommand):
             name='poročilo o prostovoljskem delu'
         )
 
-        nvo_group, created = Group.objects.get_or_create(
+        nvo_group, _created = Group.objects.get_or_create(
             name='Nvo user',
         )
 
@@ -47,8 +47,8 @@ class Command(BaseCommand):
         permissions = self.get_permissions('financialyear', ct, self.view_options)
         nvo_group.permissions.add(*permissions)
 
-        ct = ContentType.objects.get_for_model(models.OrganizationFinacialYear)
-        permissions = self.get_permissions('organizationfinacialyear', ct, self.edit_options)
+        ct = ContentType.objects.get_for_model(models.OrganizationFinancialYear)
+        permissions = self.get_permissions('organizationfinancialyear', ct, self.edit_options)
         nvo_group.permissions.add(*permissions)
 
         ct = ContentType.objects.get_for_model(models.DocumentCategory)

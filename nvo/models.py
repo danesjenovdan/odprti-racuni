@@ -47,7 +47,7 @@ class FinancialYear(models.Model):
 
 
 
-class OrganizationFinacialYear(models.Model):
+class OrganizationFinancialYear(models.Model):
     financial_year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='organiaztion_through', verbose_name=_('Financial year'))
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='financial_year_through', verbose_name=_('Organiaztion'))
     is_active = models.BooleanField(default=False, verbose_name=_('Is active'))
@@ -76,7 +76,7 @@ class Organization(models.Model):
     is_charity = models.BooleanField(default=False, verbose_name=_('is charity'))
     is_for_the_public_good = models.TextField(default=None, null=True, blank=True, verbose_name=_('Is organization for public good'))
 
-    financial_years = models.ManyToManyField(FinancialYear, related_name='organizations', through='OrganizationFinacialYear', verbose_name=_('Financial years'))
+    financial_years = models.ManyToManyField(FinancialYear, related_name='organizations', through='OrganizationFinancialYear', verbose_name=_('Financial years'))
 
     def __str__(self):
         return self.name
