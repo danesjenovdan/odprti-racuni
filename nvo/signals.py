@@ -53,11 +53,11 @@ def create_organization_financial_year_for_year(sender, instance, created, **kwa
                 ).save()
 
 @receiver(post_save, sender=User)
-def create_organization_fiinacial_year_for_organization(sender, instance, created, **kwargs):
+def create_organization_for_user(sender, instance, created, **kwargs):
     if created:
         if not instance.organization:
             organization = Organization(
-                name='Zacasno ime',
+                name=f'Zacasno ime za {instance.username}',
             )
             organization.save()
             instance.organization = organization
