@@ -64,3 +64,15 @@ def create_financial_tree_for_model(data, model, year_id, organization_id):
         if 'instructions' in element.keys():
             obj.instructions=element['instructions']
         obj.save()
+
+def clean_chart_data(data):
+    '''
+    Recursively cleans financial data to be able to draw the chart.
+    '''
+    if len(data['children']) > 0:
+        data['value'] = None
+        data['children'] = [clean_chart_data(child) for child in data['children']]
+    elif 'amount' in data.keys():
+        data['value'] = data['amount']
+    
+    return data

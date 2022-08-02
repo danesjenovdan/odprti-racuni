@@ -3,7 +3,8 @@ from django.http import HttpResponseNotFound
 
 from nvo.models import (Organization, FinancialYear, Document, OrganizationFinancialYear, People, PaymentRatio, RevenueCategory,
     ExpensesCategory, Donations, InfoText)
-# Create your views here.
+
+from nvo.utils import clean_chart_data
 
 def index(request, organization_id):
     organization = get_object_or_404(Organization, pk=organization_id)
@@ -62,6 +63,15 @@ def get_finance(request, organization_id, year):
 
     info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.FINANCE).first()
 
+    revenue_chart_data = clean_chart_data({
+        'name': 'revenue',
+        'children': [revenue.get_json_tree() for revenue in revenues if revenue.amount]
+    })
+    expenses_chart_data = clean_chart_data({
+        'name': 'expenses',
+        'children': [expense.get_json_tree() for expense in expenses if expense.amount]
+    })
+
     return render(
         request,
         'finance.html',
@@ -72,6 +82,8 @@ def get_finance(request, organization_id, year):
             'total_expense': total_expense,
             'organization': organization,
             'info_text': info_text,
+            'expenses_json': expenses_chart_data,
+            'revenue_json': revenue_chart_data
         })
 
 
