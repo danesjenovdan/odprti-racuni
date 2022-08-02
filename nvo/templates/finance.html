@@ -39,9 +39,9 @@
             <div id="finances-graph" class="finances-presentation active">
                 <div class="body-row">
                     <div class="body-column">
-                        <div style="font-size: 100px; text-align: center;">
-                            TUKAJ BO GRAF
-                        </div>
+                        {{ expenses_json | json_script:"expenses-data" }}
+                        {{ revenue_json | json_script:"revenue-data" }}
+                        {% include "graf.html" %}
                     </div>
                 </div>
             </div>
