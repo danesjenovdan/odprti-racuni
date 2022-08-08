@@ -6,6 +6,7 @@
 {% block content %}
 <div class="body-row content active">
     <div class="body-column">
+        {% if donation.personal_donations_amount %}
         <div class="minicard">
             <div>
                 <div class="icon">
@@ -15,21 +16,25 @@
             <div>
                 <div class="minicard-donations-title">
                     <h4>Višina zbranih donacij fizičnih oseb</h4>
-                    <p>{{ donation.personal_donations_amount }} EUR</p>
+                    <p>{{ donation.personal_donations_amount|floatformat:2 }} EUR</p>
                 </div>
+                {% if donation.number_of_personal_donations %}
                 <p>
                     <i>Število donatorjev:</i> {{ donation.number_of_personal_donations }}
                 </p>
+                {% endif %}
                 {% if donation.personal_donators.all %}
                     <i>Poimenski seznam donatorjev</i><br/>
                     {% for donator in donation.personal_donators.all %}
                     <div class="donator-list-element">
-                        <p>{{ donator.name }}</p><span>{{ donator.amount }} EUR</span>
+                        <p>{{ donator.name }}</p><span>{{ donator.amount|floatformat:2 }} EUR</span>
                     </div>
                     {% endfor %}
                 {% endif %}
             </div>
         </div>
+        {% endif %}
+        {% if donation.organization_donations_amount %}
         <div class="minicard">
             <div>
                 <div class="icon">
@@ -39,21 +44,25 @@
             <div>
                 <div class="minicard-donations-title">
                     <h4>Višina zbranih donacij pravnih oseb</h4>
-                    <p>{{ donation.organization_donations_amount }} EUR</p>
+                    <p>{{ donation.organization_donations_amount|floatformat:2 }} EUR</p>
                 </div>
+                {% if donation.number_of_organization_donations %}
                 <p>
                     <i>Število donatorjev:</i> {{ donation.number_of_organization_donations }}
                 </p>
+                {% endif %}
                 {% if donation.organiaztion_donators.all %}
                     <i>Poimenski seznam donatorjev</i><br/>
                     {% for donator in donation.organiaztion_donators.all %}
                     <div class="donator-list-element">
-                        <p>{{ donator.name }}</p><span>{{ donator.amount }} EUR</span>
+                        <p>{{ donator.name }}</p><span>{{ donator.amount|floatformat:2 }} EUR</span>
                     </div>
                     {% endfor %}
                 {% endif %}
             </div>
         </div>
+        {% endif %}
+        {% if donation.one_percent_income_tax %}
         <div class="minicard">
             <div>
                 <div class="icon">
@@ -63,10 +72,11 @@
             <div>
                 <div class="minicard-donations-title">
                     <h4>Višina zbranih donacij z 1% dohodnine</h4>
-                    <p>{{ donation.one_percent_income_tax }} EUR</p>
+                    <p>{{ donation.one_percent_income_tax|floatformat:2 }} EUR</p>
                 </div>
             </div>
         </div>
+        {% endif %}
         <div class="minicard">
             <div>
                 <div class="icon">
@@ -75,7 +85,7 @@
             </div>
             <div>
                 <div class="minicard-donations-title-long">
-                    <h4>Kako smo porabili dohodnine</h4>
+                    <h4>Kako smo porabili zbrane donacije</h4>
                     <div>{{ donation.purpose_of_donations|safe_markdown }}</div>
                 </div>
             </div>
@@ -124,7 +134,7 @@
         <div class="minicard">
             <div>
                 <div class="icon">
-                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                    <img src="{% static '/images/icons/deli.svg' %}" alt="Ikona za deljenje" />
                 </div>
             </div>
             <div>

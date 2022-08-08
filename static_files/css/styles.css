@@ -83,7 +83,7 @@ ul {
 }
 
 .organization-logo img {
-    max-height: 50px;
+    max-height: 40px;
 }
 
 .header-menu {
@@ -170,7 +170,7 @@ ul {
     padding: 20px;
     background-image: url(../images/NVO_ozadje.png); 
     background-repeat: repeat-y;
-    background-size: 100% auto;
+    background-size: auto;
 }
 
 .body-row {
@@ -211,17 +211,25 @@ ul {
     display: flex;
 }
 
+.minicard .card-with-sidebar .main h4 {
+    margin: 0;
+    cursor: pointer;
+}
+
+.minicard.show .card-with-sidebar .main h4 {
+    margin-bottom: 20px;
+}
+
 .card-with-sidebar .main {
     display: flex;
     flex-grow: 1;
-    cursor: pointer;
 }
 
 .card-with-sidebar .main .show-hide-wrapper {
     width: 28px;
     min-width: 28px;
     text-align: center;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .show-hide-button {
@@ -229,27 +237,39 @@ ul {
     transition: transform 0.25s ease-out;
 }
 
-.card-with-sidebar .sidebar {
+.project .card-with-sidebar .sidebar {
     width: 270px;
     min-width: 270px;
 }
 
-.card-with-sidebar .main > div:nth-child(2) {
+.project .card-with-sidebar .main > div:nth-child(2) {
     padding-right: 50px;
 }
 
-.card-with-sidebar .sidebar i {
-    font-size: 11px;
-    line-height: 11px;
+.project .card-with-sidebar .sidebar i {
+    font-size: 14px;
+    line-height: 16px;
     display: block;
     margin-bottom: 3px;
 }
 
-.card-with-sidebar .sidebar b {
-    font-size: 12px;
-    line-height: 14px;
+.project .card-with-sidebar .sidebar b {
+    font-size: 14px;
+    line-height: 16px;
     margin-bottom: 5px;
     display: block;
+}
+
+.project .card-with-sidebar .sidebar p {
+    margin-bottom: 0;
+}
+
+.project .card-with-sidebar .sidebar > p {
+    cursor: pointer;
+}
+
+.project.minicard.show .card-with-sidebar .sidebar p {
+    margin-bottom: 20px;
 }
 
 .minicard h4 {
@@ -257,10 +277,6 @@ ul {
     font-weight: 700;
     margin: 4px 0 0 0;
     line-height: 22px;
-}
-
-.minicard h4.mb-10 {
-    margin-bottom: 10px;
 }
 
 .minicard p, li {
@@ -507,13 +523,17 @@ ul {
     margin-bottom: 5px;
 }
 
+.instructions-line p {
+    margin-top: 0;
+}
+
 .instructions-line p:first-child {
     margin-left: 50px;
     margin-bottom: 0;
 }
 
 .instructions-line p:last-child {
-    width: 310px; /* has to be 40px more than .siderbar */
+    width: 310px; /* has to be 40px more than .sidebar */
     margin-bottom: 0;
 }
 
@@ -528,6 +548,10 @@ ul {
 
 .project {
     display: block;
+}
+
+.project .more i {
+    font-size: 11px;
 }
 
 .project .more {
@@ -583,6 +607,7 @@ ul {
 
 .minicard-donations-body span {
     font-size: 12px;
+    white-space: nowrap;
 }
 
 .donator-list-element {
@@ -613,7 +638,7 @@ ul {
 }
 
 .info-content {
-    margin: 15px 100px 0 100px;
+    margin: 20px 100px 0 100px;
 }
 
 .info-content p {

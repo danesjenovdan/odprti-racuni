@@ -2,7 +2,7 @@
     {% for revenue in revenues %}
     <li>
         <div>
-            <span>{{ revenue.name }}</span><span>{{ revenue.amount }}</span>
+            <span>{{ revenue.name }}</span><span>{{ revenue.amount|floatformat:2 }}</span>
         </div>
         {% if revenue.children %}
             {% include "includes/finance-tree-element.html" with revenues=revenue.children %}
