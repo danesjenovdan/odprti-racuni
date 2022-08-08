@@ -33,6 +33,9 @@ def organization_basic_info(request, organization_id, year):
 
     info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.BASICINFO).first()
 
+    # get donations to decide whether to render the Donations menu item
+    donations = get_object_or_404(Donations, year=year, organization=organization)
+    
     return render(
         request,
         'basic-info.html',
@@ -43,6 +46,7 @@ def organization_basic_info(request, organization_id, year):
             'people_statistics': people.get_statistics(),
             'payment_ratio': payment_ratio.get_statistics(),
             'info_text': info_text,
+            'donation': donations,
         })
 
 def get_finance(request, organization_id, year):
@@ -72,6 +76,9 @@ def get_finance(request, organization_id, year):
         'children': [expense.get_json_tree() for expense in expenses if expense.amount]
     })
 
+    # get donations to decide whether to render the Donations menu item
+    donations = get_object_or_404(Donations, year=year, organization=organization)
+
     return render(
         request,
         'finance.html',
@@ -83,7 +90,8 @@ def get_finance(request, organization_id, year):
             'organization': organization,
             'info_text': info_text,
             'expenses_json': expenses_chart_data,
-            'revenue_json': revenue_chart_data
+            'revenue_json': revenue_chart_data,
+            'donation': donations,
         })
 
 
@@ -102,6 +110,9 @@ def get_projects(request, organization_id, year):
 
     info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.PROJECTS).first()
 
+    # get donations to decide whether to render the Donations menu item
+    donations = get_object_or_404(Donations, year=year, organization=organization)
+
     return render(
         request,
         'projects.html',
@@ -109,6 +120,7 @@ def get_projects(request, organization_id, year):
             'projects': projects,
             'organization': organization,
             'info_text': info_text,
+            'donation': donations,
         }
     )
 

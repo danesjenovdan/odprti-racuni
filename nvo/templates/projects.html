@@ -13,12 +13,12 @@
         {% for project in projects %}
         <div id="sidebar-card-{{ forloop.counter }}" class="minicard project">
             <div class="card-with-sidebar">
-                <div class="main" onclick="showHide('{{ forloop.counter }}')">
+                <div class="main">
                     <div class="show-hide-wrapper">
                         <img src="{% static '/images/icons/projekti-puscica.svg' %}" class="show-hide-button" alt="Ikona za deljenje" />
                     </div>
                     <div>
-                        <h4 class="inline-block mb-10">{{ project.name }}</h4>
+                        <h4 onclick="showHide('{{ forloop.counter }}')">{{ project.name }}</h4>
                         <div class="more">
                             <div class="description">
                                 {{ project.description|safe_markdown }}
@@ -32,20 +32,14 @@
                 </div>
                 <div class="vertical-separator"></div>
                 <div class="sidebar">
-                    <p>{{ project.org_share }} / {{ project.value }} EUR</p>
+                    <p onclick="showHide('{{ forloop.counter }}')">{{ project.org_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
                     <div class="more">
                         <i>Trajanje projekta</i>
-                        {% if project.duration.years %}
-                            <!-- {{ project.duration.years }}  -->
-                        {% endif %}
                         {% if project.duration.months %}
                         <p>
-                            <b>{{ project.duration.months }} mesecev</b>
+                            <b>{{ project.duration.years }} let, {{ project.duration.months }} mesecev, {{ project.duration.days }} dni</b>
                             <b>{{ project.start_date }}–{{ project.end_date }}</b>
                         </p>
-                        {% endif %}
-                        {% if project.duration.days %}
-                            <!-- {{ project.duration.days }} dni<br/> -->
                         {% endif %}
                         {% if project.partners.all %}
                         <p>
@@ -85,7 +79,7 @@
                         {% endif %}
                         <p>
                             <i>Lastni vložek</i>
-                            <b>{{ project.org_share }}</b>
+                            <b>{{ project.org_share|floatformat:2 }} EUR</b>
                         </p>
                         {% if project.donators.all %}
                         <p>
@@ -101,13 +95,13 @@
                         {% endif %}
                         {% if project.link %}
                         <p>
-                            <i>Projektno spletno mesto</i>
-                            <b><a href="{{ project.link }}" target="_blank">{{ project.link }}</a></b>
+                            <b><a href="{{ project.link }}" target="_blank">Projektno spletno mesto</a></b>
                         </p>
                         {% endif %}
                     </div>
                 </div>
             </div>
+            {% if project.icons %}
             <div class="more">
                 <hr class="minicard-footer-separator" />
                 <div class="minicard-footer">
@@ -116,6 +110,7 @@
                     {% endfor %}
                 </div>
             </div>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
@@ -162,7 +157,7 @@
         <div class="minicard">
             <div>
                 <div class="icon">
-                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                    <img src="{% static '/images/icons/deli.svg' %}" alt="Ikona za deljenje" />
                 </div>
             </div>
             <div>

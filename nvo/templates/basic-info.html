@@ -57,7 +57,7 @@
                 <h4 class="mb-10">Letna poročila</h4>
                 {% for document in documents %}
                 <p>
-                    <a href="{{ document.file.url }}">{{ document.category.name }}</a>
+                    <a href="{{ document.file.url }}" target="_blank">{{ document.category.name }}</a>
                 </p>
                 {% endfor %}
             </div>
@@ -79,22 +79,22 @@
                 {% endif %}
                 {% if people.other_employees %}
                 <p>
-                    <i>Število redno zaposlenih:</i> {{ people.other_employees }}
+                    <i>Število drugih stalnih sodelavcev:</i> {{ people.other_employees }}
                 </p>
                 {% endif %}
                 {% if people_statistics %}
                 <p class="inline-block">
-                    <i>Število zaposlenih po spolu:</i>
+                    <i>Redno zaposleni po spolu:</i>
                 </p>
                 <p class="inline-block">
                     {% if people_statistics.men %}
-                        {{ people_statistics.men }}% moških<br/>
+                        {{ people_statistics.men|floatformat:2 }} % moških<br/>
                     {% endif %}
                     {% if people_statistics.women %}
-                        {{ people_statistics.women }}% žensk<br/>
+                        {{ people_statistics.women|floatformat:2 }} % žensk<br/>
                     {% endif %}
                     {% if people_statistics.nonbinary %}
-                        {{ people_statistics.nonbinary }}% nebinarnih oseb<br/>
+                        {{ people_statistics.nonbinary|floatformat:2 }} % nebinarnih oseb<br/>
                     {% endif %}
                 </p>
                 {% endif %}
@@ -105,7 +105,7 @@
                 {% endif %}
                 {% if people.members %}
                 <p>
-                    <i>Število redno zaposlenih:</i> {{ people.members }}
+                    <i>Število članov:</i> {{ people.members }}
                 </p>
                 {% endif %}
             </div>
@@ -174,7 +174,7 @@
         <div class="minicard">
             <div>
                 <div class="icon">
-                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                    <img src="{% static '/images/icons/deli.svg' %}" alt="Ikona za deljenje" />
                 </div>
             </div>
             <div>
