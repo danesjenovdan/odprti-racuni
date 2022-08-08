@@ -85,7 +85,7 @@ class Organization(models.Model):
         return self.financial_years.filter(organiaztion_through__is_active=True).values_list("name", flat=True).order_by("name")
 
     class Meta:
-        verbose_name = _('Organiaztion')
+        verbose_name = _('Organization')
         verbose_name_plural = _('Organization')
 
 
@@ -211,6 +211,7 @@ class FinancialCategory(MPTTModel):
         return {
             'name': self.name,
             'amount': float(self.amount),
+            'additional_name': self.additional_name,
             'children': [child.get_json_tree() for child in self.get_children().order_by('order') if child.amount]
         }
 
@@ -267,8 +268,7 @@ class Project(models.Model):
         r = relativedelta.relativedelta(self.end_date, self.start_date)
         return {
             'days': r.days,
-            'months': r.months,
-            'years': r.years,
+            'months': r.months + r.years * 12,
         }
 
     class Meta:

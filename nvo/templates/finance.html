@@ -52,7 +52,12 @@
                         {% for revenue in revenues %}
                         <li>
                             <div>
-                                <span>{{ revenue.name }}</span><span>{{ revenue.amount|floatformat:2 }}</span>
+                                {% if revenue.additional_name %}
+                                <span>{{ revenue.additional_name }}</span>
+                                {% else %}
+                                <span>{{ revenue.name }}</span>
+                                {% endif %}
+                                <span>{{ revenue.amount|floatformat:2 }}</span>
                             </div>
                             {% include "includes/finance-tree-element.html" with revenues=revenue.children %}
                         </li>
@@ -63,7 +68,12 @@
                         {% for revenue in expenses %}
                         <li>
                             <div>
-                                <span>{{ revenue.name }}</span><span>{{ revenue.amount|floatformat:2 }}</span>
+                                {% if revenue.additional_name %}
+                                <span>{{ revenue.additional_name }}</span>
+                                {% else %}
+                                <span>{{ revenue.name }}</span>
+                                {% endif %}
+                                <span>{{ revenue.amount|floatformat:2 }}</span>
                             </div>
                             {% include "includes/finance-tree-element.html" with revenues=revenue.children %}
                         </li>
@@ -142,17 +152,17 @@
                     <p>
                         {{ info_text.text }}
                     </p>
-                    <hr />
+                    <div class="horizontal-divider"></div>
                     <i>Letna poročila</i>
                     <p>
                         {{ info_text.text }}
                     </p>
-                    <hr />
+                    <div class="horizontal-divider"></div>
                     <i>Ljudje</i>
                     <p>
                         {{ info_text.text }}
                     </p>
-                    <hr />
+                    <div class="horizontal-divider"></div>
                     <i>Plačna razmerja</i>
                     <p>
                         {{ info_text.text }}

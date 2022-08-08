@@ -203,6 +203,10 @@ ul {
     display: flex;
 }
 
+.minicard h4.mb-10 {
+    margin-bottom: 10px;
+}
+
 .minicard > div:last-child {
     flex-grow: 1;
 }
@@ -494,9 +498,16 @@ ul {
     color: #39444e;
 }
 
+.horizontal-divider {
+    background-color: #d1d7df;
+    height: 1px;
+    width: 100%;
+    margin: 20px 0;
+}
+
 .vertical-separator {
-    width: 1px;
-    background-color: #f5f7f9;
+    min-width: 1px;
+    background-color: #d1d7df;
     margin: -20px 20px;
 }
 
@@ -504,11 +515,6 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.minicard-footer-separator {
-    border: 1px solid #f5f7f9;
-    margin: 20px 0;
 }
 
 .logo {
