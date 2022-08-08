@@ -31,18 +31,18 @@
                     <i>TRR:</i> {{ organization.trr }}
                 </p>
         
-                <hr />
+                <div class="horizontal-divider"></div>
                 
                 {% if organization.is_charity %}
                     <p class="note">
                         <i>Organizacija ima status</i> humanitarne organizacije {% if organization.is_for_the_public_good %}
-                        <i>in</i> organizacija v javnem interesu na področju: {{ organization.is_for_the_public_good }}.
+                        <i>in</i> organizacije v javnem interesu na področju {{ organization.is_for_the_public_good }}.
                     {% endif %}
                     </p>
                 {% endif %}
                 {% if organization.is_for_the_public_good and not organization.is_charity %}
                     <p class="note">
-                        Organizacija je v javnem interesu na področju: {{ organization.is_for_the_public_good }}.
+                        Organizacija ima status organizacije v javnem interesu na področju {{ organization.is_for_the_public_good }}.
                     </p>
                 {% endif %}
             </div>
@@ -148,17 +148,17 @@
                     <p>
                         {{ info_text.text }}
                     </p>
-                    <hr />
+                    <div class="horizontal-divider"></div>
                     <i>Letna poročila</i>
                     <p>
                         {{ info_text.text }}
                     </p>
-                    <hr />
+                    <div class="horizontal-divider"></div>
                     <i>Ljudje</i>
                     <p>
                         {{ info_text.text }}
                     </p>
-                    <hr />
+                    <div class="horizontal-divider"></div>
                     <i>Plačna razmerja</i>
                     <p>
                         {{ info_text.text }}

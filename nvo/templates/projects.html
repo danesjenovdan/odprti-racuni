@@ -35,12 +35,10 @@
                     <p onclick="showHide('{{ forloop.counter }}')">{{ project.org_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
                     <div class="more">
                         <i>Trajanje projekta</i>
-                        {% if project.duration.months %}
                         <p>
-                            <b>{{ project.duration.years }} let, {{ project.duration.months }} mesecev, {{ project.duration.days }} dni</b>
+                            <b>{{ project.duration.months }} mesecev{% if project.duration.days %}, {{ project.duration.days }} dni{% endif %}</b>
                             <b>{{ project.start_date }}–{{ project.end_date }}</b>
                         </p>
-                        {% endif %}
                         {% if project.partners.all %}
                         <p>
                             <i>Partnerji</i>
@@ -103,7 +101,7 @@
             </div>
             {% if project.icons %}
             <div class="more">
-                <hr class="minicard-footer-separator" />
+                <div class="horizontal-divider"></div>
                 <div class="minicard-footer">
                     {% for icon in project.icons %}
                         <img src="{{ icon }}" class="logo">
@@ -131,17 +129,17 @@
                     <p>
                         {{ info_text.text }}
                     </p>
-                    <hr />
+                    <div class="horizontal-divider"></div>
                     <i>Letna poročila</i>
                     <p>
                         {{ info_text.text }}
                     </p>
-                    <hr />
+                    <div class="horizontal-divider"></div>
                     <i>Ljudje</i>
                     <p>
                         {{ info_text.text }}
                     </p>
-                    <hr />
+                    <div class="horizontal-divider"></div>
                     <i>Plačna razmerja</i>
                     <p>
                         {{ info_text.text }}
