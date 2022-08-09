@@ -19,7 +19,12 @@
                     </div>
                     <div>
                         <h4 onclick="showHide('{{ forloop.counter }}')">{{ project.name }}</h4>
+                        <div class="additional-info-mobile">
+                            <i>Vrednost projekta (delež organizacije / celota)</i>
+                            <p>{{ project.org_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
+                        </div>
                         <div class="more">
+                            <div class="horizontal-divider"></div>
                             <div class="description">
                                 {{ project.description|safe_markdown }}
                             </div>
@@ -34,6 +39,7 @@
                 <div class="sidebar">
                     <p onclick="showHide('{{ forloop.counter }}')">{{ project.org_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
                     <div class="more">
+                        <div class="horizontal-divider"></div>
                         <i>Trajanje projekta</i>
                         <p>
                             <b>{{ project.duration.months }} mesecev{% if project.duration.days %}, {{ project.duration.days }} dni{% endif %}</b>

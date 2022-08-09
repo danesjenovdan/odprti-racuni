@@ -40,8 +40,18 @@
                 </div>
             </div>
             <div class="body">
-                {% block content %}
-                {% endblock %}
+                <div>
+                    <div class="header-menu-mobile">
+                        <a href="{% url 'info' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'info' %}current-page{% endif %}">Osebna izkaznica</a>
+                        <a href="{% url 'finance' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'finance' %}current-page{% endif %}">Finance</a>
+                        <a href="{% url 'projects' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'projects' %}current-page{% endif %}">Projekti</a>
+                        {% if donation.personal_donations_amount or donation.organization_donations_amount or donation.one_percent_income_tax %}
+                        <a href="{% url 'donations' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'donations' %}current-page{% endif %}">Donacije</a>
+                        {% endif %}
+                    </div>
+                    {% block content %}
+                    {% endblock %}
+                </div>
                 <div class="footer">
                     <button id="footer-info-button">
                         <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
