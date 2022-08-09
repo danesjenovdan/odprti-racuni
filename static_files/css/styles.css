@@ -314,7 +314,7 @@ ul {
 
 .payment-ratio-card {
     margin-top: 20px;
-    margin-left: -20px;
+    margin-left: -50px;
 }
 
 .payment-ratio-card .row {
@@ -368,6 +368,10 @@ ul {
 }
 
 @media (min-width: 768px) {
+    .payment-ratio-card {
+        margin-left: 0;
+    }
+    
     .payment-ratio-card .row p,
     .payment-ratio-card .row p:first-child,
     .payment-ratio-card .row p:last-child {
@@ -511,9 +515,13 @@ ul {
     font-size: 14px;
 }
 
-.finance-tree.income-tree,
-.finance-tree.expense-tree {
-    margin-right: 20px;
+@media (min-width: 576px) {
+    .finance-tree.income-tree,
+    .finance-tree.expense-tree,
+    .finances-graph {
+       padding-left: 50px;
+       margin-right: 20px;
+    }
 }
 
 .finance-tree-element {
