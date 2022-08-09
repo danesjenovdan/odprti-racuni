@@ -59,7 +59,7 @@ ul {
     font-weight: 700;
     line-height: 22px;
     color: #39444e;
-    margin: 0 15px;
+    margin: 0 10px;
     cursor: pointer;
     background-image: url('data:image/svg+xml;utf8,<svg fill="%2339444e" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
     background-repeat: no-repeat;
@@ -69,13 +69,22 @@ ul {
     -moz-appearance: none;
 }
 
+@media (min-width: 992px) {
+    .header-left select {
+        margin: 0 15px;
+    }
+}
+
 .or-logo {
     display: flex;
     align-items: center;
 }
 
 .or-logo img {
-    height: 16px;
+    max-height: 30px;
+    max-width: 90px;
+    height: 30px;
+    width: 90px;
 }
 
 .organization-logo {
@@ -86,15 +95,24 @@ ul {
 
 .organization-logo img {
     max-height: 30px;
+    max-width: 90px;
+    height: 30px;
+    width: 90px;
 }
 
 @media (min-width: 992px) {
     .or-logo img {
+        max-height: 22px;
+        max-width: 130px;
         height: 22px;
+        width: 130px;
     }
 
     .organization-logo img {
         max-height: 40px;
+        max-width: 130px;
+        height: 40px;
+        width: 130px;
     }
 }
 
@@ -132,18 +150,24 @@ ul {
     color: #616971;
 }
 
-.header-menu a:not(:first-of-type),
-.header-menu-mobile a:not(:first-of-type) {
+.header-menu a:not(:first-of-type) {
     margin-left: 10px;
+}
+
+.header-menu-mobile a:not(:first-of-type) {
+    margin-left: 8px;
 }
 
 .header-menu a.current-page,
 .header-menu-mobile a.current-page {
-    /* border: 1px solid #39444e; */
     background-color: #39444e;
     border-radius: 20px;
     color: #ffffff;
     padding: 4px 16px;
+}
+
+.header-menu-mobile a.current-page {
+    padding: 4px 8px;
 }
 
 .footer {
