@@ -75,7 +75,7 @@ ul {
 }
 
 .or-logo img {
-    height: 22px;
+    height: 16px;
 }
 
 .organization-logo {
@@ -85,17 +85,45 @@ ul {
 }
 
 .organization-logo img {
-    max-height: 40px;
+    max-height: 30px;
+}
+
+@media (min-width: 992px) {
+    .or-logo img {
+        height: 22px;
+    }
+
+    .organization-logo img {
+        max-height: 40px;
+    }
 }
 
 .header-menu {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: end;
     flex: 1 1 0;
 }
 
-.header-menu a {
+.header-menu-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 992px) {
+    .header-menu {
+        display: flex;
+    }
+
+    .header-menu-mobile {
+        display: none;
+    }
+}
+
+.header-menu a,
+.header-menu-mobile a {
     border: 1px solid transparent;
     font-size: 12px;
     font-weight: 700;
@@ -104,11 +132,13 @@ ul {
     color: #616971;
 }
 
-.header-menu a:not(:first-of-type) {
+.header-menu a:not(:first-of-type),
+.header-menu-mobile a:not(:first-of-type) {
     margin-left: 10px;
 }
 
-.header-menu a.current-page {
+.header-menu a.current-page,
+.header-menu-mobile a.current-page {
     /* border: 1px solid #39444e; */
     background-color: #39444e;
     border-radius: 20px;
@@ -175,6 +205,10 @@ ul {
     background-size: 100% auto;
     border-bottom-left-radius: 13px;
     border-bottom-right-radius: 13px;
+    min-height: 544px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 @media (min-width: 992px) {
@@ -737,7 +771,6 @@ ul {
 
 .info .minicard,
 .share .minicard {
-    min-height: 500px;
 }
 
 .content:not(.active),
