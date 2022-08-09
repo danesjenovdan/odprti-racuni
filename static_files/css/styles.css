@@ -35,6 +35,8 @@ ul {
 
 @media (min-width: 1400px) {}
 
+/*** HEADER ***/
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -170,28 +172,30 @@ ul {
     padding: 20px;
     background-image: url(../images/NVO_ozadje.png); 
     background-repeat: repeat-y;
-    background-size: auto;
+    background-size: 100% auto;
 }
 
-.body-row {
-    display: flex;
-    justify-content: space-between;
-}
+@media (min-width: 992px) {
+    .body-row {
+        display: flex;
+        justify-content: space-between;
+    }
 
-.body-column:first-child {
-    margin-right: 10px;
-}
-
-.body-column:last-child {
-    margin-left: 10px;
+    .body-column:first-child {
+        margin-right: 10px;
+    }
+    
+    .body-column:last-child {
+        margin-left: 10px;
+    }
+    
+    .body-column {
+        flex: 1 1 0;
+    }
 }
 
 .body-column:first-child:last-child {
     margin: 0;
-}
-
-.body-column {
-    flex: 1 1 0;
 }
 
 .minicard {
@@ -340,11 +344,23 @@ ul {
 
 .finances-card {
     display: block;
+    position: relative;
 }
 
-.finances-header {
-    display: flex;
-    justify-content: space-between;
+@media (min-width: 992px) {
+    .finances-card {
+        display: flex;
+        justify-content: center;
+    }
+
+    .finances-card-left,
+    .finances-card-right {
+        flex: 1 1 0;
+    }
+}
+
+.finances-header-button-wrapper {
+    position: absolute;
 }
 
 .finances-header-button {
@@ -406,8 +422,28 @@ ul {
     display: flex;
 }
 
-.finances-header-expense .icon {
-    margin: 0 0 0 15px;
+.finances-header-income {
+    margin-top: 50px;
+}
+
+.finances-header-expense {
+    margin-top: 20px;
+}
+
+@media (min-width: 992px) {
+    .finances-header-income {
+        margin-top: 0;
+    }
+    
+    .finances-header-expense {
+        justify-content: end;
+        flex-direction: row-reverse;
+        margin-top: 0;
+    }
+
+    .finances-header-expense .icon {
+        margin: 0 0 0 15px;
+    }
 }
 
 .finance-tree {
@@ -433,19 +469,27 @@ ul {
     font-size: 14px;
 }
 
-.finance-tree.income-tree {
+.finance-tree.income-tree,
+.finance-tree.expense-tree {
     padding-left: 50px;
     margin-right: 20px;
-}
-
-.finance-tree.expense-tree {
-    padding-right: 50px;
-    margin-left: 20px;
 }
 
 .finance-tree-element {
     list-style-type: none;
     padding-left: 20px;
+}
+
+@media (min-width: 992px) {
+    .finance-tree.income-tree {
+        margin: 10px 20px 10px 0;
+        padding: 0 0 0 50px;
+    }
+    
+    .finance-tree.expense-tree {
+        margin: 10px 0 10px 20px;
+        padding: 0 50px 0 0;
+    }
 }
 
 .finance-tree-element li {
@@ -572,25 +616,9 @@ ul {
     transform: rotate(90deg);
 }
 
-.minicard-donations-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .minicard-donations-title h4,
 .minicard-donations-title-long h4 {
-    white-space: nowrap;
     margin: 4px 0;
-}
-
-.minicard-donations-title-long {
-    display: flex;
-    justify-content: space-between;
-}
-
-.minicard-donations-title-long h4 {
-    margin-right: 40px;
 }
 
 .minicard-donations-title-long > div p,
@@ -600,10 +628,34 @@ ul {
     line-height: 21px;
 }
 
-.minicard-donations-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+@media (min-width: 992px) {
+    .minicard-donations-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .minicard-donations-title-long {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .minicard-donations-title-long h4 {
+        margin-right: 40px;
+    }
+
+    .minicard-donations-title h4,
+    .minicard-donations-title-long h4 {
+        white-space: nowrap;
+    }
+}
+
+@media (min-width: 992px) {
+    .minicard-donations-body {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
 .minicard-donations-body p {
@@ -644,7 +696,15 @@ ul {
 }
 
 .info-content {
-    margin: 20px 100px 0 100px;
+    margin: 20px 0 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 992px) {
+    .info-content {
+        margin: 20px 100px 0 100px;
+    }
 }
 
 .info-content p {
@@ -654,7 +714,6 @@ ul {
 
 #share-url {
     height: 30px;
-    width: 100%;
     border-radius: 15px;
     border: 1px solid #39444e;
     background-color: #f5f7f9;
