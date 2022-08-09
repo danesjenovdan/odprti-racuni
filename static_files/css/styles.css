@@ -75,7 +75,7 @@ ul {
 }
 
 .or-logo img {
-    max-height: 22px;
+    height: 22px;
 }
 
 .organization-logo {
@@ -312,10 +312,15 @@ ul {
     vertical-align: top;
 }
 
+.payment-ratio-card {
+    margin-top: 20px;
+    /* margin-left: -20px; */
+}
+
 .payment-ratio-card .row {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
     margin-bottom: 20px;
 }
 
@@ -324,10 +329,7 @@ ul {
     align-items: center;
     margin-bottom: 0;
     flex: 1 1 0;
-}
-
-.payment-ratio-card .row p:first-child {
-    justify-content: end;
+    flex-direction: column;
 }
 
 .payment-ratio-card .row .tag {
@@ -340,6 +342,46 @@ ul {
     justify-content: center;
     align-items: center;
     margin: 0 10px;
+}
+
+.payment-ratio-card .row p:first-child {
+    align-items: end;
+    margin-right: 10px;
+}
+
+.payment-ratio-card .row p:first-child .tag {
+    margin-right: 0;
+}
+
+.payment-ratio-card .row p:last-child .tag {
+    margin-left: 0;
+}
+
+.payment-ratio-card .row p:last-child {
+    flex-direction: column-reverse;
+    align-items: start;
+    margin-left: 10px;
+}
+
+.payment-ratio-card .row i {
+    margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .payment-ratio-card .row p,
+    .payment-ratio-card .row p:first-child,
+    .payment-ratio-card .row p:last-child {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .payment-ratio-card .row i {
+        margin-bottom: 0;
+    }
+
+    .payment-ratio-card .row p:first-child {
+        justify-content: end;
+    }
 }
 
 .finances-card {
