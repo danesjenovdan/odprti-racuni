@@ -314,7 +314,7 @@ ul {
 
 .payment-ratio-card {
     margin-top: 20px;
-    /* margin-left: -20px; */
+    margin-left: -20px;
 }
 
 .payment-ratio-card .row {
@@ -513,7 +513,6 @@ ul {
 
 .finance-tree.income-tree,
 .finance-tree.expense-tree {
-    padding-left: 50px;
     margin-right: 20px;
 }
 
