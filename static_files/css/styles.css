@@ -173,6 +173,8 @@ ul {
     background-image: url(../images/NVO_ozadje.png); 
     background-repeat: repeat-y;
     background-size: 100% auto;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
 }
 
 @media (min-width: 992px) {
