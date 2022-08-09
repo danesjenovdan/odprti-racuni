@@ -253,20 +253,39 @@ ul {
 
 .card-with-sidebar {
     display: flex;
+    flex-direction: column;
 }
 
 .minicard .card-with-sidebar .main h4 {
-    margin: 0;
+    margin: 0 0 10px 0;
     cursor: pointer;
 }
 
-.minicard.show .card-with-sidebar .main h4 {
-    margin-bottom: 20px;
+@media (min-width: 768px) {
+    .card-with-sidebar {
+        flex-direction: row;
+    }
+
+    .card-with-sidebar .horizontal-divider {
+        display: none;
+    }
+
+    .minicard .card-with-sidebar .main h4 {
+        margin: 0;
+    }
+
+    .minicard.show .card-with-sidebar .main h4 {
+        margin-bottom: 20px;
+    }
 }
 
 .card-with-sidebar .main {
     display: flex;
     flex-grow: 1;
+}
+
+.card-with-sidebar .main i {
+    font-size: 11px;
 }
 
 .card-with-sidebar .main .show-hide-wrapper {
@@ -281,13 +300,23 @@ ul {
     transition: transform 0.25s ease-out;
 }
 
-.project .card-with-sidebar .sidebar {
-    width: 270px;
-    min-width: 270px;
+.card-with-sidebar .main .more {
+    margin-left: -28px;
 }
 
-.project .card-with-sidebar .main > div:nth-child(2) {
-    padding-right: 50px;
+@media (min-width: 768px) {
+    .project .card-with-sidebar .sidebar {
+        width: 270px;
+        min-width: 270px;
+    }
+
+    .project .card-with-sidebar .main > div:nth-child(2) {
+        padding-right: 50px;
+    }
+
+    .card-with-sidebar .main .additional-info-mobile {
+        display: none;
+    }
 }
 
 .project .card-with-sidebar .sidebar i {
@@ -302,6 +331,7 @@ ul {
     line-height: 16px;
     margin-bottom: 5px;
     display: block;
+    white-space: break-spaces;
 }
 
 .project .card-with-sidebar .sidebar p {
@@ -310,6 +340,13 @@ ul {
 
 .project .card-with-sidebar .sidebar > p {
     cursor: pointer;
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .project .card-with-sidebar .sidebar > p {
+        display: block;
+    }
 }
 
 .project.minicard.show .card-with-sidebar .sidebar p {
@@ -635,6 +672,7 @@ ul {
 }
 
 .vertical-separator {
+    display: none;
     min-width: 1px;
     background-color: #d1d7df;
     margin: -20px 20px;
@@ -653,7 +691,7 @@ ul {
 }
 
 .instructions-line {
-    display: flex;
+    display: none;
     justify-content: space-between;
     margin-bottom: 5px;
 }
@@ -679,6 +717,16 @@ ul {
 
 .instructions-line p:last-child i {
     padding-left: 20px;
+}
+
+@media (min-width: 768px) {
+    .instructions-line {
+        display: flex;
+    }
+
+    .vertical-separator {
+        display: block;
+    }
 }
 
 .project {
