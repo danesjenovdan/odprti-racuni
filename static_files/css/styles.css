@@ -192,13 +192,21 @@ ul {
 }
 
 .footer button img {
-    max-height: 16px;
+    max-height: 14px;
     max-width: 16px;
     margin-right: 10px;
 }
 
 #footer-close-button {
     background-color: #cef98e;
+}
+
+#footer-info-button {
+    width: 145px;
+}
+
+#footer-share-button {
+    width: 82px;
 }
 
 #footer-close-button img {
@@ -233,6 +241,8 @@ ul {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    overflow: hidden;
 }
 
 @media (min-width: 992px) {
@@ -863,14 +873,29 @@ ul {
     font-size: 12px;
 }
 
-.info .minicard,
-.share .minicard {
+.info,
+.share {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    transition: all 0.5s ease-in-out;
 }
 
-.content:not(.active),
-.info:not(.active),
+.content {
+    transition: all 0.25s ease-in-out;
+}
+
+.content:not(.active) {
+    opacity: 0;
+}
+
+.info:not(.active) {
+    transform: translateX(-1000px);
+}
+
 .share:not(.active) {
-    display: none;
+    transform: translateX(1000px);
 }
 
 .info-content {
