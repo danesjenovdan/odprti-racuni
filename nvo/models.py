@@ -62,10 +62,9 @@ class OrganizationFinancialYear(models.Model):
 
 # organization info
 class Organization(models.Model):
-    name = models.TextField(verbose_name=_('Name'))
+    name = models.TextField(verbose_name=_('Organization name'))
     logo = models.ImageField(null=True, verbose_name=_('Logo'))
     address = models.TextField(null=True, verbose_name=_('Address'))
-    city = models.TextField(null=True, verbose_name=_('Post'))
     post_number = models.TextField(null=True, verbose_name=_('Post number'))
     tax_number = models.CharField(max_length=10, null=True, verbose_name=_('TAX number'))
     registration_number = models.TextField(null=True, verbose_name=_('Registration number'))
@@ -117,13 +116,13 @@ class Document(models.Model):
 class People(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='people', verbose_name=_('Organiaztion'))
     year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='people', verbose_name=_('Year'))
-    full_time_employees = models.IntegerField(default=0, verbose_name=_('Full time employees'))
-    other_employees = models.IntegerField(default=0, verbose_name=_('Other employees'))
-    volunteers = models.IntegerField(default=0, verbose_name=_('Volunteers'))
-    members = models.IntegerField(default=0, verbose_name=_('Members'))
-    number_of_men = models.IntegerField(default=0, verbose_name=_('Number of men'))
-    number_of_women = models.IntegerField(default=0, verbose_name=_('Number of women'))
-    number_of_non_binary = models.IntegerField(default=0, verbose_name=_('Number of non binary'))
+    full_time_employees = models.IntegerField(null=True, verbose_name=_('Full time employees'))
+    other_employees = models.IntegerField(null=True, verbose_name=_('Other employees'))
+    volunteers = models.IntegerField(verbose_name=_('Volunteers'), null=True, blank=True)
+    members = models.IntegerField(verbose_name=_('Members'), null=True, blank=True)
+    number_of_men = models.IntegerField(null=True, verbose_name=_('Number of men'))
+    number_of_women = models.IntegerField(null=True, verbose_name=_('Number of women'))
+    number_of_non_binary = models.IntegerField(null=True, verbose_name=_('Number of non binary'))
 
     def __str__(self):
         return f'{self.year.name} - {self.organization.name}'
@@ -180,7 +179,6 @@ class Employee(models.Model):
     job_share = models.IntegerField(
         default=100,
         validators=[
-            MaxValueValidator(100),
             MinValueValidator(1)
             ],
         verbose_name=_('job share')
@@ -199,7 +197,7 @@ class FinancialCategory(MPTTModel):
     name = models.CharField(max_length=256, verbose_name=_('Name'))
     additional_name = models.CharField(max_length=256, null=True, blank=True, verbose_name=_('Additional name'))
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='categories_children', verbose_name=_('Parent'))
-    amount = models.DecimalField(decimal_places=2, max_digits=10, default=0.0, verbose_name=_('Amount'))
+    amount = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Amount'))
     order = models.IntegerField(verbose_name=_('Order'))
     instructions = models.TextField(verbose_name=_('Instructions'))
     allow_additional_name = models.BooleanField(default=False, verbose_name=_('Allow additional name'))
@@ -238,7 +236,7 @@ class ExpensesCategory(FinancialCategory):
 
 class Project(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='projects', verbose_name=_('Organization'))
-    name = models.TextField(verbose_name=_('Name'))
+    name = models.TextField(verbose_name=_('Project name'))
     description = MartorField(verbose_name=_('Project\'s description'))
     outcomes_and_impacts = MartorField(verbose_name=_('Project\'s outcomes and impacts'))
     link = models.URLField(null=True, blank=True, verbose_name=_('Project\'s link'))
@@ -246,7 +244,6 @@ class Project(models.Model):
     organization_share = models.IntegerField(
         verbose_name=_('Organization share'),
         validators=[
-            MaxValueValidator(100),
             MinValueValidator(1)
             ],
     )
@@ -322,12 +319,15 @@ class Donator(models.Model):
 class Donations(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='donations', verbose_name=_('Organization'))
     year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='donations', verbose_name=_('Year'))
-    personal_donations_amount = models.IntegerField(default=0, verbose_name=_('Personal donation amount'))
-    number_of_personal_donations = models.IntegerField(default=0, verbose_name=_('Number of personal donations'))
-    organization_donations_amount = models.IntegerField(default=0, verbose_name=_('Organization donations amount'))
-    number_of_organization_donations = models.IntegerField(default=0, verbose_name=_('Number od organization donations'))
-    one_percent_income_tax = models.DecimalField(default=0.0, max_digits=10, decimal_places=2, verbose_name=_('1 percent income tax'))
-    purpose_of_donations = MartorField(verbose_name=_('Donation purpose'))
+    personal_donations_amount = models.IntegerField(null=True, blank=True, verbose_name=_('Personal donation amount'))
+    number_of_personal_donations = models.IntegerField(null=True, blank=True, verbose_name=_('Number of personal donations'))
+    organization_donations_amount = models.IntegerField(null=True, blank=True, verbose_name=_('Organization donations amount'))
+    number_of_organization_donations = models.IntegerField(null=True, blank=True, verbose_name=_('Number od organization donations'))
+    one_percent_income_tax = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name=_('1 percent income tax'))
+    purpose_of_donations = models.TextField(null=True, blank=True, verbose_name=_('Donation purpose'))
+
+    def __str__(self):
+        return self.year.name
 
     class Meta:
         verbose_name = _('Donations')

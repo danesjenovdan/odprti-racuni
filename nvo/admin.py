@@ -1,10 +1,7 @@
-from functools import partial
 from django.contrib import admin
 from django.db import models
-from django.contrib.admin.apps import AdminConfig
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import messages
-from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import gettext_lazy as _
 from django import forms
 
@@ -53,8 +50,7 @@ class FinancialYearInline(admin.TabularInline):
 
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = [
-        'name',
-        'logo'
+        'name'
     ]
     search_fields = ['name']
 
@@ -62,11 +58,26 @@ class OrganizationAdmin(admin.ModelAdmin):
         FinancialYearInline
     ]
 
+    def render_change_form(self, request, context, *args, **kwargs):
+        # here we define a custom template
+        self.change_form_template = 'admin/organization_admin.html'
+        extra = {
+            'preview': "/1/"
+        }
+
+        context.update(extra)
+        return super().render_change_form(request, context, *args, **kwargs)
+
     def get_queryset(self, request):
-        qs = super(OrganizationAdmin, self).get_queryset(request)
+        qs = super().get_queryset(request)
         if not request.user.organization or request.user.is_superuser:
             return qs
         return qs.filter(id=request.user.organization.id)
+
+    class Media:
+        css = {
+             'all': ('css/tabulat-hide-title.css',)
+        }
 
 
 # basic info
@@ -93,6 +104,14 @@ class DocumentAdmin(LimitedAdmin):
 
 
 class PeopleAdmin(LimitedAdmin):
+    fields = (
+        'full_time_employees',
+        'other_employees',
+        'number_of_men',
+        'number_of_women',
+        'number_of_non_binary',
+        'members',
+        'volunteers')
     list_display = [
         'year',
         'organization',
@@ -119,6 +138,10 @@ class PaymentRatioAdmin(LimitedAdmin):
     inlines = [
         EmployeeAdmin,
     ]
+    class Media:
+        css = {
+             'all': ('css/tabulat-hide-title.css',)
+        }
 
 # finance
 class FinanceChangeListForm(forms.ModelForm):
@@ -202,7 +225,7 @@ class FinacialFormSet(forms.BaseModelFormSet):
 
 class FinancialCategoryMPTTModelAdmin(LimitedAdmin, MPTTModelAdmin):
     # specify pixel amount for this ModelAdmin only:
-    mptt_level_indent = 20
+    mptt_level_indent = 40
     list_display = ['name', 'amount', 'year', 'additional_name']
     list_editable = ['amount', 'additional_name']
     list_filter = [FinanceYearListFilter]
@@ -308,7 +331,7 @@ class ProjectAdmin(LimitedAdmin):
 
     class Media:
         css = {
-             'all': ('css/admin-extra.css',)
+             'all': ('css/admin-extra.css', 'css/tabulat-hide-title.css',)
         }
 
 
@@ -364,6 +387,7 @@ class InfoTextAdmin(LimitedAdmin):
 
 class AdminSite(admin.AdminSite):
     site_header = _('Odprti računi')
+    site_url = None
     def __init__(self, *args, **kwargs):
         super(AdminSite, self).__init__(*args, **kwargs)
         self._registry.update(admin.site._registry)
@@ -376,21 +400,24 @@ class AdminSite(admin.AdminSite):
             organization = request.user.organization
         except:
             organization = None
-        if organization:
-            for financial_year_through in organization.financial_year_through.filter(is_active=True):
-                if not Document.objects.filter(organization=organization, year=financial_year_through.financial_year):
-                    messages.add_message(request, messages.WARNING, _('You need add at least one document for financial year ') + financial_year_through.financial_year.name)
-
-        context = super().each_context(request)
-
-        # insert instructions
 
         url_name = request.resolver_match.url_name
         url_attrs = url_name.split('_')
 
+        if organization and len(url_attrs) > 1:
+            if url_attrs[1]=='organization':
+                for financial_year_through in organization.financial_year_through.filter(is_active=True):
+                    if not Document.objects.filter(organization=organization, year=financial_year_through.financial_year):
+                        messages.add_message(request, messages.WARNING, _('You need add at least one document for financial year ') + financial_year_through.financial_year.name)
+
+        context = super().each_context(request)
+
+        # insert instructions
         instructions = ''
         print(url_attrs)
         if url_attrs[0] == 'login':
+            pass
+        elif url_attrs[0] == 'logout':
             pass
         elif len(url_attrs) == 1:
             instructions = Instructions.objects.filter(model=None).first()
@@ -443,6 +470,7 @@ class AdminSite(admin.AdminSite):
         app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
 
         # Sort the models alphabetically within each app.
+        print(app_list)
         for app in app_list:
             delete_idx = []
             app['models'].sort(key=lambda x: ordering[x['object_name']])

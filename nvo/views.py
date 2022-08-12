@@ -25,7 +25,10 @@ def organization_basic_info(request, organization_id, year):
         is_active=True
     )
 
-    documents = Document.objects.filter(year=year)
+    documents = Document.objects.filter(
+        year=year,
+        organization=organization
+    )
 
     people = get_object_or_404(People, year=year, organization=organization)
 
