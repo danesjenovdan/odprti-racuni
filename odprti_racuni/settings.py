@@ -171,6 +171,11 @@ MARTOR_ENABLE_CONFIGS = {
 
 MARTOR_ENABLE_LABEL = True
 
+MARTOR_TOOLBAR_BUTTONS = [
+    'bold', 'italic', 'unordered-list', 'ordered-list',
+    'link', 'toggle-maximize', 'help'
+]
+
 if sentry_url := os.getenv('DJANGO_SENTRY_URL', False):
     # imports should only happen if necessary
     import sentry_sdk

@@ -1,6 +1,7 @@
 {% extends "admin/base_site.html" %}
 {% load static %}
 {% load martortags %}
+{% load i18n static %}
 
 {% block extrahead %}
 <style>
@@ -118,6 +119,8 @@
       </div>
     {% endif %}
 {% endblock messages %}
+
+{% block content_title %}{% endblock %}
 
 {% block footer %}
     {{ block.super }}

@@ -3,7 +3,7 @@ from nvo.models import RevenueCategory, ExpensesCategory
 revenue_data = {
     'model': RevenueCategory,
     'nodes': [
-        {'name': 'Total prihodki', 'order': 1, 'allow_additional_name': False},
+        {'name': 'Skupni prihodki', 'order': 1, 'allow_additional_name': False},
         {'name': 'Tržna dejavnost', 'parent': 0, 'order': 2, 'allow_additional_name': False},
         {'name': 'Sponzorstvo', 'order': 3, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Produkti in storitve', 'order': 4, 'parent': 1, 'allow_additional_name': False},
@@ -23,7 +23,7 @@ revenue_data = {
 expenses_data = {
     'model': ExpensesCategory,
     'nodes': [
-        {'name': 'Total odhodki', 'order': 1, 'allow_additional_name': False},
+        {'name': 'Skupni odhodki', 'order': 1, 'allow_additional_name': False},
         {'name': 'Material in storitev', 'parent': 0,'order': 2, 'allow_additional_name': False},
         {'name': 'Redno delovanje', 'order': 3, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Zunanje storitve in izvajalci', 'order': 4, 'parent': 1, 'allow_additional_name': False},
