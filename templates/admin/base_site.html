@@ -5,8 +5,16 @@
 
 {% block extrahead %}
 <style>
+  @media (min-width: 992px) {
+    .object-tools {
+      position: absolute;
+      right: 40px;
+      margin-top: 8px;
+    }
+  }
+
   .instruction_collapsible {
-    margin: 20px 40px 0;
+    margin: 20px 15px 0;
     padding: 3px 12px;
     display: inline-block;
     background-color: #79aec8;
@@ -34,7 +42,7 @@
   }
 
   .instructions {
-    margin: 10px 40px;
+    margin: 10px 15px;
     border: 1px solid #e8e8e8;
     color: #e0e0e0;
   }
@@ -90,6 +98,27 @@
       color: #e0e0e0;
     }
 
+  }
+
+  /* responsive */
+  @media (min-width: 768px) {
+    .instruction_collapsible {
+      margin: 20px 30px 0;
+    }
+
+    .instructions {
+      margin: 10px 30px;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .instruction_collapsible {
+      margin: 20px 40px 0;
+    }
+
+    .instructions {
+      margin: 10px 40px;
+    }
   }
 
 </style>
