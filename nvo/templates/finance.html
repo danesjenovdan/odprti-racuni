@@ -88,9 +88,9 @@
     </div>
 </div>
 <div class="body-row content active">
-    {% if other_finances.volunteers or other_finances.partners %}
+    {% if other_finances.amount_voluntary_work or other_finances.payments_project_partners %}
     <div class="body-column">
-        {% if other_finances.volunteers %}
+        {% if other_finances.amount_voluntary_work %}
         <div class="minicard">
             <div>
                 <div class="icon">
@@ -100,12 +100,12 @@
             <div>
                 <div class="minicard-finance-title">
                     <h4>Vrednost prostovoljskega dela</h4>
-                    <div>{{ other_finances.volunteers }} EUR</div>
+                    <div>{{ other_finances.amount_voluntary_work }} EUR</div>
                 </div>
             </div>
         </div>
         {% endif %}
-        {% if other_finances.partners %}
+        {% if other_finances.payments_project_partners %}
         <div class="minicard">
             <div>
                 <div class="icon">
@@ -115,14 +115,14 @@
             <div>
                 <div class="minicard-finance-title">
                     <h4>Izplačila projektnim partnerjem</h4>
-                    <div>{{ other_finances.partners }} EUR</div>
+                    <div>{{ other_finances.payments_project_partners }} EUR</div>
                 </div>
             </div>
         </div>
         {% endif %}
     </div>
     {% endif %}
-    {% if other_finances.RS_budget %}
+    {% if other_finances.payment_state_budget %}
     <div class="body-column">
         <div class="minicard">
             <div>
@@ -133,14 +133,14 @@
             <div>
                 <div class="minicard-finance-title">
                     <h4>Vplačila v proračun RS</h4>
-                    <div>{{ other_finances.RS_budget }} EUR</div>
+                    <div>{{ other_finances.payment_state_budget }} EUR</div>
                 </div>
-                {% if other_finances.RS_budget_received_vs_contributed %}
+                {% if other_finances.difference_payment_state_budget %}
                 <div class="minicard-donations-body">
                     <p>
                         <i>Razlika med vplačanimi in pridobljenimi proračunskimi sredstvi v RS</i>
                     </p>
-                    <span>{{ other_finances.RS_budget_received_vs_contributed }} EUR</span>
+                    <span>{{ other_finances.difference_payment_state_budget }} EUR</span>
                 </div>
                 {% endif %}
             </div>

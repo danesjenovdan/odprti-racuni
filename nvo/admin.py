@@ -393,7 +393,7 @@ class FinanceAdmin(LimitedAdmin):
     list_filter = ['year']
     readonly_fields = ['year']
     exclude = ['organization']
-    fields = ['amount_voluntary_work', 'payments_project_partners', 'payment_state_budget', 'revenues', 'expenses']
+    fields = ['revenues', 'expenses', 'amount_voluntary_work', 'payments_project_partners', 'payment_state_budget', 'difference_payment_state_budget']
     readonly_fields = ['revenues', 'expenses']
 
     def revenues(self, obj):

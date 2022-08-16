@@ -198,6 +198,7 @@ class Finance(models.Model):
     amount_voluntary_work = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Amount of voluntary work'))
     payments_project_partners = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Payments to projects partners'))
     payment_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Payment to the state budget'))
+    difference_payment_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Difference payment state budget'))
 
     def __str__(self):
         return 'Finance ' + self.organization.name + ' ' + self.year.name
