@@ -84,7 +84,7 @@ ul {
     max-height: 30px;
     max-width: 90px;
     height: 30px;
-    width: 90px;
+    width: auto;
 }
 
 .organization-logo {
@@ -97,7 +97,7 @@ ul {
     max-height: 30px;
     max-width: 90px;
     height: 30px;
-    width: 90px;
+    width: auto;
 }
 
 @media (min-width: 992px) {
@@ -105,14 +105,14 @@ ul {
         max-height: 22px;
         max-width: 130px;
         height: 22px;
-        width: 130px;
+        width: auto;
     }
 
     .organization-logo img {
         max-height: 40px;
         max-width: 130px;
         height: 40px;
-        width: 130px;
+        width: auto;
     }
 }
 
@@ -234,7 +234,7 @@ ul {
     padding: 20px;
     background-image: url(../images/NVO_ozadje.png); 
     background-repeat: repeat-y;
-    background-size: 100% auto;
+    background-size: 150% auto;
     border-bottom-left-radius: 13px;
     border-bottom-right-radius: 13px;
     min-height: 544px;
@@ -243,6 +243,12 @@ ul {
     justify-content: space-between;
     position: relative;
     overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .body {
+        background-size: 100% auto;
+    }
 }
 
 @media (min-width: 992px) {
@@ -338,6 +344,10 @@ ul {
     margin-left: -28px;
 }
 
+.card-with-sidebar .main .additional-info-mobile p {
+    margin-bottom: 0;
+}
+
 @media (min-width: 768px) {
     .project .card-with-sidebar .sidebar {
         width: 270px;
@@ -354,7 +364,7 @@ ul {
 }
 
 .project .card-with-sidebar .sidebar i {
-    font-size: 14px;
+    font-size: 11px;
     line-height: 16px;
     display: block;
     margin-bottom: 3px;
@@ -805,7 +815,13 @@ ul {
     transform: rotate(90deg);
 }
 
+.minicard-donations-title + p, 
+.minicard-donations-title + i {
+    margin-top: 20px;
+}
+
 .minicard-donations-title h4,
+.minicard-finance-title h4,
 .minicard-donations-title-long h4 {
     margin: 4px 0;
 }
@@ -818,7 +834,8 @@ ul {
 }
 
 @media (min-width: 992px) {
-    .minicard-donations-title {
+    .minicard-donations-title,
+    .minicard-finance-title {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -834,6 +851,7 @@ ul {
     }
 
     .minicard-donations-title h4,
+    .minicard-finance-title h4,
     .minicard-donations-title-long h4 {
         white-space: nowrap;
     }
@@ -850,6 +868,7 @@ ul {
 .minicard-donations-body p {
     margin-right: 40px;
     margin-top: 12px;
+    line-height: 18px;
 }
 
 .minicard-donations-body span {
@@ -861,7 +880,7 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #f5f7f9;
+    border-top: 1px solid #d1d7df;
     padding: 10px 0;
 }
 
@@ -876,10 +895,17 @@ ul {
 .info,
 .share {
     position: absolute;
-    top: 20px;
+    top: 72px;
     left: 20px;
     right: 20px;
     transition: all 0.5s ease-in-out;
+}
+
+@media (min-width: 992px) {
+    .info,
+    .share {
+        top: 20px;
+    }
 }
 
 .content {
@@ -888,6 +914,7 @@ ul {
 
 .content:not(.active) {
     opacity: 0;
+    pointer-events: none;
 }
 
 .info:not(.active) {

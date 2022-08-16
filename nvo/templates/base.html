@@ -73,6 +73,126 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script type="text/javascript" src="{% static 'plugins/js/highlight.min.js' %}"></script>
         <script>
+
+            function showInfo() {
+                // show the right content
+                $(".info").addClass("active");
+                $(".share").removeClass("active");
+                $(".content").removeClass("active");
+                // show the right buttons
+                $("#footer-info-button").hide();
+                $("#footer-close-button").show();
+                $("#footer-close-button").css("width", "145px")
+                $("#footer-share-button").show();
+            }
+
+            function showContent() {
+                // show the right content
+                $(".info").removeClass("active");
+                $(".share").removeClass("active");
+                $(".content").addClass("active");
+                // show the right buttons
+                $("#footer-info-button").show();
+                $("#footer-close-button").hide();
+                $("#footer-share-button").show();
+            }
+
+            function showShare() {
+                // show the right content
+                $(".info").removeClass("active");
+                $(".share").addClass("active");
+                $(".content").removeClass("active");
+                // show the right buttons
+                $("#footer-info-button").show();
+                $("#footer-close-button").show();
+                $("#footer-close-button").css("width", "82px")
+                $("#footer-share-button").hide();
+            }
+
+
+            const touchableContent = Array.from(document.getElementsByClassName('content'));
+
+            touchableContent.forEach(el => {
+                el.addEventListener('touchstart', function (event) {
+                    touchstartX = event.changedTouches[0].screenX;
+                    touchstartY = event.changedTouches[0].screenY;
+                }, false);
+
+                el.addEventListener('touchend', function (event) {
+                    touchendX = event.changedTouches[0].screenX;
+                    touchendY = event.changedTouches[0].screenY;
+                    handleGestureContent();
+                }, false);
+            });
+
+            const touchableInfo = Array.from(document.getElementsByClassName('info'));
+
+            touchableInfo.forEach(el => {
+                el.addEventListener('touchstart', function (event) {
+                    touchstartX = event.changedTouches[0].screenX;
+                    touchstartY = event.changedTouches[0].screenY;
+                }, false);
+
+                el.addEventListener('touchend', function (event) {
+                    touchendX = event.changedTouches[0].screenX;
+                    touchendY = event.changedTouches[0].screenY;
+                    handleGestureInfo();
+                }, false);
+            });
+
+            const touchableShare = Array.from(document.getElementsByClassName('share'));
+
+            touchableShare.forEach(el => {
+                el.addEventListener('touchstart', function (event) {
+                    touchstartX = event.changedTouches[0].screenX;
+                    touchstartY = event.changedTouches[0].screenY;
+                }, false);
+
+                el.addEventListener('touchend', function (event) {
+                    touchendX = event.changedTouches[0].screenX;
+                    touchendY = event.changedTouches[0].screenY;
+                    handleGestureShare();
+                }, false);
+            });
+
+            function handleGestureContent() {
+                if (touchendX < touchstartX - 50) {
+                    // console.log('Swiped Left');
+                    showShare();
+                }
+
+                if (touchendX > touchstartX + 50) {
+                    // console.log('Swiped Right');
+                    showInfo();
+                }
+
+                // if (touchendY < touchstartY) {
+                //     console.log('Swiped Up');
+                // }
+
+                // if (touchendY > touchstartY) {
+                //     console.log('Swiped Down');
+                // }
+
+                // if (touchendY === touchstartY) {
+                //     console.log('Tap');
+                // }
+            }
+
+            function handleGestureInfo() {
+                if (touchendX < touchstartX - 50) {
+                    // console.log('Swiped Left');
+                    showContent();
+                }
+            }
+
+            function handleGestureShare() {
+                if (touchendX > touchstartX + 50) {
+                    // console.log('Swiped Right');
+                    showContent();
+                }
+            }
+            
             $(document).ready(function() {
                 $("#share-url").val(window.location.href);
 
@@ -85,40 +205,21 @@
             $('.martor-preview pre').each(function(i, block){
                 hljs.highlightBlock(block);
             });
+
             $( "#year-select" ).change(function() {
                 location.href = this.value;
             });
+
             $("#footer-info-button").click((e) => {
-                // show the right content
-                $(".info").addClass("active");
-                $(".share").removeClass("active");
-                $(".content").removeClass("active");
-                // show the right buttons
-                $("#footer-info-button").hide();
-                $("#footer-close-button").show();
-                $("#footer-close-button").css("width", "145px")
-                $("#footer-share-button").show();
+                showInfo()
             });
+
             $("#footer-share-button").click((e) => {
-                // show the right content
-                $(".info").removeClass("active");
-                $(".share").addClass("active");
-                $(".content").removeClass("active");
-                // show the right buttons
-                $("#footer-info-button").show();
-                $("#footer-close-button").show();
-                $("#footer-close-button").css("width", "82px")
-                $("#footer-share-button").hide();
+                showShare()
             });
+            
             $("#footer-close-button").click((e) => {
-                // show the right content
-                $(".info").removeClass("active");
-                $(".share").removeClass("active");
-                $(".content").addClass("active");
-                // show the right buttons
-                $("#footer-info-button").show();
-                $("#footer-close-button").hide();
-                $("#footer-share-button").show();
+                showContent()
             });
         </script>
         {% block js %}

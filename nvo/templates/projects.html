@@ -43,7 +43,7 @@
                         <i>Trajanje projekta</i>
                         <p>
                             <b>{{ project.duration.months }} mesecev{% if project.duration.days %}, {{ project.duration.days }} dni{% endif %}</b>
-                            <b>{{ project.start_date }}–{{ project.end_date }}</b>
+                            <b>{{ project.start_date|date:'j. n. Y' }}–{{ project.end_date|date:'j. n. Y' }}</b>
                         </p>
                         {% if project.partners.all %}
                         <p>
