@@ -1,37 +1,127 @@
 {% extends "admin/base_site.html" %}
 {% load static %}
 {% load martortags %}
+{% load i18n static %}
 
 {% block extrahead %}
-    <style>
-        .instruction_collapsible {
-            background-color: #eee;
-            color: #444;
-            cursor: pointer;
-            padding: 18px;
-            width: 100%;
-            border: none;
-            text-align: left;
-            outline: none;
-            font-size: 15px;
-          }
-          /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-          .instruction_active, .instruction_collapsible {
-            background-color: #ccc;
-            width:100px;
-          }
-          /* Style the collapsible content. Note: hidden by default */
-          .instructions {
-            padding: 0 18px;
-            display: none;
-            overflow: hidden;
-            background-color: #f1f1f1;
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-          }
-    </style>
+<style>
+  @media (min-width: 992px) {
+    .object-tools {
+      position: absolute;
+      right: 40px;
+      margin-top: 8px;
+    }
+  }
+
+  .instruction_collapsible {
+    margin: 20px 15px 0;
+    padding: 3px 12px;
+    display: inline-block;
+    background-color: #79aec8;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 20px;
+    cursor: pointer;
+  }
+
+  .instruction_collapsible.active {
+    background-color: #888888;
+  }
+
+  .instruction_collapsible:hover {
+    background-color: #747474;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .instructions {
+    margin: 10px 15px;
+    border: 1px solid #e8e8e8;
+    color: #e0e0e0;
+  }
+
+  .instructions-header {
+    background-color: #79aec8;
+    padding: 8px 12px;
+  }
+
+  .instructions-header h4 {
+    margin: 0;
+    padding: 0;
+    color: #fff;
+  }
+
+  .instructions-body {
+    padding: 0 12px;
+    color: #666;
+  }
+
+  /* dark theme */
+  @media (prefers-color-scheme: dark) {
+    .instruction_collapsible {
+      background-color: #264b5d;
+      border: none;
+      border-radius: 15px;
+      outline: none;
+      color: white;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      line-height: 20px;
+      cursor: pointer;
+    }
+
+    .instruction_collapsible.active {
+      background-color: #333333;
+    }
+
+    .instruction_collapsible:hover {
+      background-color: #666666;
+    }
+
+    .instructions {
+      border: 1px solid #272727;
+    }
+
+    .instructions-header {
+      background-color: #264b5d;
+    }
+
+    .instructions-body {
+      color: #e0e0e0;
+    }
+
+  }
+
+  /* responsive */
+  @media (min-width: 768px) {
+    .instruction_collapsible {
+      margin: 20px 30px 0;
+    }
+
+    .instructions {
+      margin: 10px 30px;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .instruction_collapsible {
+      margin: 20px 40px 0;
+    }
+
+    .instructions {
+      margin: 10px 40px;
+    }
+  }
+
+</style>
 {% endblock %}
 
  {% block branding %}
@@ -40,29 +130,40 @@
 
  {% block messages %}
     {% if messages %}
-    <ul class="messagelist">{% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
-    {% endfor %}</ul>
+      <ul class="messagelist">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+        {% endfor %}
+      </ul>
     {% endif %}
     {% if instructions %}
-        <button type="button" onclick="toogle_instructions()" id="instraction-button" class="instruction_collapsible">Prikaži pomoč</button>
-        <div id="instruction_content" class="instructions">
-        {{ instructions|safe_markdown }}<br/>
+      <button type="button" onclick="toogle_instructions()" id="instruction-button" class="instruction_collapsible">Prikaži navodila</button>
+      <div id="instruction_content" class="instructions hidden">
+        <div class="instructions-header">
+          <h4>Navodila</h4>
         </div>
+        <div class="instructions-body">
+          {{ instructions|safe_markdown }}
+        </div>
+      </div>
     {% endif %}
 {% endblock messages %}
+
+{% block content_title %}{% endblock %}
 
 {% block footer %}
     {{ block.super }}
     <script>
         function toogle_instructions() {
             var x = document.getElementById("instruction_content");
-            if (x.style.display === "none") {
-              x.style.display = "block";
-              document.getElementById("instraction-button").textContent = "Skrij pomoč"
+            if (x.classList.contains("hidden")) {
+              x.classList.remove("hidden");
+              document.getElementById("instruction-button").textContent = "Skrij navodila"
+              document.getElementById("instruction-button").classList.add("active")
             } else {
-              x.style.display = "none";
-              document.getElementById("instraction-button").textContent = "Prikaži pomoč"
+              x.classList.add("hidden");
+              document.getElementById("instruction-button").textContent = "Prikaži navodila"
+              document.getElementById("instruction-button").classList.remove("active")
             }
           }
     </script>
