@@ -28,7 +28,13 @@
                     </select>
                 </div>
                 <div class="organization-logo">
-                    <a href="{{ organization.link }}"><img src="{{ organization.logo.url }}"></a>
+                    {% if organization.link %}
+                    <a href="{{ organization.link }}" target="_blank">
+                        <img src="{{ organization.logo.url }}">
+                    </a>
+                    {% else %}
+                    <img src="{{ organization.logo.url }}">
+                    {% endif %}
                 </div>
                 <div class="header-menu">
                     <a href="{% url 'info' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'info' %}current-page{% endif %}">Osebna izkaznica</a>
@@ -109,10 +115,9 @@
                 $("#footer-share-button").hide();
             }
 
+            const body = Array.from(document.getElementsByClassName('body'));
 
-            const touchableContent = Array.from(document.getElementsByClassName('content'));
-
-            touchableContent.forEach(el => {
+            body.forEach(el => {
                 el.addEventListener('touchstart', function (event) {
                     touchstartX = event.changedTouches[0].screenX;
                     touchstartY = event.changedTouches[0].screenY;
@@ -121,47 +126,25 @@
                 el.addEventListener('touchend', function (event) {
                     touchendX = event.changedTouches[0].screenX;
                     touchendY = event.changedTouches[0].screenY;
-                    handleGestureContent();
-                }, false);
-            });
-
-            const touchableInfo = Array.from(document.getElementsByClassName('info'));
-
-            touchableInfo.forEach(el => {
-                el.addEventListener('touchstart', function (event) {
-                    touchstartX = event.changedTouches[0].screenX;
-                    touchstartY = event.changedTouches[0].screenY;
-                }, false);
-
-                el.addEventListener('touchend', function (event) {
-                    touchendX = event.changedTouches[0].screenX;
-                    touchendY = event.changedTouches[0].screenY;
-                    handleGestureInfo();
-                }, false);
-            });
-
-            const touchableShare = Array.from(document.getElementsByClassName('share'));
-
-            touchableShare.forEach(el => {
-                el.addEventListener('touchstart', function (event) {
-                    touchstartX = event.changedTouches[0].screenX;
-                    touchstartY = event.changedTouches[0].screenY;
-                }, false);
-
-                el.addEventListener('touchend', function (event) {
-                    touchendX = event.changedTouches[0].screenX;
-                    touchendY = event.changedTouches[0].screenY;
-                    handleGestureShare();
+                    
+                    if ($(".content").hasClass("active")) {
+                        handleGestureContent();
+                    } else if ($(".info").hasClass("active")) {
+                        handleGestureInfo();
+                    } else if ($(".share").hasClass("active")) {
+                        handleGestureShare();
+                    }
+                    
                 }, false);
             });
 
             function handleGestureContent() {
-                if (touchendX < touchstartX - 50) {
+                if (Math.abs(touchendY - touchstartY) < 50 && touchendX < touchstartX - 50) {
                     // console.log('Swiped Left');
                     showShare();
                 }
 
-                if (touchendX > touchstartX + 50) {
+                if (Math.abs(touchendY - touchstartY) < 50 && touchendX > touchstartX + 50) {
                     // console.log('Swiped Right');
                     showInfo();
                 }
@@ -180,14 +163,14 @@
             }
 
             function handleGestureInfo() {
-                if (touchendX < touchstartX - 50) {
+                if (Math.abs(touchendY - touchstartY) < 50 && touchendX < touchstartX - 50) {
                     // console.log('Swiped Left');
                     showContent();
                 }
             }
 
             function handleGestureShare() {
-                if (touchendX > touchstartX + 50) {
+                if (Math.abs(touchendY - touchstartY) < 50 && touchendX > touchstartX + 50) {
                     // console.log('Swiped Right');
                     showContent();
                 }
