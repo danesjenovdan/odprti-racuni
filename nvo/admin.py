@@ -4,6 +4,8 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django import forms
+from django.utils.safestring import mark_safe
+from django.urls import reverse
 
 from mptt.admin import MPTTModelAdmin
 
@@ -11,7 +13,7 @@ from mptt.admin import MPTTModelAdmin
 from nvo.models import (Organization, DocumentCategory, Document, People,
     Employee, User, RevenueCategory, ExpensesCategory, FinancialYear, PaymentRatio,
     Project, Financer, CoFinancer, Partner, Donator, Donations, PersonalDonator,
-    OrganiaztionDonator, Instructions, InfoText
+    OrganiaztionDonator, Instructions, InfoText, Finance
 )
 # Register your models here.
 
@@ -384,6 +386,34 @@ class InfoTextAdmin(LimitedAdmin):
     exclude = ['organization']
 
 
+class FinanceAdmin(LimitedAdmin):
+    list_display = [
+        'year',
+    ]
+    list_filter = ['year']
+    readonly_fields = ['year']
+    exclude = ['organization']
+    fields = ['revenues', 'expenses', 'amount_voluntary_work', 'payments_project_partners', 'payment_state_budget', 'difference_payment_state_budget']
+    readonly_fields = ['revenues', 'expenses']
+
+    def revenues(self, obj):
+        label = _('Edit revenues')
+        url = reverse("admin:nvo_revenuecategory_changelist") + f'?year={obj.year.id}'
+        return mark_safe(f'<a href="{url}">{label}</a>')
+
+    def expenses(self, obj):
+        label = _('Edit expenses')
+        url = reverse("admin:nvo_expensescategory_changelist") + f'?year={obj.year.id}'
+        return mark_safe(f'<a href="{url}">{label}</a>')
+
+    revenues.allow_tags = True
+    revenues.short_description = _("Revenues")
+
+    expenses.allow_tags = True
+    expenses.short_description = _("Expenses")
+
+
+
 
 class AdminSite(admin.AdminSite):
     site_header = _('Odprti računi')
@@ -460,10 +490,11 @@ class AdminSite(admin.AdminSite):
             "PaymentRatio": 8,
             "Document": 9,
             "Donations": 10,
-            "ExpensesCategory": 11,
-            "RevenueCategory": 12,
-            "Project": 13,
-            "InfoText": 14,
+            "Finance": 11,
+            "ExpensesCategory": 12,
+            "RevenueCategory": 13,
+            "Project": 14,
+            "InfoText": 15,
         }
 
         app_dict = self._build_app_dict(request)
@@ -478,7 +509,7 @@ class AdminSite(admin.AdminSite):
                 for idx, model in enumerate(app['models']):
                     # find indexes of models for remove
                     print(model)
-                    if model['object_name'] in ['FinancialYear', 'DocumentCategory']:
+                    if model['object_name'] in ['FinancialYear', 'DocumentCategory', 'ExpensesCategory', 'RevenueCategory']:
                         app['models'].remove(model)
                         delete_idx.append(idx)
                     # add id of users organization to organiaztion url
@@ -505,4 +536,5 @@ admin_site.register(Project, ProjectAdmin)
 admin_site.register(Donations, DonationsAdmin)
 admin_site.register(Instructions, InstructionsAdmin)
 admin_site.register(InfoText, InfoTextAdmin)
+admin_site.register(Finance, FinanceAdmin)
 admin.site = admin_site

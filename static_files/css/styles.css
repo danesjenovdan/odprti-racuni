@@ -93,6 +93,10 @@ ul {
     justify-content: center;
 }
 
+.organization-logo a {
+    display: flex;
+}
+
 .organization-logo img {
     max-height: 30px;
     max-width: 90px;

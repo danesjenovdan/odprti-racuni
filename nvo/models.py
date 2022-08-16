@@ -64,6 +64,7 @@ class OrganizationFinancialYear(models.Model):
 class Organization(models.Model):
     name = models.TextField(verbose_name=_('Organization name'))
     logo = models.ImageField(null=True, verbose_name=_('Logo'))
+    link = models.URLField(null=True, blank=True, verbose_name=_('Organization\'s link'))
     address = models.TextField(null=True, verbose_name=_('Address'))
     post_number = models.TextField(null=True, verbose_name=_('Post number'))
     tax_number = models.CharField(max_length=10, null=True, verbose_name=_('TAX number'))
@@ -190,6 +191,18 @@ class Employee(models.Model):
 
 
 # finance
+
+class Finance(models.Model):
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='%(class)s_related', verbose_name=_('Organiaztion'))
+    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE,null=True, blank=True, related_name='%(class)s_related', verbose_name=_('Year'))
+    amount_voluntary_work = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Amount of voluntary work'))
+    payments_project_partners = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Payments to projects partners'))
+    payment_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Payment to the state budget'))
+    difference_payment_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Difference payment state budget'))
+
+    def __str__(self):
+        return 'Finance ' + self.organization.name + ' ' + self.year.name
+
 
 class FinancialCategory(MPTTModel):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='%(class)s_related', verbose_name=_('Organiaztion'))
