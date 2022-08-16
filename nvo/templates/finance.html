@@ -88,7 +88,9 @@
     </div>
 </div>
 <div class="body-row content active">
+    {% if other_finances.volunteers or other_finances.partners %}
     <div class="body-column">
+        {% if other_finances.volunteers %}
         <div class="minicard">
             <div>
                 <div class="icon">
@@ -96,12 +98,14 @@
                 </div>
             </div>
             <div>
-                <div class="minicard-donations-title">
+                <div class="minicard-finance-title">
                     <h4>Vrednost prostovoljskega dela</h4>
-                    <div>45.000,00 EUR</div>
+                    <div>{{ other_finances.volunteers }} EUR</div>
                 </div>
             </div>
         </div>
+        {% endif %}
+        {% if other_finances.partners %}
         <div class="minicard">
             <div>
                 <div class="icon">
@@ -109,13 +113,16 @@
                 </div>
             </div>
             <div>
-                <div class="minicard-donations-title">
+                <div class="minicard-finance-title">
                     <h4>Izplačila projektnim partnerjem</h4>
-                    <div>50.000,00 EUR</div>
+                    <div>{{ other_finances.partners }} EUR</div>
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
+    {% endif %}
+    {% if other_finances.RS_budget %}
     <div class="body-column">
         <div class="minicard">
             <div>
@@ -124,19 +131,22 @@
                 </div>
             </div>
             <div>
-                <div class="minicard-donations-title">
+                <div class="minicard-finance-title">
                     <h4>Vplačila v proračun RS</h4>
-                    <div>67.000,00 EUR</div>
+                    <div>{{ other_finances.RS_budget }} EUR</div>
                 </div>
+                {% if other_finances.RS_budget_received_vs_contributed %}
                 <div class="minicard-donations-body">
                     <p>
                         <i>Razlika med vplačanimi in pridobljenimi proračunskimi sredstvi v RS</i>
                     </p>
-                    <span>-22.000,00 EUR</span>
+                    <span>{{ other_finances.RS_budget_received_vs_contributed }} EUR</span>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 
 <div class="body-row info">

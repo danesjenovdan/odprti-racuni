@@ -90,6 +90,12 @@ def get_finance(request, organization_id, year):
             'expenses': [expense.get_json_tree() for expense in expenses if expense.amount],
             'total_income': total_income,
             'total_expense': total_expense,
+            'other_finances': {
+                'volunteers': 45000,
+                'partners': 50000,
+                'RS_budget': 67000,
+                'RS_budget_received_vs_contributed': -22000
+            },
             'organization': organization,
             'info_text': info_text,
             'expenses_json': expenses_chart_data,

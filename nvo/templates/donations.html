@@ -16,7 +16,7 @@
             <div>
                 <div class="minicard-donations-title">
                     <h4>Višina zbranih donacij fizičnih oseb</h4>
-                    <p>{{ donation.personal_donations_amount|floatformat:2 }} EUR</p>
+                    <div>{{ donation.personal_donations_amount|floatformat:2 }} EUR</div>
                 </div>
                 {% if donation.number_of_personal_donations %}
                 <p>
@@ -44,7 +44,7 @@
             <div>
                 <div class="minicard-donations-title">
                     <h4>Višina zbranih donacij pravnih oseb</h4>
-                    <p>{{ donation.organization_donations_amount|floatformat:2 }} EUR</p>
+                    <div>{{ donation.organization_donations_amount|floatformat:2 }} EUR</div>
                 </div>
                 {% if donation.number_of_organization_donations %}
                 <p>
@@ -72,7 +72,7 @@
             <div>
                 <div class="minicard-donations-title">
                     <h4>Višina zbranih donacij z 1% dohodnine</h4>
-                    <p>{{ donation.one_percent_income_tax|floatformat:2 }} EUR</p>
+                    <div>{{ donation.one_percent_income_tax|floatformat:2 }} EUR</div>
                 </div>
             </div>
         </div>
