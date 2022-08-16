@@ -5,11 +5,16 @@
 
 {% block extrahead %}
 <style>
+  .content {
+    position: relative;
+  }
+
   @media (min-width: 992px) {
     .object-tools {
       position: absolute;
       right: 40px;
-      margin-top: 8px;
+      margin-top: 0;
+      top: 20px;
     }
   }
 
@@ -59,7 +64,7 @@
   }
 
   .instructions-body {
-    padding: 0 12px;
+    padding: 12px;
     color: #666;
   }
 
@@ -136,7 +141,8 @@
         {% endfor %}
       </ul>
     {% endif %}
-    {% if instructions %}
+    <div style="min-height: 40px;">
+      {% if instructions %}
       <button type="button" onclick="toogle_instructions()" id="instruction-button" class="instruction_collapsible">Prikaži navodila</button>
       <div id="instruction_content" class="instructions hidden">
         <div class="instructions-header">
@@ -147,6 +153,7 @@
         </div>
       </div>
     {% endif %}
+    </div>
 {% endblock messages %}
 
 {% block content_title %}{% endblock %}

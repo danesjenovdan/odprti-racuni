@@ -914,6 +914,7 @@ ul {
 
 .content:not(.active) {
     opacity: 0;
+    pointer-events: none;
 }
 
 .info:not(.active) {
