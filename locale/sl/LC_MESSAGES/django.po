@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-12 16:36+0200\n"
+"POT-Creation-Date: 2022-08-16 17:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,36 +19,52 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
 "%100==4 ? 2 : 3);\n"
 
-#: nvo/admin.py:28
+#: nvo/admin.py:27
 msgid "Personal info"
 msgstr "Osebni podatki"
 
-#: nvo/admin.py:29
+#: nvo/admin.py:28
 msgid "Permissions"
 msgstr "Dovoljenja"
 
-#: nvo/admin.py:162 nvo/admin.py:294
+#: nvo/admin.py:161 nvo/admin.py:293
 msgid "By financial year"
 msgstr "Po finančnem letu"
 
-#: nvo/admin.py:224
+#: nvo/admin.py:223
 msgid "Item amount of "
 msgstr "Vrednost postavke "
 
-#: nvo/admin.py:224
+#: nvo/admin.py:223
 msgid " and its children is not valid."
 msgstr " in vrednost njenih podpostavk ni enaka."
 
-#: nvo/admin.py:392
+#: nvo/admin.py:400
+msgid "Edit revenues"
+msgstr "Uredi prihodke"
+
+#: nvo/admin.py:405
+msgid "Edit expenses"
+msgstr "Uredi odhodke"
+
+#: nvo/admin.py:410 nvo/models.py:238
+msgid "Revenues"
+msgstr "Prihodki"
+
+#: nvo/admin.py:413 nvo/models.py:244
+msgid "Expenses"
+msgstr "Odhodki"
+
+#: nvo/admin.py:419
 msgid "Odprti računi"
 msgstr "Odprti računi"
 
-#: nvo/admin.py:414
+#: nvo/admin.py:441
 msgid "You need add at least one document for financial year "
 msgstr "Dodati je potrebno vsaj en dokument za finančno leto "
 
-#: nvo/models.py:22 nvo/models.py:87 nvo/models.py:88 nvo/models.py:239
-#: nvo/models.py:322 nvo/models.py:367
+#: nvo/models.py:22 nvo/models.py:88 nvo/models.py:89 nvo/models.py:250
+#: nvo/models.py:332 nvo/models.py:377
 msgid "Organization"
 msgstr "Osnovni podatki o organizaciji"
 
@@ -60,17 +76,17 @@ msgstr "Uporabnik"
 msgid "Users"
 msgstr "Uporabniki"
 
-#: nvo/models.py:30 nvo/models.py:92 nvo/models.py:198 nvo/models.py:280
-#: nvo/models.py:291 nvo/models.py:302 nvo/models.py:312 nvo/models.py:341
-#: nvo/models.py:351
+#: nvo/models.py:30 nvo/models.py:93 nvo/models.py:209 nvo/models.py:290
+#: nvo/models.py:301 nvo/models.py:312 nvo/models.py:322 nvo/models.py:351
+#: nvo/models.py:361
 msgid "Name"
 msgstr "Ime"
 
-#: nvo/models.py:31 nvo/models.py:252
+#: nvo/models.py:31 nvo/models.py:262
 msgid "Start date"
 msgstr "Datum začetka"
 
-#: nvo/models.py:32 nvo/models.py:253
+#: nvo/models.py:32 nvo/models.py:263
 msgid "End date"
 msgstr "Datum zaključka"
 
@@ -78,12 +94,12 @@ msgstr "Datum zaključka"
 msgid "Financial year"
 msgstr "Finančno leto"
 
-#: nvo/models.py:45 nvo/models.py:78
+#: nvo/models.py:45 nvo/models.py:79
 msgid "Financial years"
 msgstr "Finančna leta"
 
-#: nvo/models.py:52 nvo/models.py:105 nvo/models.py:117 nvo/models.py:150
-#: nvo/models.py:196
+#: nvo/models.py:52 nvo/models.py:106 nvo/models.py:118 nvo/models.py:151
+#: nvo/models.py:196 nvo/models.py:207
 msgid "Organiaztion"
 msgstr "Organizacija"
 
@@ -103,124 +119,128 @@ msgstr "Finančno leto organizacije"
 msgid "Organization name"
 msgstr "Polno ime organizacije"
 
-#: nvo/models.py:66 nvo/models.py:282 nvo/models.py:293
+#: nvo/models.py:66 nvo/models.py:292 nvo/models.py:303
 msgid "Logo"
 msgstr "Logo"
 
 #: nvo/models.py:67
+msgid "Organization's link"
+msgstr "Spletno mesto organizacije"
+
+#: nvo/models.py:68
 msgid "Address"
 msgstr "Ulica in hišna številka"
 
-#: nvo/models.py:68
+#: nvo/models.py:69
 msgid "Post number"
 msgstr "Poštna številka in pošta"
 
-#: nvo/models.py:69
+#: nvo/models.py:70
 msgid "TAX number"
 msgstr "Davčna številka"
 
-#: nvo/models.py:70
+#: nvo/models.py:71
 msgid "Registration number"
 msgstr "Matična številka"
 
-#: nvo/models.py:71
+#: nvo/models.py:72
 msgid "Email"
 msgstr "Email"
 
-#: nvo/models.py:72
+#: nvo/models.py:73
 msgid "Phone number"
 msgstr "Telefonska številka"
 
-#: nvo/models.py:73
+#: nvo/models.py:74
 msgid "TRR"
 msgstr "TRR"
 
-#: nvo/models.py:74
+#: nvo/models.py:75
 msgid "representative"
 msgstr "Zastopnik_ca"
 
-#: nvo/models.py:75
+#: nvo/models.py:76
 msgid "is charity"
 msgstr "Organizacija ima status humanitarne organizacije"
 
-#: nvo/models.py:76
+#: nvo/models.py:77
 msgid "Is organization for public good"
 msgstr "Organizacija ima status organizacije v javnem interesu na področju"
 
-#: nvo/models.py:98
+#: nvo/models.py:99
 msgid "Document category"
 msgstr "Kategorija dokumentov"
 
-#: nvo/models.py:99
+#: nvo/models.py:100
 msgid "Document categories"
 msgstr "Kategorije dokumentov"
 
-#: nvo/models.py:103
+#: nvo/models.py:104
 msgid "File"
 msgstr "Datoteka"
 
-#: nvo/models.py:104
+#: nvo/models.py:105
 msgid "Category"
 msgstr "Kategorija"
 
-#: nvo/models.py:106 nvo/models.py:118 nvo/models.py:151 nvo/models.py:197
-#: nvo/models.py:323 nvo/models.py:368
+#: nvo/models.py:107 nvo/models.py:119 nvo/models.py:152 nvo/models.py:197
+#: nvo/models.py:208 nvo/models.py:333 nvo/models.py:378
 msgid "Year"
 msgstr "Leto"
 
-#: nvo/models.py:112
+#: nvo/models.py:113
 msgid "Document"
 msgstr "Letno poročilo"
 
-#: nvo/models.py:113
+#: nvo/models.py:114
 msgid "Documents"
 msgstr "Letna poročila"
 
-#: nvo/models.py:119
+#: nvo/models.py:120
 msgid "Full time employees"
 msgstr "Število redno zaposlenih"
 
-#: nvo/models.py:120
+#: nvo/models.py:121
 msgid "Other employees"
 msgstr "Število drugih stalnih sodelavcev"
 
-#: nvo/models.py:121
+#: nvo/models.py:122
 msgid "Volunteers"
 msgstr "Število prostovoljcev"
 
-#: nvo/models.py:122
+#: nvo/models.py:123
 msgid "Members"
 msgstr "Število članov"
 
-#: nvo/models.py:123
+#: nvo/models.py:124
 msgid "Number of men"
 msgstr "Število moških"
 
-#: nvo/models.py:124
+#: nvo/models.py:125
 msgid "Number of women"
 msgstr "Število žensk"
 
-#: nvo/models.py:125
+#: nvo/models.py:126
 msgid "Number of non binary"
 msgstr "Število nebinarnih oseb"
 
-#: nvo/models.py:145 nvo/models.py:146
+#: nvo/models.py:146 nvo/models.py:147
 msgid "People"
 msgstr "Ljudje"
 
-#: nvo/models.py:171
+#: nvo/models.py:172
 msgid "Payment ratio"
 msgstr "Plačna razmerja"
 
-#: nvo/models.py:172
+#: nvo/models.py:173
 msgid "Payment ratios"
 msgstr "Plačna razmerja"
 
-#: nvo/models.py:177
+#: nvo/models.py:178
 msgid "Note"
 msgstr "Opis"
 
-#: nvo/models.py:178
+#: nvo/models.py:179
 msgid "Average gross selary"
 msgstr "Bruto plača zadnji mesec v letu"
 
@@ -236,205 +256,209 @@ msgstr "Zaposlen"
 msgid "Employees"
 msgstr "Vsi zaposleni"
 
+#: nvo/models.py:198
+msgid "Amount of voluntary work"
+msgstr "Vrednost prostovoljskega dela"
+
 #: nvo/models.py:199
+msgid "Payments to projects partners"
+msgstr "Izplačila projektnim partnerjem"
+
+#: nvo/models.py:200
+msgid "Payment to the state budget"
+msgstr "Vplačila v proračun RS"
+
+#: nvo/models.py:210
 msgid "Additional name"
 msgstr "Po potrebi predstavite s par besedami"
 
-#: nvo/models.py:200
+#: nvo/models.py:211
 msgid "Parent"
 msgstr "Starš"
 
-#: nvo/models.py:201 nvo/models.py:342 nvo/models.py:352
+#: nvo/models.py:212 nvo/models.py:352 nvo/models.py:362
 msgid "Amount"
 msgstr "Vrednost"
 
-#: nvo/models.py:202
+#: nvo/models.py:213
 msgid "Order"
 msgstr "Vrstni red"
 
-#: nvo/models.py:203 nvo/models.py:396 nvo/models.py:397
+#: nvo/models.py:214 nvo/models.py:406 nvo/models.py:407
 msgid "Instructions"
 msgstr "Navodila"
 
-#: nvo/models.py:204
+#: nvo/models.py:215
 msgid "Allow additional name"
 msgstr "Dovoli dodatno ime"
 
-#: nvo/models.py:226
+#: nvo/models.py:237
 msgid "Revenue"
 msgstr "Prihodek"
 
-#: nvo/models.py:227
-msgid "Revenues"
-msgstr "Prihodki"
-
-#: nvo/models.py:232
+#: nvo/models.py:243
 msgid "Expense"
 msgstr "Odhodek"
 
-#: nvo/models.py:233
-msgid "Expenses"
-msgstr "Odhodki"
-
-#: nvo/models.py:240
+#: nvo/models.py:251
 msgid "Project name"
 msgstr "Ime projekta"
 
-#: nvo/models.py:241
+#: nvo/models.py:252
 msgid "Project's description"
 msgstr "Opis projekta"
 
-#: nvo/models.py:242
+#: nvo/models.py:253
 msgid "Project's outcomes and impacts"
 msgstr "Rezultati in učinki"
 
-#: nvo/models.py:243
+#: nvo/models.py:254
 msgid "Project's link"
 msgstr "Povezava do projektnega spletnega mesta"
 
-#: nvo/models.py:244
+#: nvo/models.py:255
 msgid "Total value"
 msgstr "Vrednost celotnega projekta (v EUR)"
 
-#: nvo/models.py:246
+#: nvo/models.py:257
 msgid "Organization share"
 msgstr "Delež organizacije od celotnega projekta (v EUR)"
 
-#: nvo/models.py:274
+#: nvo/models.py:284
 msgid "Project"
 msgstr "Projekt"
 
-#: nvo/models.py:275 nvo/models.py:364
+#: nvo/models.py:285 nvo/models.py:374
 msgid "Projects"
 msgstr "Projekt"
 
-#: nvo/models.py:285
+#: nvo/models.py:295
 msgid "Financer"
 msgstr "Financer"
 
-#: nvo/models.py:286
+#: nvo/models.py:296
 msgid "Financers"
 msgstr "Financerji"
 
-#: nvo/models.py:292
+#: nvo/models.py:302
 msgid "CoFinancer's link"
 msgstr "Povezava do spletnega mesta"
 
-#: nvo/models.py:296
+#: nvo/models.py:306
 msgid "Cofinancer"
 msgstr "Sofinancer"
 
-#: nvo/models.py:297
+#: nvo/models.py:307
 msgid "Cofinancers"
 msgstr "Sofinancerji"
 
-#: nvo/models.py:303
+#: nvo/models.py:313
 msgid "Partners's link"
 msgstr "Povezava do spletnega mesta"
 
-#: nvo/models.py:306
+#: nvo/models.py:316
 msgid "Partner"
 msgstr "Partner"
 
-#: nvo/models.py:307
+#: nvo/models.py:317
 msgid "Partners"
 msgstr "Partnerji"
 
-#: nvo/models.py:313
+#: nvo/models.py:323
 msgid "Donators's link"
 msgstr "Povezava do spletnega mesta"
 
-#: nvo/models.py:316
+#: nvo/models.py:326
 msgid "Donator"
 msgstr "Donator"
 
-#: nvo/models.py:317
+#: nvo/models.py:327
 msgid "Donators"
 msgstr "Donatorji"
 
-#: nvo/models.py:324
+#: nvo/models.py:334
 msgid "Personal donation amount"
 msgstr "Višina zbranih donacij fizičnih oseb (v EUR)"
 
-#: nvo/models.py:325
+#: nvo/models.py:335
 msgid "Number of personal donations"
 msgstr "Število donatorjev, ki so fizične osebe"
 
-#: nvo/models.py:326
+#: nvo/models.py:336
 msgid "Organization donations amount"
 msgstr "Višina zbranih donacij pravnih oseb (v EUR)"
 
-#: nvo/models.py:327
+#: nvo/models.py:337
 msgid "Number od organization donations"
 msgstr "Število donatorjev, ki so pravne osebe"
 
-#: nvo/models.py:328
+#: nvo/models.py:338
 msgid "1 percent income tax"
 msgstr "Višina zbranih donacij z 1 % dohodnine (v EUR)"
 
-#: nvo/models.py:329
+#: nvo/models.py:339
 msgid "Donation purpose"
 msgstr ""
 "Poraba donacij, pod tem pa podnapis Na kratko obrazložite, kako ste porabili "
 "zbrane donacije"
 
-#: nvo/models.py:335 nvo/models.py:336 nvo/models.py:365
+#: nvo/models.py:345 nvo/models.py:346 nvo/models.py:375
 msgid "Donations"
 msgstr "Donacije"
 
-#: nvo/models.py:345
+#: nvo/models.py:355
 msgid "PersonalDonator"
 msgstr "Fizična oseba donator"
 
-#: nvo/models.py:346
+#: nvo/models.py:356
 msgid "PersonalDonators"
 msgstr "Poimenski seznam donatorjev, ki so fizične osebe"
 
-#: nvo/models.py:355
+#: nvo/models.py:365
 msgid "OrganiaztionDonator"
 msgstr "Pravni donator"
 
-#: nvo/models.py:356
+#: nvo/models.py:366
 msgid "OrganiaztionDonators"
 msgstr "Pravne osebe donatorji"
 
-#: nvo/models.py:363
+#: nvo/models.py:373
 msgid "BasicInfo"
 msgstr "Osnovne informacije"
 
-#: nvo/models.py:366
+#: nvo/models.py:376
 msgid "Finance"
 msgstr "Finance"
 
-#: nvo/models.py:373
+#: nvo/models.py:383
 msgid "Card"
 msgstr "Kartica"
 
-#: nvo/models.py:375
+#: nvo/models.py:385
 msgid "Text"
 msgstr "Text"
 
-#: nvo/models.py:378
+#: nvo/models.py:388
 msgid "Info Text"
 msgstr "Info text"
 
-#: nvo/models.py:379
+#: nvo/models.py:389
 msgid "Info Texts"
 msgstr "Informacijski teksti"
 
-#: nvo/models.py:384
+#: nvo/models.py:394
 msgid "Model"
 msgstr "Model"
 
-#: nvo/models.py:385
+#: nvo/models.py:395
 msgid "Instructions for list of objects"
 msgstr "Navodila za seznam"
 
-#: nvo/models.py:386
+#: nvo/models.py:396
 msgid "Instructions for adding object"
 msgstr "Navodila za dodajanje objekta"
 
-#: nvo/models.py:387
+#: nvo/models.py:397
 msgid "Instructions for edit single object"
 msgstr "Navodila za urejanje objekta"
 
@@ -448,15 +472,15 @@ msgstr ""
 
 #: templates/admin/pagination.html:10
 msgid "Show all"
-msgstr ""
+msgstr "Prikaži vse"
 
 #: templates/admin/pagination.html:11
 msgid "Save"
-msgstr ""
+msgstr "Shrani"
 
 #: templates/registration/logged_out.html:4
 msgid "Home"
-msgstr ""
+msgstr "Domov"
 
 #: templates/registration/logged_out.html:10
 msgid "Odjava je uspela!"
@@ -464,7 +488,7 @@ msgstr ""
 
 #: templates/registration/logged_out.html:12
 msgid "Log in again"
-msgstr ""
+msgstr "Ponovna prijava"
 
 #~ msgid "Perople"
 #~ msgstr "Ljudje"

@@ -2,7 +2,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from nvo.models import (OrganizationFinancialYear, People, PaymentRatio, Donations, InfoText,
-    Organization, FinancialYear, User)
+    Organization, FinancialYear, User, Finance)
 from nvo.utils import create_financial_tree
 
 @receiver(post_save, sender=OrganizationFinancialYear)
@@ -12,6 +12,7 @@ def create_models_for_organization(sender, instance, created, **kwargs):
         People(year=instance.financial_year, organization=instance.organization).save()
         PaymentRatio(year=instance.financial_year, organization=instance.organization).save()
         Donations(year=instance.financial_year, organization=instance.organization).save()
+        Finance(year=instance.financial_year, organization=instance.organization).save()
 
         InfoText(
             year=instance.financial_year,

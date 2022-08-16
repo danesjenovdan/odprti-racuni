@@ -28,7 +28,7 @@
                     </select>
                 </div>
                 <div class="organization-logo">
-                    <img src="{{ organization.logo.url }}">
+                    <a href="{{ organization.link }}"><img src="{{ organization.logo.url }}"></a>
                 </div>
                 <div class="header-menu">
                     <a href="{% url 'info' organization.id request.resolver_match.kwargs.year %}" class="{% if request.resolver_match.url_name == 'info' %}current-page{% endif %}">Osebna izkaznica</a>
