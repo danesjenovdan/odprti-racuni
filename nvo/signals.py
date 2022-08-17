@@ -1,5 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.translation import gettext_lazy as _
 
 from nvo.models import (OrganizationFinancialYear, People, PaymentRatio, Donations, InfoText,
     Organization, FinancialYear, User, Finance)
@@ -17,22 +18,44 @@ def create_models_for_organization(sender, instance, created, **kwargs):
         InfoText(
             year=instance.financial_year,
             organization=instance.organization,
-            card=InfoText.CardTypes.BASICINFO
+            card=InfoText.CardTypes.DONATIONS,
+            pre_text=_('donations info text')
         ).save()
         InfoText(
             year=instance.financial_year,
             organization=instance.organization,
-            card=InfoText.CardTypes.PROJECTS
+            card=InfoText.CardTypes.PROJECTS,
+            pre_text=_('projects info text')
         ).save()
         InfoText(
             year=instance.financial_year,
             organization=instance.organization,
-            card=InfoText.CardTypes.DONATIONS
+            card=InfoText.CardTypes.FINANCE,
+            pre_text=_('finance info text')
         ).save()
         InfoText(
             year=instance.financial_year,
             organization=instance.organization,
-            card=InfoText.CardTypes.FINANCE
+            card=InfoText.CardTypes.PAYMENTRATIOS,
+            pre_text=_('payment ratio info text')
+        ).save()
+        InfoText(
+            year=instance.financial_year,
+            organization=instance.organization,
+            card=InfoText.CardTypes.PEOPLE,
+            pre_text=_('people info text')
+        ).save()
+        InfoText(
+            year=instance.financial_year,
+            organization=instance.organization,
+            card=InfoText.CardTypes.YEARLYREPORTS,
+            pre_text=_('yearly reports info text')
+        ).save()
+        InfoText(
+            year=instance.financial_year,
+            organization=instance.organization,
+            card=InfoText.CardTypes.BASICINFO,
+            pre_text=_('basic info info text')
         ).save()
 
 @receiver(post_save, sender=Organization)
