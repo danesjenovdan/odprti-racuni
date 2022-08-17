@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, FileExtensionValidator
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 
@@ -101,7 +101,11 @@ class DocumentCategory(models.Model):
 
 
 class Document(models.Model):
-    file = models.FileField(verbose_name=_('File'))
+    file = models.FileField(
+        verbose_name=_('File'),
+        validators=[
+            FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx', 'xlsx', 'xls'])]
+    )
     category = models.ForeignKey('DocumentCategory', on_delete=models.CASCADE, verbose_name=_('Category'))
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='documents', verbose_name=_('Organiaztion'))
     year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='documents', verbose_name=_('Year'))
@@ -126,7 +130,7 @@ class People(models.Model):
     number_of_non_binary = models.IntegerField(null=True, verbose_name=_('Number of non binary'))
 
     def __str__(self):
-        return f'{self.year.name} - {self.organization.name}'
+        return f'{_("People")} {self.year}'
 
     def get_statistics(self):
         num_of_men = self.number_of_men
@@ -168,6 +172,9 @@ class PaymentRatio(models.Model):
                 'average': 1
             }
 
+    def __str__(self):
+        return f'{_("Payment ratio")} {self.year}'
+
     class Meta:
         verbose_name = _('Payment ratio')
         verbose_name_plural = _('Payment ratios')
@@ -201,7 +208,7 @@ class Finance(models.Model):
     difference_payment_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Difference payment state budget'))
 
     def __str__(self):
-        return 'Finance ' + self.organization.name + ' ' + self.year.name
+        return f'{_("Finance")} {self.year.name}'
 
 
 class FinancialCategory(MPTTModel):
@@ -275,11 +282,14 @@ class Project(models.Model):
 
     @property
     def duration(self):
-        r = relativedelta.relativedelta(self.end_date, self.start_date)
+        r = relativedelta.relativedelta(self.end_date, self.start_date) + relativedelta.relativedelta(days=1)
         return {
             'days': r.days,
             'months': r.months + r.years * 12,
         }
+
+    def __str__(self):
+        return f'{_("Project: ")} {self.name}'
 
     class Meta:
         verbose_name = _('Project')
@@ -372,6 +382,9 @@ class OrganiaztionDonator(models.Model):
 class InfoText(models.Model):
     class CardTypes(models.TextChoices):
         BASICINFO = 'BI', _('BasicInfo')
+        YEARLYREPORTS = 'YR', _('Documents')
+        PEOPLE = 'PE', _('People')
+        PAYMENTRATIOS = 'PS', _('Payment ratios')
         PROJECTS = 'PR', _('Projects')
         DONATIONS = 'DO', _('Donations')
         FINANCE = 'FI', _('Finance')
@@ -383,7 +396,11 @@ class InfoText(models.Model):
         default=CardTypes.BASICINFO,
         verbose_name=_('Card')
     )
+    pre_text = models.TextField(default='', verbose_name=_('Description'))
     text = models.TextField(default='', verbose_name=_('Text'))
+
+    def __str__(self):
+        return f'{self.year}'
 
     class Meta:
         verbose_name = _('Info Text')

@@ -95,6 +95,7 @@ class DocumentAdmin(LimitedAdmin):
         'year',
         'organization',
     ]
+    list_filter = ['year', 'organization']
     readonly_fields = []
 
     def save_model(self, request, obj, form, change):
@@ -118,6 +119,7 @@ class PeopleAdmin(LimitedAdmin):
         'year',
         'organization',
     ]
+    list_filter = ['year', 'organization']
 
 
 class EmployeeAdmin(admin.TabularInline):
@@ -128,6 +130,7 @@ class EmployeeAdmin(admin.TabularInline):
     ]
     model = Employee
     extra = 0
+    list_filter = ['year', 'organization']
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
     }
@@ -140,12 +143,41 @@ class PaymentRatioAdmin(LimitedAdmin):
     inlines = [
         EmployeeAdmin,
     ]
+    list_filter = ['year', 'organization']
     class Media:
         css = {
              'all': ('css/tabulat-hide-title.css',)
         }
 
 # finance
+
+class FinanceAdmin(LimitedAdmin):
+    list_display = [
+        'year',
+    ]
+    list_filter = ['year', 'organization']
+    readonly_fields = ['year']
+    exclude = ['organization']
+    fields = ['revenues', 'expenses', 'amount_voluntary_work', 'payments_project_partners', 'payment_state_budget', 'difference_payment_state_budget']
+    readonly_fields = ['revenues', 'expenses']
+
+    def revenues(self, obj):
+        label = _('Edit revenues')
+        url = reverse("admin:nvo_revenuecategory_changelist") + f'?year={obj.year.id}'
+        return mark_safe(f'<a href="{url}">{label}</a>')
+
+    def expenses(self, obj):
+        label = _('Edit expenses')
+        url = reverse("admin:nvo_expensescategory_changelist") + f'?year={obj.year.id}'
+        return mark_safe(f'<a href="{url}">{label}</a>')
+
+    revenues.allow_tags = True
+    revenues.short_description = _("Revenues")
+
+    expenses.allow_tags = True
+    expenses.short_description = _("Expenses")
+
+
 class FinanceChangeListForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FinanceChangeListForm, self).__init__(*args, **kwargs)
@@ -316,7 +348,7 @@ class ProjectAdmin(LimitedAdmin):
         'start_date',
         'end_date',
     ]
-    list_filter = [ProjectYearListFilter]
+    list_filter = [ProjectYearListFilter, 'organization']
     inlines = [
         FinancerInlineAdmin,
         CoFinancerInlineAdmin,
@@ -381,37 +413,10 @@ class InfoTextAdmin(LimitedAdmin):
         'year',
         'card'
     ]
-    list_filter = ['year']
-    readonly_fields = ['year', 'card']
+    fields = ['card', 'pre_text', 'text']
+    list_filter = ['year', 'organization', 'card']
+    readonly_fields = ['year', 'card', 'pre_text']
     exclude = ['organization']
-
-
-class FinanceAdmin(LimitedAdmin):
-    list_display = [
-        'year',
-    ]
-    list_filter = ['year']
-    readonly_fields = ['year']
-    exclude = ['organization']
-    fields = ['revenues', 'expenses', 'amount_voluntary_work', 'payments_project_partners', 'payment_state_budget', 'difference_payment_state_budget']
-    readonly_fields = ['revenues', 'expenses']
-
-    def revenues(self, obj):
-        label = _('Edit revenues')
-        url = reverse("admin:nvo_revenuecategory_changelist") + f'?year={obj.year.id}'
-        return mark_safe(f'<a href="{url}">{label}</a>')
-
-    def expenses(self, obj):
-        label = _('Edit expenses')
-        url = reverse("admin:nvo_expensescategory_changelist") + f'?year={obj.year.id}'
-        return mark_safe(f'<a href="{url}">{label}</a>')
-
-    revenues.allow_tags = True
-    revenues.short_description = _("Revenues")
-
-    expenses.allow_tags = True
-    expenses.short_description = _("Expenses")
-
 
 
 
