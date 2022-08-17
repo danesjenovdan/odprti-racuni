@@ -19,7 +19,7 @@
             <div class="header">
                 <div class="header-left">
                     <div class="or-logo">
-                        <img src="{% static '/images/OR-logo.svg' %}" alt="Odprti računi">
+                        <img src="{% static '/images/OR-logo.svg' %}" alt="Logo odprtih računov, ki je stiliziran tekst s povečevalnim steklom namesto prvega O-ja.">
                     </div>
                     <select id="year-select" name="years">
                         {% for year in organization.get_years %}
@@ -30,10 +30,10 @@
                 <div class="organization-logo">
                     {% if organization.link %}
                     <a href="{{ organization.link }}" target="_blank">
-                        <img src="{{ organization.logo.url }}">
+                        <img src="{{ organization.logo.url }}" alt="Logo organizacije.">
                     </a>
                     {% else %}
-                    <img src="{{ organization.logo.url }}">
+                    <img src="{{ organization.logo.url }}" alt="Logo organizacije." >
                     {% endif %}
                 </div>
                 <div class="header-menu">
@@ -60,16 +60,16 @@
                 </div>
                 <div class="footer">
                     <button id="footer-info-button">
-                        <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                        <img src="{% static '/images/icons/vec-info.svg' %}" />
                         <span>Več informacij</span>
                     </button>
                     <button id="footer-close-button" style="display: none;">
-                        <img src="{% static '/images/icons/zapri.svg' %}" alt="Ikona za deljenje" />
+                        <img src="{% static '/images/icons/zapri.svg' %}" />
                         <span>Zapri</span>
                     </button>
                         <!-- {{ info_text.text }} -->
                     <button id="footer-share-button">
-                        <img src="{% static '/images/icons/deli.svg' %}" alt="Ikona za deljenje" />
+                        <img src="{% static '/images/icons/deli.svg' %}" />
                         <span>Deli</span>
                     </button>
                         <!-- href="{{ request.get_full_path }}" -->
