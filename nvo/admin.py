@@ -43,6 +43,13 @@ class LimitedAdmin(admin.ModelAdmin):
             return qs.model.objects.none()
         return qs.filter(organization=request.user.organization)
 
+    def message_user(self, *args):
+        pass
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        messages.success(request, _("Changes are successful saved"))
+
 
 class FinancialYearInline(admin.TabularInline):
     readonly_fields = ['financial_year']
@@ -76,9 +83,16 @@ class OrganizationAdmin(admin.ModelAdmin):
             return qs
         return qs.filter(id=request.user.organization.id)
 
+    def message_user(self, *args):
+        pass
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        messages.success(request, _("Changes are successful saved"))
+
     class Media:
         css = {
-             'all': ('css/tabulat-hide-title.css',)
+             'all': ('css/tabular-hide-title.css',)
         }
 
 
@@ -134,6 +148,15 @@ class EmployeeAdmin(admin.TabularInline):
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
     }
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super().get_formset(request, obj, **kwargs)
+        print(dir(formset))
+        print(vars(formset.form))
+        print(vars(formset))
+
+        formset.addText = 'Dodaj novega'
+
+        return formset
 
 
 class PaymentRatioAdmin(LimitedAdmin):
@@ -146,7 +169,7 @@ class PaymentRatioAdmin(LimitedAdmin):
     list_filter = ['year', 'organization']
     class Media:
         css = {
-             'all': ('css/tabulat-hide-title.css',)
+             'all': ('css/tabular-hide-title.css',)
         }
 
 # finance
@@ -365,7 +388,7 @@ class ProjectAdmin(LimitedAdmin):
 
     class Media:
         css = {
-             'all': ('css/admin-extra.css', 'css/tabulat-hide-title.css',)
+             'all': ('css/admin-extra.css', 'css/tabular-hide-title.css',)
         }
 
 
@@ -449,7 +472,6 @@ class AdminSite(admin.AdminSite):
 
         # insert instructions
         instructions = ''
-        print(url_attrs)
         if url_attrs[0] == 'login':
             pass
         elif url_attrs[0] == 'logout':
@@ -506,14 +528,12 @@ class AdminSite(admin.AdminSite):
         app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
 
         # Sort the models alphabetically within each app.
-        print(app_list)
         for app in app_list:
             delete_idx = []
             app['models'].sort(key=lambda x: ordering[x['object_name']])
             if not request.user.is_superuser:
                 for idx, model in enumerate(app['models']):
                     # find indexes of models for remove
-                    print(model)
                     if model['object_name'] in ['FinancialYear', 'DocumentCategory', 'ExpensesCategory', 'RevenueCategory']:
                         app['models'].remove(model)
                         delete_idx.append(idx)
