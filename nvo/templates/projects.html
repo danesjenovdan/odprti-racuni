@@ -15,7 +15,7 @@
             <div class="card-with-sidebar">
                 <div class="main">
                     <div class="show-hide-wrapper">
-                        <img src="{% static '/images/icons/projekti-puscica.svg' %}" class="show-hide-button" alt="Ikona za deljenje" />
+                        <img src="{% static '/images/icons/projekti-puscica.svg' %}" class="show-hide-button" alt="Puščica, ki kaže desno. Ob razširitvi kartice se zavrti za 90 stopinj in kaže navzdol." />
                     </div>
                     <div>
                         <h4 onclick="showHide('{{ forloop.counter }}')">{{ project.name }}</h4>
@@ -110,7 +110,7 @@
                 <div class="horizontal-divider"></div>
                 <div class="minicard-footer">
                     {% for icon in project.icons %}
-                        <img src="{{ icon }}" class="logo">
+                        <img src="{{ icon }}" class="logo" alt="Logo financerja.">
                     {% endfor %}
                 </div>
             </div>
@@ -125,7 +125,7 @@
         <div class="minicard">
             <div>
                 <div class="icon">
-                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="Ikona za deljenje" />
+                    <img src="{% static '/images/icons/vec-info.svg' %}" alt="" />
                 </div>
             </div>
             <div>
@@ -161,7 +161,7 @@
         <div class="minicard">
             <div>
                 <div class="icon">
-                    <img src="{% static '/images/icons/deli.svg' %}" alt="Ikona za deljenje" />
+                    <img src="{% static '/images/icons/deli.svg' %}" alt="" />
                 </div>
             </div>
             <div>
