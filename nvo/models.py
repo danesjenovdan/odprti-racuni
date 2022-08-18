@@ -299,7 +299,7 @@ class Project(models.Model):
 class Financer(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='financers')
     name = models.TextField(verbose_name=_('Name'))
-    link = models.URLField(null=True, blank=True, verbose_name='Financer\'s link')
+    link = models.URLField(null=True, blank=True, verbose_name='Povezava do spletnega mesta')
     logo = models.FileField(null=True, blank=True, verbose_name=_('Logo'))
 
     class Meta:

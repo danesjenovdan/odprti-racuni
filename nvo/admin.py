@@ -9,12 +9,13 @@ from django.urls import reverse
 
 from mptt.admin import MPTTModelAdmin
 
-
 from nvo.models import (Organization, DocumentCategory, Document, People,
     Employee, User, RevenueCategory, ExpensesCategory, FinancialYear, PaymentRatio,
     Project, Financer, CoFinancer, Partner, Donator, Donations, PersonalDonator,
     OrganiaztionDonator, Instructions, InfoText, Finance
 )
+
+import json
 # Register your models here.
 
 
@@ -34,6 +35,7 @@ class UserAdmin(UserAdmin):
 class LimitedAdmin(admin.ModelAdmin):
     exclude = ['organization']
     readonly_fields = ['year']
+    list_filter = ['year', 'organization']
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -42,6 +44,27 @@ class LimitedAdmin(admin.ModelAdmin):
             # return empty queryset if user has not organizations
             return qs.model.objects.none()
         return qs.filter(organization=request.user.organization)
+
+    def message_user(self, *args):
+        pass
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        messages.success(request, _("Changes are successful saved"))
+
+    def get_inline_formsets(self, request, formsets, inline_instances, obj=None):
+        inline_formsets = super().get_inline_formsets(request, formsets, inline_instances, obj)
+        for inline_formset in inline_formsets:
+            org_func = inline_formset.inline_formset_data
+            def inline_formset_data():
+                data = org_func()
+                data = json.loads(data)
+                data['options']['addText'] = 'Dodaj novo'
+                return json.dumps(data)
+
+            inline_formset.inline_formset_data = inline_formset_data
+        return inline_formsets
+
 
 
 class FinancialYearInline(admin.TabularInline):
@@ -76,9 +99,16 @@ class OrganizationAdmin(admin.ModelAdmin):
             return qs
         return qs.filter(id=request.user.organization.id)
 
+    def message_user(self, *args):
+        pass
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        messages.success(request, _("Changes are successful saved"))
+
     class Media:
         css = {
-             'all': ('css/tabulat-hide-title.css',)
+             'all': ('css/tabular-hide-title.css',)
         }
 
 
@@ -134,7 +164,15 @@ class EmployeeAdmin(admin.TabularInline):
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
     }
+    # def get_formset(self, request, obj=None, **kwargs):
+    #     formset = super().get_formset(request, obj, **kwargs)
+    #     print(dir(formset))
+    #     print(vars(formset.form))
+    #     print(vars(formset))
 
+    #     formset.addText = 'Dodaj novega'
+
+    #     return formset
 
 class PaymentRatioAdmin(LimitedAdmin):
     list_display = [
@@ -144,9 +182,10 @@ class PaymentRatioAdmin(LimitedAdmin):
         EmployeeAdmin,
     ]
     list_filter = ['year', 'organization']
+
     class Media:
         css = {
-             'all': ('css/tabulat-hide-title.css',)
+             'all': ('css/tabular-hide-title.css',)
         }
 
 # finance
@@ -365,7 +404,7 @@ class ProjectAdmin(LimitedAdmin):
 
     class Media:
         css = {
-             'all': ('css/admin-extra.css', 'css/tabulat-hide-title.css',)
+             'all': ('css/admin-extra.css', 'css/tabular-hide-title.css',)
         }
 
 
@@ -449,7 +488,6 @@ class AdminSite(admin.AdminSite):
 
         # insert instructions
         instructions = ''
-        print(url_attrs)
         if url_attrs[0] == 'login':
             pass
         elif url_attrs[0] == 'logout':
@@ -491,11 +529,11 @@ class AdminSite(admin.AdminSite):
             "Instructions": 4,
             "DocumentCategory": 5,
             "Organization": 6,
+            "Document": 9,
             "People": 7,
             "PaymentRatio": 8,
-            "Document": 9,
-            "Donations": 10,
             "Finance": 11,
+            "Donations": 10,
             "ExpensesCategory": 12,
             "RevenueCategory": 13,
             "Project": 14,
@@ -506,14 +544,12 @@ class AdminSite(admin.AdminSite):
         app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
 
         # Sort the models alphabetically within each app.
-        print(app_list)
         for app in app_list:
             delete_idx = []
             app['models'].sort(key=lambda x: ordering[x['object_name']])
             if not request.user.is_superuser:
                 for idx, model in enumerate(app['models']):
                     # find indexes of models for remove
-                    print(model)
                     if model['object_name'] in ['FinancialYear', 'DocumentCategory', 'ExpensesCategory', 'RevenueCategory']:
                         app['models'].remove(model)
                         delete_idx.append(idx)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-17 10:20+0200\n"
+"POT-Creation-Date: 2022-08-18 19:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,47 +19,55 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
 "%100==4 ? 2 : 3);\n"
 
-#: nvo/admin.py:27
+#: nvo/admin.py:28
 msgid "Personal info"
 msgstr "Osebni podatki"
 
-#: nvo/admin.py:28
+#: nvo/admin.py:29
 msgid "Permissions"
 msgstr "Dovoljenja"
 
-#: nvo/admin.py:165
+#: nvo/admin.py:53 nvo/admin.py:93
+msgid "Changes are successful saved"
+msgstr "Spremembe so bile uspešno shranjene."
+
+#: nvo/admin.py:179
+msgid "Dodaj novo"
+msgstr ""
+
+#: nvo/admin.py:205
 msgid "Edit revenues"
 msgstr "Uredi prihodke"
 
-#: nvo/admin.py:170
+#: nvo/admin.py:210
 msgid "Edit expenses"
 msgstr "Uredi odhodke"
 
-#: nvo/admin.py:175 nvo/models.py:246
+#: nvo/admin.py:215 nvo/models.py:246
 msgid "Revenues"
 msgstr "Prihodki*"
 
-#: nvo/admin.py:178 nvo/models.py:252
+#: nvo/admin.py:218 nvo/models.py:252
 msgid "Expenses"
 msgstr "Odhodki*"
 
-#: nvo/admin.py:193 nvo/admin.py:325
+#: nvo/admin.py:233 nvo/admin.py:365
 msgid "By financial year"
 msgstr "Po finančnem letu"
 
-#: nvo/admin.py:255
+#: nvo/admin.py:295
 msgid "Item amount of "
 msgstr "Vrednost postavke "
 
-#: nvo/admin.py:255
+#: nvo/admin.py:295
 msgid " and its children is not valid."
 msgstr " in vrednost njenih podpostavk ni enaka."
 
-#: nvo/admin.py:423
+#: nvo/admin.py:464
 msgid "Odprti računi"
 msgstr "Odprti računi"
 
-#: nvo/admin.py:445
+#: nvo/admin.py:486
 msgid "You need add at least one document for financial year "
 msgstr "Dodati je potrebno vsaj en dokument za finančno leto "
 
@@ -288,7 +296,7 @@ msgstr "Vrednost"
 msgid "Order"
 msgstr "Vrstni red"
 
-#: nvo/models.py:222 nvo/models.py:421 nvo/models.py:422
+#: nvo/models.py:222 nvo/models.py:424 nvo/models.py:425
 msgid "Instructions"
 msgstr "Navodila"
 
@@ -448,27 +456,27 @@ msgstr "Opis projekta"
 msgid "Text"
 msgstr "Text"
 
-#: nvo/models.py:403
+#: nvo/models.py:406
 msgid "Info Text"
 msgstr "Info text"
 
-#: nvo/models.py:404
+#: nvo/models.py:407
 msgid "Info Texts"
 msgstr "Informacijski teksti"
 
-#: nvo/models.py:409
+#: nvo/models.py:412
 msgid "Model"
 msgstr "Model"
 
-#: nvo/models.py:410
+#: nvo/models.py:413
 msgid "Instructions for list of objects"
 msgstr "Navodila za seznam"
 
-#: nvo/models.py:411
+#: nvo/models.py:414
 msgid "Instructions for adding object"
 msgstr "Navodila za dodajanje objekta"
 
-#: nvo/models.py:412
+#: nvo/models.py:415
 msgid "Instructions for edit single object"
 msgstr "Navodila za urejanje objekta"
 
@@ -501,12 +509,13 @@ msgid "basic info info text"
 msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
 
 #: templates/admin/change_list.html:15
+#: templates/registration/password_change_form.html:24
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Prosim popravite spodnje napake."
+msgstr[1] "Prosim popravite spodnje napake."
+msgstr[2] "Prosim popravite spodnje napake."
+msgstr[3] "Prosim popravite spodnje napake."
 
 #: templates/admin/change_list.html:40
 msgid "Filter"
@@ -533,6 +542,7 @@ msgid "Save"
 msgstr "Shrani"
 
 #: templates/registration/logged_out.html:4
+#: templates/registration/password_change_form.html:13
 msgid "Home"
 msgstr "Domov"
 
@@ -543,6 +553,41 @@ msgstr ""
 #: templates/registration/logged_out.html:12
 msgid "Log in again"
 msgstr "Ponovna prijava"
+
+#: templates/registration/password_change_form.html:5
+#, fuzzy
+#| msgid "Document"
+msgid "Documentation"
+msgstr "Letno poročilo"
+
+#: templates/registration/password_change_form.html:5
+msgid "Change password"
+msgstr "Spremeni geslo"
+
+#: templates/registration/password_change_form.html:8
+msgid "Log out"
+msgstr "Odjava"
+
+#: templates/registration/password_change_form.html:14
+msgid "Password change"
+msgstr "Spremeni geslo"
+
+#: templates/registration/password_change_form.html:24
+#, fuzzy
+#| msgid "Please correct the error below."
+#| msgid_plural "Please correct the errors below."
+msgid "Please correct the errors below."
+msgstr "Prosim popravite spodnje napake."
+
+#: templates/registration/password_change_form.html:29
+msgid ""
+"Please enter your old password, for security’s sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr "Vnesi svoje staro geslo in nato vnesi svoje novo geslo dvakrat."
+
+#: templates/registration/password_change_form.html:57
+msgid "Change my password"
+msgstr "Spremeni geslo"
 
 #~ msgid "Perople"
 #~ msgstr "Ljudje"
