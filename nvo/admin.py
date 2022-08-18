@@ -9,12 +9,13 @@ from django.urls import reverse
 
 from mptt.admin import MPTTModelAdmin
 
-
 from nvo.models import (Organization, DocumentCategory, Document, People,
     Employee, User, RevenueCategory, ExpensesCategory, FinancialYear, PaymentRatio,
     Project, Financer, CoFinancer, Partner, Donator, Donations, PersonalDonator,
     OrganiaztionDonator, Instructions, InfoText, Finance
 )
+
+import json
 # Register your models here.
 
 
@@ -34,6 +35,7 @@ class UserAdmin(UserAdmin):
 class LimitedAdmin(admin.ModelAdmin):
     exclude = ['organization']
     readonly_fields = ['year']
+    list_filter = ['year', 'organization']
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -49,6 +51,20 @@ class LimitedAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         messages.success(request, _("Changes are successful saved"))
+
+    def get_inline_formsets(self, request, formsets, inline_instances, obj=None):
+        inline_formsets = super().get_inline_formsets(request, formsets, inline_instances, obj)
+        for inline_formset in inline_formsets:
+            org_func = inline_formset.inline_formset_data
+            def inline_formset_data():
+                data = org_func()
+                data = json.loads(data)
+                data['options']['addText'] = 'Dodaj novo'
+                return json.dumps(data)
+
+            inline_formset.inline_formset_data = inline_formset_data
+        return inline_formsets
+
 
 
 class FinancialYearInline(admin.TabularInline):
@@ -148,16 +164,15 @@ class EmployeeAdmin(admin.TabularInline):
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
     }
-    def get_formset(self, request, obj=None, **kwargs):
-        formset = super().get_formset(request, obj, **kwargs)
-        print(dir(formset))
-        print(vars(formset.form))
-        print(vars(formset))
+    # def get_formset(self, request, obj=None, **kwargs):
+    #     formset = super().get_formset(request, obj, **kwargs)
+    #     print(dir(formset))
+    #     print(vars(formset.form))
+    #     print(vars(formset))
 
-        formset.addText = 'Dodaj novega'
+    #     formset.addText = 'Dodaj novega'
 
-        return formset
-
+    #     return formset
 
 class PaymentRatioAdmin(LimitedAdmin):
     list_display = [
@@ -167,6 +182,7 @@ class PaymentRatioAdmin(LimitedAdmin):
         EmployeeAdmin,
     ]
     list_filter = ['year', 'organization']
+
     class Media:
         css = {
              'all': ('css/tabular-hide-title.css',)
@@ -513,11 +529,11 @@ class AdminSite(admin.AdminSite):
             "Instructions": 4,
             "DocumentCategory": 5,
             "Organization": 6,
+            "Document": 9,
             "People": 7,
             "PaymentRatio": 8,
-            "Document": 9,
-            "Donations": 10,
             "Finance": 11,
+            "Donations": 10,
             "ExpensesCategory": 12,
             "RevenueCategory": 13,
             "Project": 14,

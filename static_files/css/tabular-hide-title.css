@@ -5,7 +5,3 @@
 .original {
     display: none;
 }
-
-tr.add-row td a:after{
-    content: '>>CSS>> Dodaj še enega';
-}
