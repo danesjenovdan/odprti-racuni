@@ -342,7 +342,7 @@ msgstr "Projekt"
 
 #: nvo/models.py:300 nvo/models.py:392
 msgid "Projects"
-msgstr "Projekt"
+msgstr "Projekti"
 
 #: nvo/models.py:310
 msgid "Financer"
