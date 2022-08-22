@@ -12,7 +12,7 @@ from mptt.admin import MPTTModelAdmin
 from nvo.models import (Organization, DocumentCategory, Document, People,
     Employee, User, RevenueCategory, ExpensesCategory, FinancialYear, PaymentRatio,
     Project, Financer, CoFinancer, Partner, Donator, Donations, PersonalDonator,
-    OrganiaztionDonator, Instructions, InfoText, Finance
+    OrganiaztionDonator, Instructions, InfoText, Finance, Embed
 )
 
 import json
@@ -102,16 +102,6 @@ class OrganizationAdmin(admin.ModelAdmin):
     inlines = [
         FinancialYearInline
     ]
-
-    def render_change_form(self, request, context, *args, **kwargs):
-        # here we define a custom template
-        self.change_form_template = 'admin/organization_admin.html'
-        extra = {
-            'preview': f'/{request.user.organization.id}/'
-        }
-
-        context.update(extra)
-        return super().render_change_form(request, context, *args, **kwargs)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -464,6 +454,21 @@ class InfoTextAdmin(LimitedAdmin):
     exclude = ['organization']
 
 
+class EmbedAdmin(admin.ModelAdmin):
+    fields = ['embed_code']
+    readonly_fields = ['embed_code']
+    list_display = [
+        'organization'
+    ]
+
+    def embed_code(self, obj):
+        print("vian")
+        org_id = obj.organization.id
+        return f'<iframe width="560" height="315" src="https://odprtiracuni.lb.djnd.si/{org_id}/" title="Odprti računi"></iframe>'
+
+    embed_code.allow_tags = True
+    embed_code.short_description = _('Koda za vdelavo')
+
 
 class AdminSite(admin.AdminSite):
     site_header = _('Odprti računi')
@@ -531,7 +536,6 @@ class AdminSite(admin.AdminSite):
         Return a sorted list of all the installed apps that have been
         registered in this site.
         """
-        print("Bla bla")
         ordering = {
             "Group": 1,
             "FinancialYear": 2,
@@ -548,6 +552,7 @@ class AdminSite(admin.AdminSite):
             "Project": 13,
             "Donations": 14,
             "InfoText": 15,
+            "Embed": 16
         }
 
         app_dict = self._build_app_dict(request)
@@ -567,6 +572,9 @@ class AdminSite(admin.AdminSite):
                     if model['object_name'] == 'Organization':
                         user_organization_id = request.user.organization_id
                         model['admin_url'] = model['admin_url'] + str(user_organization_id)
+                    # show embed model with id 0
+                    if model['object_name'] == 'Embed':
+                        model['admin_url'] = model['admin_url'] + str(request.user.organization.embeds.first().id)
             # delete models from list for Nvo users
             for idx in reversed(delete_idx):
                 app['models'].pop(idx)
@@ -589,4 +597,5 @@ admin_site.register(Donations, DonationsAdmin)
 admin_site.register(Instructions, InstructionsAdmin)
 admin_site.register(InfoText, InfoTextAdmin)
 admin_site.register(Finance, FinanceAdmin)
+admin_site.register(Embed, EmbedAdmin)
 admin.site = admin_site

@@ -447,3 +447,12 @@ class Instructions(models.Model):
     class Meta:
         verbose_name = _('Instructions')
         verbose_name_plural = _('Instructions')
+
+
+class Embed(models.Model):
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='embeds', verbose_name=_('Organization'))
+    def __str__(self):
+        return ''
+    class Meta:
+        verbose_name = _('Koda za vdelavo')
+        verbose_name_plural = _('Koda za vdelavo')

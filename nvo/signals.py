@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
 from nvo.models import (OrganizationFinancialYear, People, PaymentRatio, Donations, InfoText,
-    Organization, FinancialYear, User, Finance)
+    Organization, FinancialYear, User, Finance, Embed)
 from nvo.utils import create_financial_tree
 
 @receiver(post_save, sender=OrganizationFinancialYear)
@@ -61,6 +61,7 @@ def create_models_for_organization(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Organization)
 def create_organization_financial_year_for_organization(sender, instance, created, **kwargs):
     if created:
+        Embed(organization=instance).save()
         for year in FinancialYear.objects.all():
             OrganizationFinancialYear(
                 financial_year=year,
