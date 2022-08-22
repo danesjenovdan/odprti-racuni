@@ -210,6 +210,10 @@ class Finance(models.Model):
     def __str__(self):
         return f'{_("Finance")} {self.year.name}'
 
+    class Meta:
+        verbose_name = _('Finance')
+        verbose_name_plural = _('Finance')
+
 
 class FinancialCategory(MPTTModel):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='%(class)s_related', verbose_name=_('Organiaztion'))
