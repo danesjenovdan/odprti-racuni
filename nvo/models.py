@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from mptt.models import MPTTModel, TreeForeignKey
 from martor.models import MartorField
 from dateutil import relativedelta
+from datetime import timedelta
 
 from nvo.behaviors.models import Timestampable
 
@@ -133,9 +134,9 @@ class People(models.Model):
         return f'{_("People")} {self.year}'
 
     def get_statistics(self):
-        num_of_men = self.number_of_men
-        num_of_women = self.number_of_women
-        num_of_nonbinary = self.number_of_non_binary
+        num_of_men = self.number_of_men or 0
+        num_of_women = self.number_of_women or 0
+        num_of_nonbinary = self.number_of_non_binary or 0
         all_people = num_of_men + num_of_women + num_of_nonbinary
         if all_people == 0:
             return {}
@@ -286,7 +287,7 @@ class Project(models.Model):
 
     @property
     def duration(self):
-        r = relativedelta.relativedelta(self.end_date, self.start_date) + relativedelta.relativedelta(days=1)
+        r = relativedelta.relativedelta(self.end_date+timedelta(days=1), self.start_date)
         return {
             'days': r.days,
             'months': r.months + r.years * 12,
