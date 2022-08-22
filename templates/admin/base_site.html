@@ -154,6 +154,9 @@
       </div>
     {% endif %}
     </div>
+    {% if preview %}
+    <a href="{{ preview }}"><button type="button" id="instruction-button" class="instruction_collapsible">Poglej stran</button></a>
+    {% endif %}
 {% endblock messages %}
 
 {% block content_title %}{% endblock %}

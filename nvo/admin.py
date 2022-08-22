@@ -12,11 +12,28 @@ from mptt.admin import MPTTModelAdmin
 from nvo.models import (Organization, DocumentCategory, Document, People,
     Employee, User, RevenueCategory, ExpensesCategory, FinancialYear, PaymentRatio,
     Project, Financer, CoFinancer, Partner, Donator, Donations, PersonalDonator,
-    OrganiaztionDonator, Instructions, InfoText, Finance
+    OrganiaztionDonator, Instructions, InfoText, Finance, Embed
 )
 
 import json
 # Register your models here.
+
+
+class SimpleFinanceYearListFilter(admin.SimpleListFilter):
+    title = _('By financial year')
+    parameter_name = 'year'
+
+    def lookups(self, request, model_admin):
+        if request.user.is_superuser:
+            years = FinancialYear.objects.all()
+        else:
+            years = request.user.organization.financial_years.all()
+        return (
+            (year.id, year.name) for year in years
+        )
+
+    def queryset(self, request, queryset):
+        return queryset.filter(year_id=self.value())
 
 
 class UserAdmin(UserAdmin):
@@ -35,7 +52,7 @@ class UserAdmin(UserAdmin):
 class LimitedAdmin(admin.ModelAdmin):
     exclude = ['organization']
     readonly_fields = ['year']
-    list_filter = ['year', 'organization']
+    list_filter = [SimpleFinanceYearListFilter, 'organization']
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -60,7 +77,7 @@ class LimitedAdmin(admin.ModelAdmin):
 
         data = [json.loads(inline_formset.inline_formset_data()) for inline_formset in inline_formsets]
         for item in data:
-            item['options']['addText'] = 'Dodaj novo'
+            item['options']['addText'] = 'Dodaj'
 
         for i, inline_formset in enumerate(inline_formsets):
             def inline_formset_data(data):
@@ -85,16 +102,6 @@ class OrganizationAdmin(admin.ModelAdmin):
     inlines = [
         FinancialYearInline
     ]
-
-    def render_change_form(self, request, context, *args, **kwargs):
-        # here we define a custom template
-        self.change_form_template = 'admin/organization_admin.html'
-        extra = {
-            'preview': "/1/"
-        }
-
-        context.update(extra)
-        return super().render_change_form(request, context, *args, **kwargs)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -128,7 +135,7 @@ class DocumentAdmin(LimitedAdmin):
         'year',
         'organization',
     ]
-    list_filter = ['year', 'organization']
+    list_filter = [SimpleFinanceYearListFilter, 'organization']
     readonly_fields = []
 
     def save_model(self, request, obj, form, change):
@@ -152,7 +159,7 @@ class PeopleAdmin(LimitedAdmin):
         'year',
         'organization',
     ]
-    list_filter = ['year', 'organization']
+    list_filter = [SimpleFinanceYearListFilter, 'organization']
 
 
 class EmployeeAdmin(admin.TabularInline):
@@ -163,7 +170,7 @@ class EmployeeAdmin(admin.TabularInline):
     ]
     model = Employee
     extra = 0
-    list_filter = ['year', 'organization']
+    list_filter = [SimpleFinanceYearListFilter, 'organization']
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
     }
@@ -184,7 +191,7 @@ class PaymentRatioAdmin(LimitedAdmin):
     inlines = [
         EmployeeAdmin,
     ]
-    list_filter = ['year', 'organization']
+    list_filter = [SimpleFinanceYearListFilter, 'organization']
 
     class Media:
         css = {
@@ -197,7 +204,7 @@ class FinanceAdmin(LimitedAdmin):
     list_display = [
         'year',
     ]
-    list_filter = ['year', 'organization']
+    list_filter = [SimpleFinanceYearListFilter, 'organization']
     readonly_fields = ['year']
     exclude = ['organization']
     fields = ['revenues', 'expenses', 'amount_voluntary_work', 'payments_project_partners', 'payment_state_budget', 'difference_payment_state_budget']
@@ -229,9 +236,7 @@ class FinanceChangeListForm(forms.ModelForm):
                 self.fields['additional_name'].widget.attrs['hidden'] = 'hidden'
 
 
-class FinanceYearListFilter(admin.SimpleListFilter):
-    # Human-readable title which will be displayed in the
-    # right admin sidebar just above the filter options.
+class FinanceYearListFilter(SimpleFinanceYearListFilter):
     title = _('By financial year')
 
     # Parameter for the filter that will be used in the URL query.
@@ -258,18 +263,6 @@ class FinanceYearListFilter(admin.SimpleListFilter):
                 'display': title,
             }
 
-
-    def lookups(self, request, model_admin):
-        if request.user.is_superuser:
-            years = FinancialYear.objects.all()
-        else:
-            years = request.user.organization.financial_years.all()
-        return (
-            (year.id, year.name) for year in years
-        )
-
-    def queryset(self, request, queryset):
-        return queryset.filter(year_id=self.value())
 
 class FinacialFormSet(forms.BaseModelFormSet):
     """
@@ -456,10 +449,25 @@ class InfoTextAdmin(LimitedAdmin):
         'card'
     ]
     fields = ['card', 'pre_text', 'text']
-    list_filter = ['year', 'organization', 'card']
+    list_filter = [SimpleFinanceYearListFilter, 'organization', 'card']
     readonly_fields = ['year', 'card', 'pre_text']
     exclude = ['organization']
 
+
+class EmbedAdmin(admin.ModelAdmin):
+    fields = ['embed_code']
+    readonly_fields = ['embed_code']
+    list_display = [
+        'organization'
+    ]
+
+    def embed_code(self, obj):
+        print("vian")
+        org_id = obj.organization.id
+        return f'<iframe width="560" height="315" src="https://odprtiracuni.lb.djnd.si/{org_id}/" title="Odprti računi"></iframe>'
+
+    embed_code.allow_tags = True
+    embed_code.short_description = _('Koda za vdelavo')
 
 
 class AdminSite(admin.AdminSite):
@@ -471,6 +479,7 @@ class AdminSite(admin.AdminSite):
 
     def each_context(self, request):
         url_attrs = []
+        preview = ''
 
         # show misisng data as error
         try:
@@ -480,7 +489,7 @@ class AdminSite(admin.AdminSite):
 
         url_name = request.resolver_match.url_name
         url_attrs = url_name.split('_')
-
+        print(url_attrs)
         if organization and len(url_attrs) > 1:
             if url_attrs[1]=='organization':
                 for financial_year_through in organization.financial_year_through.filter(is_active=True):
@@ -496,6 +505,7 @@ class AdminSite(admin.AdminSite):
         elif url_attrs[0] == 'logout':
             pass
         elif len(url_attrs) == 1:
+            preview = f'/{request.user.organization.id}/'
             instructions = Instructions.objects.filter(model=None).first()
             if instructions and instructions.list_instructions:
                 instructions = instructions.list_instructions
@@ -516,7 +526,8 @@ class AdminSite(admin.AdminSite):
                 instructions = ''
 
         context.update({
-            "instructions": instructions,
+            'instructions': instructions,
+            'preview': preview
         })
         return context
 
@@ -532,15 +543,16 @@ class AdminSite(admin.AdminSite):
             "Instructions": 4,
             "DocumentCategory": 5,
             "Organization": 6,
-            "Document": 9,
-            "People": 7,
-            "PaymentRatio": 8,
-            "Finance": 11,
-            "Donations": 10,
-            "ExpensesCategory": 12,
-            "RevenueCategory": 13,
-            "Project": 14,
+            "Document": 7,
+            "People": 8,
+            "PaymentRatio": 9,
+            "Finance": 10,
+            "ExpensesCategory": 11,
+            "RevenueCategory": 12,
+            "Project": 13,
+            "Donations": 14,
             "InfoText": 15,
+            "Embed": 16
         }
 
         app_dict = self._build_app_dict(request)
@@ -560,9 +572,13 @@ class AdminSite(admin.AdminSite):
                     if model['object_name'] == 'Organization':
                         user_organization_id = request.user.organization_id
                         model['admin_url'] = model['admin_url'] + str(user_organization_id)
+                    # show embed model with id 0
+                    if model['object_name'] == 'Embed':
+                        model['admin_url'] = model['admin_url'] + str(request.user.organization.embeds.first().id)
             # delete models from list for Nvo users
             for idx in reversed(delete_idx):
                 app['models'].pop(idx)
+        print(app_list)
         return app_list
 
 admin_site = AdminSite(name='Odprti računi')
@@ -581,4 +597,5 @@ admin_site.register(Donations, DonationsAdmin)
 admin_site.register(Instructions, InstructionsAdmin)
 admin_site.register(InfoText, InfoTextAdmin)
 admin_site.register(Finance, FinanceAdmin)
+admin_site.register(Embed, EmbedAdmin)
 admin.site = admin_site

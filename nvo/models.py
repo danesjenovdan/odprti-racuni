@@ -10,6 +10,20 @@ from dateutil import relativedelta
 from datetime import timedelta
 
 from nvo.behaviors.models import Timestampable
+from django.core.exceptions import ValidationError
+
+
+def document_size_validator(value): # add this to some file where you can import it from
+    limit = 10 * 1024 * 1024
+    if value.size > limit:
+        raise ValidationError('Datoteka je prevelika. Največja možna velikost je 10 MB.')
+
+def image_validator(image):
+    limit = 1 * 1024 * 1024
+    if image.size > limit:
+        raise ValidationError('Slika je prevelika. Največja možna velikost je 1 MB.')
+
+
 
 # Create your models here.
 
@@ -64,7 +78,10 @@ class OrganizationFinancialYear(models.Model):
 # organization info
 class Organization(models.Model):
     name = models.TextField(verbose_name=_('Organization name'))
-    logo = models.ImageField(null=True, verbose_name=_('Logo'))
+    logo = models.ImageField(
+        null=True,
+        verbose_name=_('Logo'),
+        validators=[image_validator])
     link = models.URLField(null=True, blank=True, verbose_name=_('Organization\'s link'))
     address = models.TextField(null=True, verbose_name=_('Address'))
     post_number = models.TextField(null=True, verbose_name=_('Post number'))
@@ -105,7 +122,9 @@ class Document(models.Model):
     file = models.FileField(
         verbose_name=_('File'),
         validators=[
-            FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx', 'xlsx', 'xls'])]
+            FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx', 'xlsx', 'xls']),
+            document_size_validator
+        ]
     )
     category = models.ForeignKey('DocumentCategory', on_delete=models.CASCADE, verbose_name=_('Category'))
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='documents', verbose_name=_('Organiaztion'))
@@ -402,7 +421,7 @@ class InfoText(models.Model):
         verbose_name=_('Card')
     )
     pre_text = models.TextField(default='', verbose_name=_('Description'))
-    text = models.TextField(default='', verbose_name=_('Text'))
+    text = models.TextField(default='', blank=True, verbose_name=_('Text'))
 
     def __str__(self):
         return f'{self.year}'
@@ -428,3 +447,12 @@ class Instructions(models.Model):
     class Meta:
         verbose_name = _('Instructions')
         verbose_name_plural = _('Instructions')
+
+
+class Embed(models.Model):
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='embeds', verbose_name=_('Organization'))
+    def __str__(self):
+        return ''
+    class Meta:
+        verbose_name = _('Koda za vdelavo')
+        verbose_name_plural = _('Koda za vdelavo')
