@@ -53,16 +53,20 @@ class LimitedAdmin(admin.ModelAdmin):
         messages.success(request, _("Changes are successful saved"))
 
     def get_inline_formsets(self, request, formsets, inline_instances, obj=None):
+        """
+        override inline formsets for rename add text
+        """
         inline_formsets = super().get_inline_formsets(request, formsets, inline_instances, obj)
-        for inline_formset in inline_formsets:
-            org_func = inline_formset.inline_formset_data
-            def inline_formset_data():
-                data = org_func()
-                data = json.loads(data)
-                data['options']['addText'] = 'Dodaj novo'
+
+        data = [json.loads(inline_formset.inline_formset_data()) for inline_formset in inline_formsets]
+        for item in data:
+            item['options']['addText'] = 'Dodaj novo'
+
+        for i, inline_formset in enumerate(inline_formsets):
+            def inline_formset_data(data):
                 return json.dumps(data)
 
-            inline_formset.inline_formset_data = inline_formset_data
+            inline_formsets[i].inline_formset_data = inline_formset_data(data[i])
         return inline_formsets
 
 
