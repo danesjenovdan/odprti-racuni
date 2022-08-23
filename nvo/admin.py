@@ -140,9 +140,10 @@ class DocumentAdmin(LimitedAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.id:
-            user = User.objects.get(id=request.user.id)
-            organization = user.organization
-            obj.organization_id = organization.id
+            print('ni id-ja')
+            obj.organization = request.user.organization
+            print(obj.organization)
+        print('save')
         super().save_model(request, obj, form, change)
 
 
@@ -462,7 +463,6 @@ class EmbedAdmin(admin.ModelAdmin):
     ]
 
     def embed_code(self, obj):
-        print("vian")
         org_id = obj.organization.id
         return f'<iframe width="560" height="315" src="https://odprtiracuni.lb.djnd.si/{org_id}/" title="Odprti računi"></iframe>'
 
@@ -489,7 +489,6 @@ class AdminSite(admin.AdminSite):
 
         url_name = request.resolver_match.url_name
         url_attrs = url_name.split('_')
-        print(url_attrs)
         if organization and len(url_attrs) > 1:
             if url_attrs[1]=='organization':
                 for financial_year_through in organization.financial_year_through.filter(is_active=True):
@@ -505,7 +504,8 @@ class AdminSite(admin.AdminSite):
         elif url_attrs[0] == 'logout':
             pass
         elif len(url_attrs) == 1:
-            preview = f'/{request.user.organization.id}/'
+            if request.user and request.user.organization:
+                preview = f'/{request.user.organization.id}/'
             instructions = Instructions.objects.filter(model=None).first()
             if instructions and instructions.list_instructions:
                 instructions = instructions.list_instructions
