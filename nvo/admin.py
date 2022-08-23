@@ -33,7 +33,10 @@ class SimpleFinanceYearListFilter(admin.SimpleListFilter):
         )
 
     def queryset(self, request, queryset):
-        return queryset.filter(year_id=self.value())
+        if self.value():
+            return queryset.filter(year_id=self.value())
+        else:
+            return queryset
 
 
 class UserAdmin(UserAdmin):
@@ -140,10 +143,7 @@ class DocumentAdmin(LimitedAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.id:
-            print('ni id-ja')
             obj.organization = request.user.organization
-            print(obj.organization)
-        print('save')
         super().save_model(request, obj, form, change)
 
 
@@ -175,15 +175,7 @@ class EmployeeAdmin(admin.TabularInline):
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
     }
-    # def get_formset(self, request, obj=None, **kwargs):
-    #     formset = super().get_formset(request, obj, **kwargs)
-    #     print(dir(formset))
-    #     print(vars(formset.form))
-    #     print(vars(formset))
 
-    #     formset.addText = 'Dodaj novega'
-
-    #     return formset
 
 class PaymentRatioAdmin(LimitedAdmin):
     list_display = [
@@ -578,7 +570,6 @@ class AdminSite(admin.AdminSite):
             # delete models from list for Nvo users
             for idx in reversed(delete_idx):
                 app['models'].pop(idx)
-        print(app_list)
         return app_list
 
 admin_site = AdminSite(name='Odprti računi')
