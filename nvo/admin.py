@@ -53,7 +53,7 @@ class UserAdmin(UserAdmin):
 
 
 class LimitedAdmin(admin.ModelAdmin):
-    exclude = ['organization']
+    exclude = ['organization', 'year']
     readonly_fields = ['year']
     list_filter = [SimpleFinanceYearListFilter, 'organization']
     def get_queryset(self, request):
@@ -188,11 +188,18 @@ class PaymentRatioAdmin(LimitedAdmin):
         EmployeeAdmin,
     ]
     list_filter = [SimpleFinanceYearListFilter, 'organization']
-
+    readonly_fields = ['tmp']
+    fields = ['tmp']
     class Media:
         css = {
              'all': ('css/tabular-hide-title.css',)
         }
+
+    def tmp(self, obj):
+        return obj.year.name
+
+    tmp.short_description = _('Finančno leto')
+
 
 # finance
 

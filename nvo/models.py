@@ -205,7 +205,7 @@ class Employee(models.Model):
     note = models.TextField(verbose_name=_('Note'))
     average_gross_salary = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=_('Average gross selary'))
     job_share = models.IntegerField(
-        default=100,
+        null=True,
         validators=[
             MinValueValidator(1)
             ],
@@ -221,11 +221,11 @@ class Employee(models.Model):
 
 class Finance(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='%(class)s_related', verbose_name=_('Organiaztion'))
-    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE,null=True, blank=True, related_name='%(class)s_related', verbose_name=_('Year'))
-    amount_voluntary_work = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Amount of voluntary work'))
-    payments_project_partners = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Payments to projects partners'))
-    payment_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Payment to the state budget'))
-    difference_payment_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Difference payment state budget'))
+    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE,null=True, related_name='%(class)s_related', verbose_name=_('Year'))
+    amount_voluntary_work = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True, verbose_name=_('Amount of voluntary work'))
+    payments_project_partners = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True, verbose_name=_('Payments to projects partners'))
+    payment_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True, verbose_name=_('Payment to the state budget'))
+    difference_payment_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True, verbose_name=_('Difference payment state budget'))
 
     def __str__(self):
         return f'{_("Finance")} {self.year.name}'
