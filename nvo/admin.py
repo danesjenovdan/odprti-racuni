@@ -262,15 +262,19 @@ class FinacialFormSet(forms.BaseModelFormSet):
     This formset is used for validate amounts in finance admin view
     """
     def clean(self):
-        form_set = self.cleaned_data
-        root_node = form_set[0]['id']
+        super().clean()
+        form_set = self.data
+        form_set = self.forms
+        root_node = form_set[0].instance
 
         # create pairs from formset {node_id: node_amount, ...}
-        self.enumerated_amounts = {
-            node['id'].id: node['amount'] for node in form_set
-        }
-        self.clean_branch(root_node)
+        self.enumerated_amounts = {}
+        for node in form_set:
+            if not 'amount' in node.cleaned_data.keys():
+                continue
+            self.enumerated_amounts[node.instance.id] = node.cleaned_data['amount']
 
+        self.clean_branch(root_node)
         return form_set
 
     def clean_branch(self, root_node):
@@ -566,7 +570,10 @@ class AdminSite(admin.AdminSite):
                         model['admin_url'] = model['admin_url'] + str(user_organization_id)
                     # show embed model with id 0
                     if model['object_name'] == 'Embed':
-                        model['admin_url'] = model['admin_url'] + str(request.user.organization.embeds.first().id)
+                        try:
+                            model['admin_url'] = model['admin_url'] + str(request.user.organization.embeds.first().id)
+                        except:
+                            model['admin_url'] = model['admin_url'] + '1'
             # delete models from list for Nvo users
             for idx in reversed(delete_idx):
                 app['models'].pop(idx)
