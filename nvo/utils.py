@@ -8,7 +8,7 @@ revenue_data = {
         {'name': 'Sponzorstvo', 'order': 3, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Produkti in storitve', 'order': 4, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Donacije in subvencije', 'parent': 0, 'order': 5, 'allow_additional_name': False},
-        {'name': 'Donacije', 'order': 6, 'parent': 4, 'allow_additional_name': False},
+        {'name': 'Donacije fizičnih oseb', 'order': 6, 'parent': 4, 'allow_additional_name': False},
         {'name': 'Javna sredstva', 'order': 7, 'parent': 4, 'allow_additional_name': False},
         {'name': 'Državna sredstva', 'order': 8, 'parent': 6, 'allow_additional_name': False},
         {'name': 'Občinska sredstva', 'order': 9, 'parent': 6, 'allow_additional_name': False},
