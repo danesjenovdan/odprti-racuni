@@ -21,7 +21,7 @@
                         <h4 onclick="showHide('{{ forloop.counter }}')">{{ project.name }}</h4>
                         <div class="additional-info-mobile">
                             <i>Vrednost projekta (delež organizacije / celota)</i>
-                            <p>{{ project.org_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
+                            <p>{{ project.organization_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
                         </div>
                         <div class="more">
                             <div class="horizontal-divider"></div>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="vertical-separator"></div>
                 <div class="sidebar">
-                    <p onclick="showHide('{{ forloop.counter }}')">{{ project.org_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
+                    <p onclick="showHide('{{ forloop.counter }}')">{{ project.organization_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
                     <div class="more">
                         <div class="horizontal-divider"></div>
                         <i>Trajanje projekta</i>
@@ -83,7 +83,7 @@
                         {% endif %}
                         <p>
                             <i>Lastni vložek</i>
-                            <b>{{ project.org_share|floatformat:2 }} EUR</b>
+                            <b>{{ project.self_money|floatformat:2 }} EUR</b>
                         </p>
                         {% if project.donators.all %}
                         <p>
