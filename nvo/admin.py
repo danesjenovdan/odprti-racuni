@@ -431,9 +431,8 @@ class DonationsAdmin(LimitedAdmin):
 
     class Media:
         css = {
-             'all': ('css/admin-extra.css',)
-        }
-
+             'all': ('css/admin-extra.css', 'css/tabular-hide-title.css'),
+       }
 class InstructionsAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         # TODO

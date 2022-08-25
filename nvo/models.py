@@ -285,6 +285,7 @@ class Project(models.Model):
     outcomes_and_impacts = MartorField(verbose_name=_('Project\'s outcomes and impacts'))
     link = models.URLField(null=True, blank=True, verbose_name=_('Project\'s link'))
     value = models.IntegerField(verbose_name=_('Total value'))
+    self_money = models.IntegerField(null=True, blank=True, verbose_name=_('Self money'))
     organization_share = models.IntegerField(
         verbose_name=_('Organization share'),
         validators=[
@@ -313,7 +314,7 @@ class Project(models.Model):
         }
 
     def __str__(self):
-        return f'{_("Project: ")} {self.name}'
+        return f''
 
     class Meta:
         verbose_name = _('Project')
