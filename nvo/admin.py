@@ -284,8 +284,8 @@ class FinacialFormSet(forms.BaseModelFormSet):
         children = root_node.get_children()
         if children:
             # get node amount from formset
-            childen_amount = sum([self.enumerated_amounts[child.id] for child in children])
-            root_amount = self.enumerated_amounts[root_node.id]
+            childen_amount = sum([self.enumerated_amounts.get(child.id, 0) for child in children])
+            root_amount = self.enumerated_amounts.get(root_node.id, 0)
             if root_amount != childen_amount:
                 raise forms.ValidationError(_('Item amount of ') + root_node.name + _(' and its children is not valid.') + f'{root_amount} != {childen_amount}')
             for child in children:
