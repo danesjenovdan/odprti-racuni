@@ -70,7 +70,10 @@ class LimitedAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
-        messages.success(request, _("Changes are successful saved"))
+        if ('revenuecategory' in request.resolver_match.route) or ('expensescategory' in request.resolver_match.route):
+            pass
+        else:
+            messages.success(request, _("Changes are successful saved"))
 
     def get_inline_formsets(self, request, formsets, inline_instances, obj=None):
         """
