@@ -22,7 +22,7 @@
                     <i>Matična številka:</i> {{ organization.registration_number }}
                 </p>
                 <p>
-                    <i>Kontakt:</i> {{ organization.email }}, {{ organization.phone_number }}
+                    <i>Kontakt:</i> {{ organization.email }}{% if organization.phone_number %}, {{ organization.phone_number }}{% endif %}
                 </p>
                 <p>
                     <i>Zastopnik_ca:</i> {{ organization.representative }}
@@ -30,8 +30,10 @@
                 <p>
                     <i>TRR:</i> {{ organization.trr }}
                 </p>
-        
+                
+                {% if organization.is_charity or organization.is_for_the_public_good %}
                 <div class="horizontal-divider"></div>
+                {% endif %}
                 
                 {% if organization.is_charity %}
                     <p class="note">

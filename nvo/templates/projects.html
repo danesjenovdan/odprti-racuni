@@ -15,7 +15,7 @@
             <div class="card-with-sidebar">
                 <div class="main">
                     <div class="show-hide-wrapper">
-                        <img src="{% static '/images/icons/projekti-puscica.svg' %}" class="show-hide-button" alt="Puščica, ki kaže desno. Ob razširitvi kartice se zavrti za 90 stopinj in kaže navzdol." />
+                        <img src="{% static '/images/icons/projekti-puscica.svg' %}" class="show-hide-button" alt="Puščica, ki kaže desno. Ob razširitvi kartice se zavrti za 90 stopinj in kaže navzdol." onclick="showHide('{{ forloop.counter }}')" />
                     </div>
                     <div>
                         <h4 onclick="showHide('{{ forloop.counter }}')">{{ project.name }}</h4>

@@ -101,6 +101,7 @@
 
     .instructions-body {
       color: #e0e0e0;
+      background-color: black;
     }
 
   }
@@ -143,8 +144,8 @@
     {% endif %}
     <div style="min-height: 40px;">
       {% if instructions %}
-      <button type="button" onclick="toogle_instructions()" id="instruction-button" class="instruction_collapsible">Prikaži navodila</button>
-      <div id="instruction_content" class="instructions hidden">
+      <button type="button" onclick="toogle_instructions()" id="instruction-button" class="instruction_collapsible">Skrij navodila</button>
+      <div id="instruction_content" class="instructions">
         <div class="instructions-header">
           <h4>Navodila</h4>
         </div>
