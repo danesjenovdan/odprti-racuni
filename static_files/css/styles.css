@@ -18,7 +18,7 @@ ul {
 }
 
 .card {
-    max-width: 980px;
+    max-width: 978px;
     font-family: 'Roboto', sans-serif;
     border: 1px solid #d1d7df;
     background-color: #ffffff;
@@ -340,6 +340,7 @@ ul {
 }
 
 .show-hide-button {
+    cursor: pointer;
     width: 18px;
     transition: transform 0.25s ease-out;
 }
@@ -893,7 +894,7 @@ ul {
 }
 
 .donator-list-element span {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .info,
