@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotFound
 
 from nvo.models import (Organization, FinancialYear, Document, OrganizationFinancialYear, People, PaymentRatio, RevenueCategory,
-    ExpensesCategory, Donations, InfoText)
+    ExpensesCategory, Donations, InfoText, Finance)
 
 from nvo.utils import clean_chart_data
 
@@ -34,7 +34,10 @@ def organization_basic_info(request, organization_id, year):
 
     payment_ratio = get_object_or_404(PaymentRatio, year=year, organization=organization)
 
-    info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.BASICINFO).first()
+    info_text_basic_info = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.BASICINFO).first()
+    info_text_yearly_reports = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.YEARLYREPORTS).first()
+    info_text_people = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.PEOPLE).first()
+    info_text_payment_ratios = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.PAYMENTRATIOS).first()
 
     # get donations to decide whether to render the Donations menu item
     donations = get_object_or_404(Donations, year=year, organization=organization)
@@ -48,13 +51,19 @@ def organization_basic_info(request, organization_id, year):
             'people': people,
             'people_statistics': people.get_statistics(),
             'payment_ratio': payment_ratio.get_statistics(),
-            'info_text': info_text,
+            'info_texts': {
+                'basic_info': info_text_basic_info,
+                'yearly_reports': info_text_yearly_reports,
+                'people': info_text_people,
+                'payment_ratios': info_text_payment_ratios
+            },
             'donation': donations,
         })
 
 def get_finance(request, organization_id, year):
     organization = get_object_or_404(Organization, pk=organization_id)
     year = get_object_or_404(FinancialYear, name=year)
+    finance = get_object_or_404(Finance, organization=organization, year=year)
 
     get_object_or_404(
         OrganizationFinancialYear,
@@ -90,12 +99,7 @@ def get_finance(request, organization_id, year):
             'expenses': [expense.get_json_tree() for expense in expenses if expense.amount],
             'total_income': total_income,
             'total_expense': total_expense,
-            'other_finances': {
-                'volunteers': 45000,
-                'partners': 50000,
-                'RS_budget': 67000,
-                'RS_budget_received_vs_contributed': -22000
-            },
+            'other_finances': finance,
             'organization': organization,
             'info_text': info_text,
             'expenses_json': expenses_chart_data,

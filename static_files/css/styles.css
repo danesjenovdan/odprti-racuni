@@ -942,6 +942,10 @@ ul {
     }
 }
 
+.info-content i {
+    margin-bottom: 6px;
+}
+
 .info-content p {
     font-size: 12px;
     line-height: 14px;
