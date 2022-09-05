@@ -469,7 +469,12 @@ class EmbedAdmin(admin.ModelAdmin):
 
     def embed_code(self, obj):
         org_id = obj.organization.id
-        return f'<iframe width="560" height="315" src="https://odprtiracuni.lb.djnd.si/{org_id}/" title="Odprti računi"></iframe>'
+        return f'''
+        <iframe id="odprti-racuni" frameborder="0" width="980" style="max-width:980px;" src="https://odprtiracuni.lb.djnd.si/info/{org_id}/"></iframe>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
+        <script>iFrameResize({{checkOrigin:false}},'#odprti-racuni');</script>
+        '''
+
 
     embed_code.allow_tags = True
     embed_code.short_description = _('Koda za vdelavo')
