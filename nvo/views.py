@@ -80,11 +80,13 @@ def get_finance(request, organization_id, year):
     info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.FINANCE).first()
 
     revenue_chart_data = clean_chart_data({
-        'name': 'revenue',
+        'name': total_income.name,
+        'amount': total_income.amount,
         'children': [revenue.get_json_tree() for revenue in revenues if revenue.amount]
     })
     expenses_chart_data = clean_chart_data({
-        'name': 'expenses',
+        'name': total_expense.name,
+        'amount': total_expense.amount,
         'children': [expense.get_json_tree() for expense in expenses if expense.amount]
     })
 

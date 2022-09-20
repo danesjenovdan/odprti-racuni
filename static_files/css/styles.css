@@ -663,7 +663,7 @@ ul {
     .finance-tree.income-tree,
     .finance-tree.expense-tree,
     .finances-graph {
-       padding-left: 50px;
+       /* padding-left: 50px; */
        margin-right: 20px;
     }
 }
