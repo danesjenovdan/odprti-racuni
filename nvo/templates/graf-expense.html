@@ -19,12 +19,12 @@
     linkTarget = "_blank", // the target attribute for links (if any)
     width = 430, // outer width, in pixels
     height = 400, // outer height, in pixels
-    margin = -5, // account for padding
+    margin = 0, // account for padding
     marginTop = margin, // top margin, in pixels
     marginRight = margin, // right margin, in pixels
     marginBottom = margin, // bottom margin, in pixels
     marginLeft = margin, // left margin, in pixels
-    padding = 5, // cell padding, in pixels
+    padding = 0, // cell padding, in pixels
     round = false, // whether to round to exact pixels
     color = ["#feddd6", "#fcbbac", "#d49182"], // colors array
     fill = "#fa8e75", // fill for node rects (if no color encoding)
@@ -41,14 +41,14 @@
       id != null || parentId != null ? d3.stratify().id(id).parentId(parentId)(data) :
       d3.hierarchy(data, children);
 
+    let focus = root;
+
     // Compute the values of internal nodes by aggregating from the leaves.
     value == null ? root.count() : root.sum(d => Math.max(0, value(d)));
 
     // Compute the partition layout. Note that x and y are swapped!
     d3.partition()
-      .size([height, width])
-      .padding(padding)
-      .round(round)
+      .size([height, (root.height + 1) * width / 3])
       (root);    
 
     // Add colors and font sizes
@@ -79,35 +79,72 @@
       .attr("target", link == null ? null : linkTarget)
       .attr("transform", d => `translate(${d.y0},${d.x0})`);
 
-    cell.append("rect")
+    const rect = cell.append("rect")
       .attr("width", d => d.y1 - d.y0)
-      .attr("height", d => d.x1 - d.x0)
+      .attr("height", d => rectHeight(d))
       .attr("fill", d => d.color ? d.color : fill)
-      .attr("stroke", "#929aa1");
+      .attr("stroke", "#929aa1")
+      .attr("stroke-width", 0.5)
 
     const textContainer = cell.append("foreignObject")
       .attr("width", d => d.y1 - d.y0)
-      .attr("height", d => d.x1 - d.x0)
-      .append("xhtml:div")
+      .attr("height", d => rectHeight(d))
+      
+    const div = textContainer.append("xhtml:div")
       .attr("title", d => title(d.data)) // tooltip
       .style("height", "100%")
       .style("display", "flex")
       .style("flex-direction", "column")
       .style("justify-content", "center")
+      .on("click", clicked)
+      .style("cursor", "pointer")
 
-    textContainer.filter(d => d.x1 - d.x0 > 5).append("h6")
+    div.append("xhtml:h6")
       .style("font-size", d => d.fontSize)
+      .style("pointer-events", "none")
+      .style("user-select", "none")
       .text(d => label(d.data));
 
-    textContainer.filter(d => d.x1 - d.x0 > 5).append("p")
+    div.append("xhtml:p")
       .text(d => d.value.toLocaleString("sl"))
+      .style("pointer-events", "none")
+      .style("user-select", "none")
       .style("font-size", d => d.fontSize);
+
+    function clicked(event, p) {
+      focus = focus === p ? p = p.parent : p;
+
+      root.each(d => d.target = {
+        x0: (d.x0 - p.x0) / (p.x1 - p.x0) * height,
+        x1: (d.x1 - p.x0) / (p.x1 - p.x0) * height,
+        y0: d.y0 - p.y0,
+        y1: d.y1 - p.y0
+      });
+
+      const t = cell.transition().duration(750).attr("transform", d => `translate(${d.target.y0},${d.target.x0})`);
+      rect.transition(t).attr("height", d => rectHeight(d.target));
+      textContainer.transition(t).attr("height", d => rectHeight(d.target));;
+    }
+    
+    function rectHeight(d) {
+      return d.x1 - d.x0;
+    }
 
     return svg.node();
   }
 </script>
 
 <style>
+  #graf-expense {
+    display: flex;
+  }
+
+  @media (min-width: 992px) {
+    #graf-expense {
+      justify-content: end;
+    }
+  }
+
   #graf-expense svg h6 {
     margin-top: 0;
     margin-bottom: 0;
@@ -129,7 +166,7 @@
 </style>
 
 <!-- the container for the icicle charts -->
-<div id="graf-expense" style="display: flex;"></div>
+<div id="graf-expense"></div>
 
 <!-- parse data and display charts -->
 <script>

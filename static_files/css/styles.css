@@ -659,15 +659,6 @@ ul {
     margin: 10px 0;
 }
 
-@media (min-width: 576px) {
-    .finance-tree.income-tree,
-    .finance-tree.expense-tree,
-    .finances-graph {
-       /* padding-left: 50px; */
-       margin-right: 20px;
-    }
-}
-
 .finance-tree-element {
     list-style-type: none;
     padding-left: 20px;
