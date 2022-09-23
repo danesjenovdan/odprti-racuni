@@ -70,6 +70,7 @@
       .attr("width", width)
       .attr("height", height)
       .attr("style", "max-width: 100%;")
+      .attr("aria-hidden", "true")
 
     const cell = svg
       .selectAll("a")
@@ -90,26 +91,26 @@
       .attr("width", d => d.y1 - d.y0)
       .attr("height", d => rectHeight(d))
       
-    const div = textContainer.append("xhtml:div")
-      .attr("title", d => title(d.data)) // tooltip
-      .style("height", "100%")
-      .style("display", "flex")
-      .style("flex-direction", "column")
-      .style("justify-content", "center")
+    const button = textContainer.append("xhtml:button")
       .on("click", clicked)
-      .style("cursor", "pointer")
+      .attr("aria-labelledby", d => `${d.data.name.replace(/\W/g,'-')}`)
       
-    div.append("xhtml:h6")
+    button.append("xhtml:h6")
       .style("font-size", d => d.fontSize)
       .style("pointer-events", "none")
       .style("user-select", "none")
       .text(d => label(d.data));
 
-    div.append("xhtml:p")
+    button.append("xhtml:p")
       .text(d => d.value.toLocaleString("sl"))
       .style("pointer-events", "none")
       .style("user-select", "none")
       .style("font-size", d => d.fontSize);
+
+    const tooltip = textContainer.append("xhtml:div")
+      .attr("role", "tooltip")
+      .attr("id", d => `${d.data.name.replace(/\W/g,'-')}`)
+      .text(d => `Prihodki za kategorijo ${d.data.name} so v vrednosti ${d.data.amount} EUR.`)
 
     
     function clicked(event, p) {
@@ -136,6 +137,42 @@
 </script>
 
 <style>
+  #graf-income svg button {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    text-align: left;
+  }
+
+  [role="tooltip"] {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 10px;
+    color: white;
+    background: black;
+    margin: 10px;
+    padding: 6px;
+    pointer-events: none;
+    transition: all 250ms linear;
+  }
+
+  #graf-income svg button:hover + [role="tooltip"],
+  #graf-income svg button:focus + [role="tooltip"] {  
+    opacity: 0.9 !important;
+  }
+
+  foreignObject {
+    position: relative;
+  }
+
   #graf-income svg h6 {
     margin-top: 0;
     margin-bottom: 0;
@@ -157,7 +194,10 @@
 </style>
 
 <!-- the container for the icicle charts -->
-<div id="graf-income" style="display: flex;"></div>
+<div id="graf-income" style="display: flex;" role="img" aria-label="Graf prihodkov" aria-describedby="finances-income-graph"></div>
+<p id="finances-income-graph" hidden="">
+  Graf z informacijami o različnih virih prihodkov in njihovih vrednostih. Celoten prihodek organizacije je <span id="finances-income-graph-amount"></span> EUR, za več informacij pa preverite tabelo.
+</p>
 
 <!-- parse data and display charts -->
 <script>
@@ -172,4 +212,6 @@
 
   const containerIncome = document.getElementById('graf-income');
   containerIncome.append(revenueChart);
+
+  document.getElementById('finances-income-graph-amount').textContent = revenue["amount"];
 </script>
