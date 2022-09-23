@@ -901,6 +901,8 @@ ul {
     .info,
     .share {
         top: 20px;
+        overflow-y: scroll;
+        max-height: 485px;
     }
 }
 

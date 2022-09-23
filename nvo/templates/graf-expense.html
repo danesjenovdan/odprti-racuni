@@ -109,6 +109,7 @@
 
     const tooltip = textContainer.append("xhtml:div")
       .attr("role", "tooltip")
+      .attr("class", "graph-tooltip")
       .attr("id", d => `${d.data.name.replace(/\W/g,'-')}`)
       .text(d => `Odhodki za kategorijo ${d.data.name} so v vrednosti ${d.data.amount} EUR.`)
 
@@ -146,8 +147,8 @@
     }
   }
 
-  #graf-expense svg button:hover + [role="tooltip"],
-  #graf-expense svg button:focus + [role="tooltip"] { 
+  #graf-expense svg button:hover + .graph-tooltip,
+  #graf-expense svg button:focus + .graph-tooltip { 
     opacity: 0.9 !important;
   }
 
