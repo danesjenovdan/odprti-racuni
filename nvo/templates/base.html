@@ -115,66 +115,55 @@
                 $("#footer-share-button").hide();
             }
 
-            const body = Array.from(document.getElementsByClassName('body'));
+            // hide swiping
+            // const body = Array.from(document.getElementsByClassName('body'));
 
-            body.forEach(el => {
-                el.addEventListener('touchstart', function (event) {
-                    touchstartX = event.changedTouches[0].screenX;
-                    touchstartY = event.changedTouches[0].screenY;
-                }, false);
+            // body.forEach(el => {
+            //     el.addEventListener('touchstart', function (event) {
+            //         touchstartX = event.changedTouches[0].screenX;
+            //         touchstartY = event.changedTouches[0].screenY;
+            //     }, false);
 
-                el.addEventListener('touchend', function (event) {
-                    touchendX = event.changedTouches[0].screenX;
-                    touchendY = event.changedTouches[0].screenY;
+            //     el.addEventListener('touchend', function (event) {
+            //         touchendX = event.changedTouches[0].screenX;
+            //         touchendY = event.changedTouches[0].screenY;
                     
-                    if ($(".content").hasClass("active")) {
-                        handleGestureContent();
-                    } else if ($(".info").hasClass("active")) {
-                        handleGestureInfo();
-                    } else if ($(".share").hasClass("active")) {
-                        handleGestureShare();
-                    }
+            //         if ($(".content").hasClass("active")) {
+            //             handleGestureContent();
+            //         } else if ($(".info").hasClass("active")) {
+            //             handleGestureInfo();
+            //         } else if ($(".share").hasClass("active")) {
+            //             handleGestureShare();
+            //         }
                     
-                }, false);
-            });
+            //     }, false);
+            // });
 
-            function handleGestureContent() {
-                if (Math.abs(touchendY - touchstartY) < 50 && touchendX < touchstartX - 50) {
-                    // console.log('Swiped Left');
-                    showShare();
-                }
+            // function handleGestureContent() {
+            //     if (Math.abs(touchendY - touchstartY) < 50 && touchendX < touchstartX - 50) {
+            //         // console.log('Swiped Left');
+            //         showShare();
+            //     }
 
-                if (Math.abs(touchendY - touchstartY) < 50 && touchendX > touchstartX + 50) {
-                    // console.log('Swiped Right');
-                    showInfo();
-                }
+            //     if (Math.abs(touchendY - touchstartY) < 50 && touchendX > touchstartX + 50) {
+            //         // console.log('Swiped Right');
+            //         showInfo();
+            //     }
+            // }
 
-                // if (touchendY < touchstartY) {
-                //     console.log('Swiped Up');
-                // }
+            // function handleGestureInfo() {
+            //     if (Math.abs(touchendY - touchstartY) < 50 && touchendX < touchstartX - 50) {
+            //         // console.log('Swiped Left');
+            //         showContent();
+            //     }
+            // }
 
-                // if (touchendY > touchstartY) {
-                //     console.log('Swiped Down');
-                // }
-
-                // if (touchendY === touchstartY) {
-                //     console.log('Tap');
-                // }
-            }
-
-            function handleGestureInfo() {
-                if (Math.abs(touchendY - touchstartY) < 50 && touchendX < touchstartX - 50) {
-                    // console.log('Swiped Left');
-                    showContent();
-                }
-            }
-
-            function handleGestureShare() {
-                if (Math.abs(touchendY - touchstartY) < 50 && touchendX > touchstartX + 50) {
-                    // console.log('Swiped Right');
-                    showContent();
-                }
-            }
+            // function handleGestureShare() {
+            //     if (Math.abs(touchendY - touchstartY) < 50 && touchendX > touchstartX + 50) {
+            //         // console.log('Swiped Right');
+            //         showContent();
+            //     }
+            // }
             
             $(document).ready(function() {
                 $("#share-url").val(window.location.href);

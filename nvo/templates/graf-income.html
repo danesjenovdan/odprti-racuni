@@ -109,6 +109,7 @@
 
     const tooltip = textContainer.append("xhtml:div")
       .attr("role", "tooltip")
+      .attr("class", "graph-tooltip")
       .attr("id", d => `${d.data.name.replace(/\W/g,'-')}`)
       .text(d => `Prihodki za kategorijo ${d.data.name} so v vrednosti ${d.data.amount} EUR.`)
 
@@ -150,7 +151,7 @@
     text-align: left;
   }
 
-  [role="tooltip"] {
+  .graph-tooltip {
     opacity: 0;
     position: absolute;
     left: 0;
@@ -164,8 +165,8 @@
     transition: all 250ms linear;
   }
 
-  #graf-income svg button:hover + [role="tooltip"],
-  #graf-income svg button:focus + [role="tooltip"] {  
+  #graf-income svg button:hover + .graph-tooltip,
+  #graf-income svg button:focus + .graph-tooltip {  
     opacity: 0.9 !important;
   }
 
