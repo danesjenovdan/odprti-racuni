@@ -48,7 +48,7 @@
 
     // Compute the partition layout. Note that x and y are swapped!
     d3.partition()
-      .size([height, (root.height + 1) * width / 3])
+      .size([height, (root.height + 1) * width / 4])
       (root);    
 
     // Add colors and font sizes
@@ -107,11 +107,15 @@
       .style("user-select", "none")
       .style("font-size", d => d.fontSize);
 
-    const tooltip = textContainer.append("xhtml:div")
-      .attr("role", "tooltip")
-      .attr("class", "graph-tooltip")
-      .attr("id", d => `${d.data.name.replace(/\W/g,'-')}`)
-      .text(d => `Odhodki za kategorijo ${d.data.name} so v vrednosti ${d.data.amount} EUR.`)
+    const back = button.append("xhtml:div")
+      .attr("class", "back-button")
+      .style("opacity", d => d.depth > 0 && d.x0 == 0 && d.y0 == 0 ? 1 : 0);
+
+    // const tooltip = textContainer.append("xhtml:div")
+    //   .attr("role", "tooltip")
+    //   .attr("class", "graph-tooltip")
+    //   .attr("id", d => `${d.data.name.replace(/\W/g,'-')}`)
+    //   .text(d => `Odhodki za kategorijo ${d.data.name} so v vrednosti ${d.data.amount} EUR.`)
 
     function clicked(event, p) {
       focus = focus === p ? p = p.parent : p;
@@ -125,6 +129,7 @@
 
       const t = cell.transition().duration(750).attr("transform", d => `translate(${d.target.y0},${d.target.x0})`);
       rect.transition(t).attr("height", d => rectHeight(d.target));
+      back.transition().duration(750).style("opacity", d => d.depth > 0 && d.target.x0 == 0 && d.target.y0 == 0 ? 1 : 0);
       textContainer.transition(t).attr("height", d => rectHeight(d.target));;
     }
     
@@ -135,55 +140,6 @@
     return svg.node();
   }
 </script>
-
-<style>
-  #graf-expense {
-    display: flex;
-  }
-
-  @media (min-width: 992px) {
-    #graf-expense {
-      justify-content: end;
-    }
-  }
-
-  #graf-expense svg button:hover + .graph-tooltip,
-  #graf-expense svg button:focus + .graph-tooltip { 
-    opacity: 0.9 !important;
-  }
-
-  #graf-expense svg button {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    cursor: pointer;
-    border: none;
-    border-radius: 0;
-    background-color: transparent;
-    text-align: left;
-  }
-
-  #graf-expense svg h6 {
-    margin-top: 0;
-    margin-bottom: 0;
-    color: black;
-    font-weight: 500;
-    font-style: italic;
-    font-family: 'Roboto', sans-serif;
-    line-height: 1;
-    padding: 0 10px;
-  }
-
-  #graf-expense svg p {
-    margin-bottom: 0;
-    color: black;
-    font-family: 'Roboto', sans-serif;
-    line-height: normal;
-    padding: 0 10px;
-  }
-</style>
 
 <!-- the container for the icicle charts -->
 <div id="graf-expense" role="img" aria-label="Graf odhodkov" aria-describedby="finances-expense-graph"></div>

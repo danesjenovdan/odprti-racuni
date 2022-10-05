@@ -955,3 +955,91 @@ ul {
     color: #39444e;
     padding: 0 15px;
 }
+
+/* GRAFI ZA FINANCE */
+
+.graph-tooltip {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 10px;
+    color: white;
+    background: black;
+    margin: 10px;
+    padding: 6px;
+    pointer-events: none;
+    transition: all 250ms linear;
+}
+
+foreignObject {
+    position: relative;
+}
+
+#graf-expense {
+    display: flex;
+}
+
+@media (min-width: 992px) {
+    #graf-expense {
+        justify-content: end;
+    }
+}
+
+#graf-income .back-button,
+#graf-expense .back-button {
+    background-image: url('../images/icons/nazaj.svg');
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#graf-income svg button,
+#graf-expense svg button {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    text-align: left;
+}
+
+#graf-income svg button:hover + .graph-tooltip,
+#graf-income svg button:focus + .graph-tooltip,
+#graf-expense svg button:hover + .graph-tooltip,
+#graf-expense svg button:focus + .graph-tooltip {  
+    opacity: 0.9 !important;
+}
+
+#graf-income svg button:focus,
+#graf-expense svg button:focus {
+    border: 1px solid black;
+}
+
+#graf-income svg h6,
+#graf-expense svg h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: black;
+    font-weight: 500;
+    font-style: italic;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    padding: 0 10px;
+}
+
+#graf-income svg p,
+#graf-expense svg p {
+    margin-bottom: 0;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    line-height: normal;
+    padding: 0 10px;
+}
