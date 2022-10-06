@@ -141,6 +141,7 @@ class DocumentAdmin(LimitedAdmin):
         'year',
         'organization',
     ]
+    exclude = ['organization']
     list_filter = [SimpleFinanceYearListFilter, 'organization']
     readonly_fields = []
 
