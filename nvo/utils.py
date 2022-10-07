@@ -5,7 +5,7 @@ revenue_data = {
     'nodes': [
         {'name': 'Skupni prihodki', 'order': 1, 'allow_additional_name': False},
         {'name': 'Tržna dejavnost', 'parent': 0, 'order': 2, 'allow_additional_name': False},
-        {'name': 'Sponzorstvo', 'order': 3, 'parent': 1, 'allow_additional_name': False},
+        {'name': 'Sponzorstva', 'order': 3, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Produkti in storitve', 'order': 4, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Donacije in subvencije', 'parent': 0, 'order': 5, 'allow_additional_name': False},
         {'name': 'Donacije fizičnih oseb', 'order': 6, 'parent': 4, 'allow_additional_name': False},
