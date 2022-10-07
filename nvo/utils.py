@@ -24,7 +24,7 @@ expenses_data = {
     'model': ExpensesCategory,
     'nodes': [
         {'name': 'Skupni odhodki', 'order': 1, 'allow_additional_name': False},
-        {'name': 'Material in storitev', 'parent': 0,'order': 2, 'allow_additional_name': False},
+        {'name': 'Materiali in storitve', 'parent': 0,'order': 2, 'allow_additional_name': False},
         {'name': 'Redno delovanje', 'order': 3, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Zunanje storitve in izvajalci', 'order': 4, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Potni stroški', 'order': 5, 'parent': 1, 'allow_additional_name': False},

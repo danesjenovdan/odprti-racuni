@@ -282,7 +282,7 @@ msgstr "Vplačila v proračun RS"
 
 #: nvo/models.py:228
 msgid "Difference payment state budget"
-msgstr "Razlika med vplačanimi in pridobljenimi proračunskimi sredstvi v RS"
+msgstr "Pridobljena proračunska sredstva v RS"
 
 #: nvo/models.py:234 nvo/models.py:235 nvo/models.py:415
 msgid "Finance"

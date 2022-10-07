@@ -54,7 +54,7 @@ class UserAdmin(UserAdmin):
 
 class LimitedAdmin(admin.ModelAdmin):
     exclude = ['organization', 'year']
-    readonly_fields = ['year']
+    #readonly_fields = ['year']
     list_filter = [SimpleFinanceYearListFilter, 'organization']
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -189,17 +189,10 @@ class PaymentRatioAdmin(LimitedAdmin):
         EmployeeAdmin,
     ]
     list_filter = [SimpleFinanceYearListFilter, 'organization']
-    readonly_fields = ['tmp']
-    fields = ['tmp']
     class Media:
         css = {
              'all': ('css/tabular-hide-title.css',)
         }
-
-    def tmp(self, obj):
-        return obj.year.name
-
-    tmp.short_description = _('Finančno leto')
 
 
 # finance
@@ -295,7 +288,7 @@ class FinacialFormSet(forms.BaseModelFormSet):
             childen_amount = sum([self.enumerated_amounts.get(child.id, 0) for child in children])
             root_amount = self.enumerated_amounts.get(root_node.id, 0)
             if root_amount != childen_amount:
-                raise forms.ValidationError(_('Item amount of ') + root_node.name + _(' and its children is not valid.') + f'{root_amount} != {childen_amount}')
+                raise forms.ValidationError(_('Item amount of ') + root_node.name + _(' and its children is not valid.') + f'{root_amount} ≠ {childen_amount}')
             for child in children:
                 self.clean_branch(child)
 
@@ -441,6 +434,8 @@ class DonationsAdmin(LimitedAdmin):
         css = {
              'all': ('css/admin-extra.css', 'css/tabular-hide-title.css'),
        }
+
+
 class InstructionsAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         # TODO

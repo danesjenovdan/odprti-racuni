@@ -137,12 +137,12 @@
                     <h4>Vplačila v proračun RS</h4>
                     <div>{{ other_finances.payment_state_budget }} EUR</div>
                 </div>
-                {% if other_finances.difference_payment_state_budget %}
+                {% if other_finances.difference_state_budget %}
                 <div class="minicard-donations-body">
                     <p>
                         <i>Razlika med vplačanimi in pridobljenimi proračunskimi sredstvi v RS</i>
                     </p>
-                    <span>{{ other_finances.difference_payment_state_budget }} EUR</span>
+                    <span>{{ other_finances.difference_state_budget }} EUR</span>
                 </div>
                 {% endif %}
             </div>
