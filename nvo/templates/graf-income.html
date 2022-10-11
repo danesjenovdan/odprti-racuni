@@ -29,8 +29,6 @@
     color = ["#e7fcc7", "#afd479", "#89a65e"], // colors array
     fill = "#cef98e", // fill for node rects (if no color encoding)
     fillOpacity = 1, // fill opacity for node rects
-    fontSizeBig = "14px",
-    fontSizeSmall = "10px",
   } = {}) {
 
     // If id and parentId options are specified, or the path option, use d3.stratify
@@ -52,13 +50,13 @@
       (root);    
 
     // Add colors and font sizes
-    root.fontSize = fontSizeBig;
+    root.customFontSize = "big";
     if (color != null && color.length > 0 && color.length >= root.children.length) {
       const colors = color.slice(0, root.children.length);
       root.children.forEach((child, i) => {
         child.descendants().forEach((descendant) => {
           descendant.color = colors[i];
-          descendant.fontSize = descendant.depth > 1 ? fontSizeSmall : fontSizeBig;
+          descendant.customFontSize = descendant.depth > 1 ? "small" : "big";
         });
       });
     } else {
@@ -96,17 +94,17 @@
       .attr("aria-labelledby", d => `${d.data.name.replace(/\W/g,'-')}`)
       
     button.append("xhtml:h6")
-      .style("font-size", d => d.fontSize)
+      .attr("class", d => `font-size-${d.customFontSize}`)
       .style("pointer-events", "none")
       .style("user-select", "none")
       .text(d => label(d.data));
 
     button.append("xhtml:p")
       .text(d => d.value.toLocaleString("sl"))
+      .attr("class", d => `font-size-${d.customFontSize}`)
       .style("pointer-events", "none")
       .style("user-select", "none")
-      .style("font-size", d => d.fontSize);
-
+      
     const back = button.append("xhtml:div")
       .attr("class", "back-button")
       .style("opacity", d => d.depth > 0 && d.x0 == 0 && d.y0 == 0 ? 1 : 0);
@@ -146,6 +144,22 @@
   #graf-income svg,
   #graf-expense svg {
     height: 100%;
+  }
+
+  .font-size-small {
+    font-size: 16px !important;
+  }
+  .font-size-big {
+      font-size: 20px !important;
+  }
+
+  @media (min-width: 576px) {
+      .font-size-small {
+          font-size: 10px !important;
+      }
+      .font-size-big {
+          font-size: 14px !important;
+      }
   }
 </style>
 
