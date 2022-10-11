@@ -25,6 +25,8 @@ ul {
     border-radius: 13px;
 }
 
+/* MEDIA QUERIES
+
 @media (min-width: 576px) {}
 
 @media (min-width: 768px) {}
@@ -33,7 +35,9 @@ ul {
 
 @media (min-width: 1200px) {}
 
-@media (min-width: 1400px) {}
+@media (min-width: 1400px) {} 
+
+*/
 
 /*** HEADER ***/
 
@@ -242,11 +246,12 @@ ul {
     border-bottom-left-radius: 13px;
     border-bottom-right-radius: 13px;
     min-height: 544px;
+    max-height: 940px;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    overflow: hidden;
 }
 
 @media (min-width: 768px) {
