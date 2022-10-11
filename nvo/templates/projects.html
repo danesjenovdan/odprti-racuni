@@ -81,10 +81,12 @@
                             {% endfor %}
                         </p>
                         {% endif %}
+                        {% if project.self_money %}
                         <p>
                             <i>Lastni vložek</i>
                             <b>{{ project.self_money|floatformat:2 }} EUR</b>
                         </p>
+                        {% endif %}
                         {% if project.donators.all %}
                         <p>
                             <i>Donatorji</i>
