@@ -949,6 +949,10 @@ ul {
     line-height: 14px;
 }
 
+.info-content p:last-child {
+    margin-bottom: 0;
+}
+
 #share-url {
     height: 30px;
     border-radius: 15px;

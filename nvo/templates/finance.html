@@ -162,13 +162,68 @@
             <div>
                 <h4>Osebna izkaznica</h4>
                 <div class="info-content">
-                    <i>Finance</i>
-                    <p>
-                        <b>{{ info_text.pre_text }}</b>
-                    </p>
-                    <p>
-                        {{ info_text.text }}
-                    </p>
+                    <i>Prihodki</i>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.revenue.pre_text }}</b>
+                        </p>
+                        {% if info_texts.revenue.text %}
+                        <p>
+                            {{ info_texts.revenue.text }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="horizontal-divider"></div>
+                    <i>Odhodki</i>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.expense.pre_text }}</b>
+                        </p>
+                        {% if info_texts.expense.text %}
+                        <p>
+                            {{ info_texts.expense.text }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="horizontal-divider"></div>
+                    <i>Vrednost prostovoljskega dela</i>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.voluntier.pre_text }}</b>
+                        </p>
+                        {% if info_texts.voluntier.text %}
+                        <p>
+                            {{ info_texts.voluntier.text }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="horizontal-divider"></div>
+                    <i>Izplačila projektnim partnerjem</i>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.partners.pre_text }}</b>
+                        </p>
+                        {% if info_texts.partners.text %}
+                        <p>
+                            {{ info_texts.partners.text }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="horizontal-divider"></div>
+                    <i>Vplačila v proračun RS</i>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.state_budget.pre_text }}</b>
+                        </p>
+                        <p>
+                            {{ info_texts.state_budget.text }}
+                        </p>
+                    </div>
+                    
                 </div>
             </div>
         </div>

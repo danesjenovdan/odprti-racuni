@@ -82,7 +82,7 @@ def get_finance(request, organization_id, year):
     info_text_expense = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.EXPENSE).first()
     info_text_voluntier = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.VOLUNTIER).first()
     info_text_partners = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.PRO_PARTNERS).first()
-    info_text_state_bufget = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.STATE_BUDGET).first()
+    info_text_state_budget = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.STATE_BUDGET).first()
 
     revenue_chart_data = clean_chart_data({
         'name': total_income.name,
@@ -113,7 +113,7 @@ def get_finance(request, organization_id, year):
                 'expense': info_text_expense,
                 'voluntier': info_text_voluntier,
                 'partners': info_text_partners,
-                'state_bufget': info_text_state_bufget,
+                'state_budget': info_text_state_budget,
             },
             'expenses_json': expenses_chart_data,
             'revenue_json': revenue_chart_data,
