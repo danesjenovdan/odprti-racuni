@@ -232,49 +232,49 @@ class ExportNVOData(object):
             self.document.add_page_break()
 
 
-
         # DONATIONS
-        self.add_heading('Donacije\n')
-
         donations = self.organization.donations.get(year=self.year)
-        if donations.personal_donations_amount:
-            self.write_paragraph(
-                title='Donacije fizičnih oseb',
-                lines=[
-                    f'Višina zbranih donacij fizičnih oseb: {format_decimal(donations.personal_donations_amount, locale="sl_SI")} EUR',
-                    f'Število donatorjev: {donations.number_of_personal_donations}'
-                ]
-            )
-            self.write_list_of_donors(donations.personal_donators.all())
+        if donations.personal_donations_amount or donations.organization_donations_amount or donations.one_percent_income_tax or donations.purpose_of_donations:
+            self.add_heading('Donacije\n')
 
-        donations = self.organization.donations.get(year=self.year)
-        if donations.organization_donations_amount:
-            self.write_paragraph(
-                title='Donacije pravnih oseb',
-                lines=[
-                    f'Višina zbranih donacij fizičnih oseb: {format_decimal(donations.organization_donations_amount, locale="sl_SI")} EUR',
-                    f'Število donatorjev: {donations.number_of_organization_donations}'
-                ],
-                hr=True
-            )
-            self.write_list_of_donors(donations.organiaztion_donators.all())
+            if donations.personal_donations_amount:
+                self.write_paragraph(
+                    title='Donacije fizičnih oseb',
+                    lines=[
+                        f'Višina zbranih donacij fizičnih oseb: {format_decimal(donations.personal_donations_amount, locale="sl_SI")} EUR',
+                        f'Število donatorjev: {donations.number_of_personal_donations}'
+                    ]
+                )
+                self.write_list_of_donors(donations.personal_donators.all())
 
-        if donations.one_percent_income_tax:
-            self.insertDashes()
-            p = self.document.add_paragraph()
-            p.add_run('Višina zbranih donacij z 1% dohodnine: ').bold = True
-            p.add_run(f'{format_decimal(donations.one_percent_income_tax, locale="sl_SI")} EUR')
+            donations = self.organization.donations.get(year=self.year)
+            if donations.organization_donations_amount:
+                self.write_paragraph(
+                    title='Donacije pravnih oseb',
+                    lines=[
+                        f'Višina zbranih donacij fizičnih oseb: {format_decimal(donations.organization_donations_amount, locale="sl_SI")} EUR',
+                        f'Število donatorjev: {donations.number_of_organization_donations}'
+                    ],
+                    hr=True
+                )
+                self.write_list_of_donors(donations.organiaztion_donators.all())
+
+            if donations.one_percent_income_tax:
+                self.insertDashes()
+                p = self.document.add_paragraph()
+                p.add_run('Višina zbranih donacij z 1% dohodnine: ').bold = True
+                p.add_run(f'{format_decimal(donations.one_percent_income_tax, locale="sl_SI")} EUR')
 
 
-        if donations.purpose_of_donations:
-            self.write_paragraph(
-                title='Kako smo porabili zbrane donacije',
-                lines=[
-                    donations.purpose_of_donations,
+            if donations.purpose_of_donations:
+                self.write_paragraph(
+                    title='Kako smo porabili zbrane donacije',
+                    lines=[
+                        donations.purpose_of_donations,
 
-                ],
-                hr=True
-            )
+                    ],
+                    hr=True
+                )
 
         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
         response['Content-Disposition'] = f'attachment; filename={slugify(self.organization.name)}_{self.year.name}.docx'
@@ -285,6 +285,7 @@ class ExportNVOData(object):
     def add_heading(self, text, level=1):
         heading = self.document.add_heading('', level=level).add_run(text)
         heading.font.color.rgb = RGBColor(0, 0, 0)
+        heading.font.name = 'Arial'
 
     def write_paragraph(self, title=None, lines=[], hr=False, add_newline=False):
         if hr:
