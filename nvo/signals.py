@@ -15,24 +15,73 @@ def create_models_for_organization(sender, instance, created, **kwargs):
         Donations(year=instance.financial_year, organization=instance.organization).save()
         Finance(year=instance.financial_year, organization=instance.organization).save()
 
+        # donations
         InfoText(
             year=instance.financial_year,
             organization=instance.organization,
-            card=InfoText.CardTypes.DONATIONS,
-            pre_text=_('donations info text')
+            card=InfoText.CardTypes.DONATION_CONSUMPTION,
+            pre_text=_('donations purpose info text')
         ).save()
+        InfoText(
+            year=instance.financial_year,
+            organization=instance.organization,
+            card=InfoText.CardTypes.INCOME_TAX,
+            pre_text=_('one percent tax info text')
+        ).save()
+        InfoText(
+            year=instance.financial_year,
+            organization=instance.organization,
+            card=InfoText.CardTypes.ORG_DONATIONS,
+            pre_text=_('Organizatin donations text')
+        ).save()
+        InfoText(
+            year=instance.financial_year,
+            organization=instance.organization,
+            card=InfoText.CardTypes.PERSONAL_DONATIONS,
+            pre_text=_('Personal donation text')
+        ).save()
+
+        # projects
         InfoText(
             year=instance.financial_year,
             organization=instance.organization,
             card=InfoText.CardTypes.PROJECTS,
             pre_text=_('projects info text')
         ).save()
+
+        # finance
         InfoText(
             year=instance.financial_year,
             organization=instance.organization,
-            card=InfoText.CardTypes.FINANCE,
-            pre_text=_('finance info text')
+            card=InfoText.CardTypes.STATE_BUDGET,
+            pre_text=_('Payment to the state budget info text')
         ).save()
+        InfoText(
+            year=instance.financial_year,
+            organization=instance.organization,
+            card=InfoText.CardTypes.PRO_PARTNERS,
+            pre_text=_('Payments to projects partners info text')
+        ).save()
+        InfoText(
+            year=instance.financial_year,
+            organization=instance.organization,
+            card=InfoText.CardTypes.VOLUNTIER,
+            pre_text=_('Amount of voluntary work info text')
+        ).save()
+        InfoText(
+            year=instance.financial_year,
+            organization=instance.organization,
+            card=InfoText.CardTypes.EXPENSE,
+            pre_text=_('Expense info text')
+        ).save()
+        InfoText(
+            year=instance.financial_year,
+            organization=instance.organization,
+            card=InfoText.CardTypes.REVENUE,
+            pre_text=_('Revenue info text')
+        ).save()
+
+        # basic info
         InfoText(
             year=instance.financial_year,
             organization=instance.organization,

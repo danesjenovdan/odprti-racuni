@@ -416,13 +416,25 @@ class OrganiaztionDonator(models.Model):
 
 class InfoText(models.Model):
     class CardTypes(models.TextChoices):
+        # basic info
         BASICINFO = 'BI', _('BasicInfo')
         YEARLYREPORTS = 'YR', _('Documents')
         PEOPLE = 'PE', _('People')
         PAYMENTRATIOS = 'PS', _('Payment ratios')
+        # projects
         PROJECTS = 'PR', _('Projects')
-        DONATIONS = 'DO', _('Donations')
-        FINANCE = 'FI', _('Finance')
+        # donations
+        PERSONAL_DONATIONS = 'DO', _('Personal donation')
+        ORG_DONATIONS = 'OD', _('Organizatin donations')
+        INCOME_TAX = 'IT', _('1 percent income tax')
+        DONATION_CONSUMPTION = 'DC', _('Donation purpose')
+        # finance
+        REVENUE = 'FI', _('Revenue')
+        EXPENSE = 'EX', _('Expanse')
+        VOLUNTIER = 'CO', _('Amount of voluntary work')
+        PRO_PARTNERS = 'PP', _('Payments to projects partners')
+        STATE_BUDGET = 'SB', _('Payment to the state budget')
+
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='info_texts', verbose_name=_('Organization'))
     year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='info_texts', verbose_name=_('Year'))
     card =  models.CharField(
