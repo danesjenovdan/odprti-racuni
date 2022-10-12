@@ -1,6 +1,6 @@
 from django.urls import path
 
-from nvo.views import get_projects, organization_basic_info, get_finance, get_donations, index
+from nvo.views import get_projects, organization_basic_info, get_finance, get_donations, index, get_export
 
 urlpatterns = [
     path('<int:organization_id>/', index, name='index'),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('finance/<int:organization_id>/leto/<str:year>/', get_finance, name='finance'),
     path('projekti/<int:organization_id>/leto/<str:year>/', get_projects, name='projects'),
     path('donacije/<int:organization_id>/leto/<str:year>/', get_donations, name='donations'),
+    path('export/<int:organization_id>/<int:year_id>/', get_export, name='export'),
 ]

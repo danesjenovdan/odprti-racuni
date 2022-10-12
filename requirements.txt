@@ -10,3 +10,6 @@ django-markdownx==4.0.0-beta.1
 boto3==1.24.28
 django-storages==1.12.3
 sentry-sdk
+python-docx==0.8.11
+babel
+htmldocx
