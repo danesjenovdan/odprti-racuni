@@ -184,21 +184,23 @@ class ExportNVOData(object):
 
         reveues = self.organization.revenuecategory_related.filter(year=self.year).exclude(level=0)
         total_income = RevenueCategory.objects.get(year=self.year, organization=self.organization, level=0)
-        self.write_paragraph(
-            title=f'Skupni prihodki: {format_decimal(total_income.amount, locale="sl_SI")} EUR\n',
-            lines=[
-                f'{"    " * revenue.level} {revenue.name}: {format_decimal(revenue.amount, locale="sl_SI")} EUR' for revenue in reveues if revenue.amount > 0
-            ]
-        )
+        if total_income.amount:
+            self.write_paragraph(
+                title=f'Skupni prihodki: {format_decimal(total_income.amount, locale="sl_SI")} EUR\n',
+                lines=[
+                    f'{"    " * revenue.level} {revenue.name}: {format_decimal(revenue.amount, locale="sl_SI")} EUR' for revenue in reveues if revenue.amount > 0
+                ]
+            )
 
         expenses = self.organization.expensescategory_related.filter(year=self.year).exclude(level=0)
         total_expense = ExpensesCategory.objects.get(year=self.year, organization=self.organization, level=0)
-        self.write_paragraph(
-            title=f'\nSkupni odhodki: {format_decimal(total_expense.amount, locale="sl_SI")} EUR\n',
-            lines=[
-                f'{"    " * expense.level} {expense.name}: {format_decimal(expense.amount, locale="sl_SI")} EUR' for expense in expenses if expense.amount > 0
-            ]
-        )
+        if total_expense.amount:
+            self.write_paragraph(
+                title=f'\nSkupni odhodki: {format_decimal(total_expense.amount, locale="sl_SI")} EUR\n',
+                lines=[
+                    f'{"    " * expense.level} {expense.name}: {format_decimal(expense.amount, locale="sl_SI")} EUR' for expense in expenses if expense.amount > 0
+                ]
+            )
 
         finance = self.organization.finances.get(year=self.year)
 
