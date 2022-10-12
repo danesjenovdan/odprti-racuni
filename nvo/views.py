@@ -78,7 +78,11 @@ def get_finance(request, organization_id, year):
     revenues = RevenueCategory.objects.filter(year=year, organization=organization, level=1).order_by('order')
     expenses = ExpensesCategory.objects.filter(year=year, organization=organization, level=1).order_by('order')
 
-    info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.FINANCE).first()
+    info_text_revenue = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.REVENUE).first()
+    info_text_expense = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.EXPENSE).first()
+    info_text_voluntier = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.VOLUNTIER).first()
+    info_text_partners = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.PRO_PARTNERS).first()
+    info_text_state_bufget = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.STATE_BUDGET).first()
 
     revenue_chart_data = clean_chart_data({
         'name': total_income.name,
@@ -104,7 +108,13 @@ def get_finance(request, organization_id, year):
             'total_expense': total_expense,
             'other_finances': finance,
             'organization': organization,
-            'info_text': info_text,
+            'info_texts': {
+                'revenue': info_text_revenue,
+                'expense': info_text_expense,
+                'voluntier': info_text_voluntier,
+                'partners': info_text_partners,
+                'state_bufget': info_text_state_bufget,
+            },
             'expenses_json': expenses_chart_data,
             'revenue_json': revenue_chart_data,
             'donation': donations,
@@ -154,7 +164,10 @@ def get_donations(request, organization_id, year):
 
     donations = get_object_or_404(Donations, year=year, organization=organization)
 
-    info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.DONATIONS).first()
+    info_text_personal_donation = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.PERSONAL_DONATIONS).first()
+    info_text_org_donation = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.ORG_DONATIONS).first()
+    info_text_one_percent = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.INCOME_TAX).first()
+    info_text_purpose = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.DONATION_CONSUMPTION).first()
 
     return render(
         request,
@@ -162,7 +175,12 @@ def get_donations(request, organization_id, year):
         {
             'donation': donations,
             'organization': organization,
-            'info_text': info_text,
+            'info_texts': {
+                'personal_donation': info_text_personal_donation,
+                'org_donation': info_text_org_donation,
+                'one_percent': info_text_one_percent,
+                'donation_purpose': info_text_purpose
+            },
         }
     )
 
