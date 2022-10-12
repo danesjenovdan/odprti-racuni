@@ -147,36 +147,50 @@
                 <h4>Osebna izkaznica</h4>
                 <div class="info-content">
                     <i>Osnovni podatki</i>
-                    <p>
-                        <b>{{ info_texts.basic_info.pre_text }}</b>
-                    </p>
-                    <p>
-                        {{ info_texts.basic_info.text }}
-                    </p>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.basic_info.pre_text }}</b>
+                        </p>
+                        {% if info_texts.basic_info.text %}
+                        <p>
+                            {{ info_texts.basic_info.text }}
+                        </p>
+                        {% endif %}
+                    </div>
                     <div class="horizontal-divider"></div>
                     <i>Letna poročila</i>
-                    <p>
-                        <b>{{ info_texts.yearly_reports.pre_text }}</b>
-                    </p>
-                    <p>
-                        {{ info_texts.yearly_reports.text }}
-                    </p>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.yearly_reports.pre_text }}</b>
+                        </p>
+                        {% if info_texts.yearly_reports.text %}
+                        <p>
+                            {{ info_texts.yearly_reports.text }}
+                        </p>
+                        {% endif %}
+                    </div>
                     <div class="horizontal-divider"></div>
                     <i>Ljudje</i>
-                    <p>
-                        <b>{{ info_texts.people.pre_text }}</b>
-                    </p>
-                    <p>
-                        {{ info_texts.people.text }}
-                    </p>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.people.pre_text }}</b>
+                        </p>
+                        {% if info_texts.people.text %}
+                        <p>
+                            {{ info_texts.people.text }}
+                        </p>
+                        {% endif %}
+                    </div>
                     <div class="horizontal-divider"></div>
                     <i>Plačna razmerja</i>
-                    <p>
-                        <b>{{ info_texts.payment_ratios.pre_text }}</b>
-                    </p>
-                    <p>
-                        {{ info_texts.payment_ratios.text }}
-                    </p>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.payment_ratios.pre_text }}</b>
+                        </p>
+                        <p>
+                            {{ info_texts.payment_ratios.text }}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

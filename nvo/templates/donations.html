@@ -104,13 +104,51 @@
             <div>
                 <h4>Osebna izkaznica</h4>
                 <div class="info-content">
-                    <i>Donacije</i>
-                    <p>
-                        <b>{{ info_text.pre_text }}</b>
-                    </p>
-                    <p>
-                        {{ info_text.text }}
-                    </p>
+                    <i>Donacije fizičnih oseb</i>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.personal_donation.pre_text }}</b>
+                        </p>
+                        {% if info_texts.personal_donation.text %}
+                        <p>
+                            {{ info_texts.personal_donation.text }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    <div class="horizontal-divider"></div>
+                    <i>Donacije pravnih oseb</i>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.org_donation.pre_text }}</b>
+                        </p>
+                        {% if info_texts.org_donation.text %}
+                        <p>
+                            {{ info_texts.org_donation.text }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    <div class="horizontal-divider"></div>
+                    <i>1 % dohodnine</i>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.one_percent.pre_text }}</b>
+                        </p>
+                        {% if info_texts.one_percent.text %}
+                        <p>
+                            {{ info_texts.one_percent.text }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    <div class="horizontal-divider"></div>
+                    <i>Poraba donacij</i>
+                    <div>
+                        <p>
+                            <b>{{ info_texts.donation_purpose.pre_text }}</b>
+                        </p>
+                        <p>
+                            {{ info_texts.donation_purpose.text }}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
