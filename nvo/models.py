@@ -220,21 +220,22 @@ class Employee(models.Model):
 # finance
 
 class Finance(models.Model):
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='%(class)s_related', verbose_name=_('Organiaztion'))
-    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE,null=True, related_name='%(class)s_related', verbose_name=_('Year'))
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='finances', verbose_name=_('Organiaztion'))
+    year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE,null=True, related_name='finances', verbose_name=_('Year'))
     amount_voluntary_work = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True, verbose_name=_('Amount of voluntary work'))
     payments_project_partners = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True, verbose_name=_('Payments to projects partners'))
     payment_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True, verbose_name=_('Payment to the state budget'))
     acquired_state_budget = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True, verbose_name=_('Difference payment state budget'))
 
-    def __str__(self):
-        return f'{_("Finance")} {self.year.name}'
-
+    @property
     def difference_state_budget(self):
         if self.payment_state_budget and self.acquired_state_budget:
             return self.acquired_state_budget - self.payment_state_budget
         else:
             return 0
+
+    def __str__(self):
+        return f'{_("Finance")} {self.year.name}'
 
     class Meta:
         verbose_name = _('Finance')
@@ -307,9 +308,12 @@ class Project(models.Model):
 
     @property
     def icons(self):
-        financer_icons = [financer.logo.url for financer in self.financers.all() if financer.logo]
-        co_financer_icons = [co_financer.logo.url for co_financer in self.cofinancers.all() if co_financer.logo]
+        financer_icons = [financer.logo for financer in self.financers.all() if financer.logo]
+        co_financer_icons = [co_financer.logo for co_financer in self.cofinancers.all() if co_financer.logo]
         return financer_icons + co_financer_icons
+
+    def icon_urls(self):
+        return [icon.url for icon in self.icons]
 
     @property
     def duration(self):

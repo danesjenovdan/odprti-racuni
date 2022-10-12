@@ -95,10 +95,17 @@ class LimitedAdmin(admin.ModelAdmin):
 
 
 class FinancialYearInline(admin.TabularInline):
-    readonly_fields = ['financial_year']
+    readonly_fields = ['financial_year', 'izvoz']
     model = Organization.financial_years.through
     extra = 0
     ordering = ("financial_year__name",)
+
+    def izvoz(self, obj):
+        url = reverse('export', kwargs={'year_id':obj.financial_year.id, 'organization_id':obj.organization.id})
+        print(url)
+        return mark_safe(f'<a href="{url}">Izvozi</a>')
+
+    izvoz.allow_tags=True
 
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = [

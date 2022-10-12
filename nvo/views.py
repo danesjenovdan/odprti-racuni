@@ -4,7 +4,8 @@ from django.http import HttpResponseNotFound
 from nvo.models import (Organization, FinancialYear, Document, OrganizationFinancialYear, People, PaymentRatio, RevenueCategory,
     ExpensesCategory, Donations, InfoText, Finance)
 
-from nvo.utils import clean_chart_data
+from nvo.utils import clean_chart_data, ExportNVOData
+
 
 def index(request, organization_id):
     organization = get_object_or_404(Organization, pk=organization_id)
@@ -41,7 +42,7 @@ def organization_basic_info(request, organization_id, year):
 
     # get donations to decide whether to render the Donations menu item
     donations = get_object_or_404(Donations, year=year, organization=organization)
-    
+
     return render(
         request,
         'basic-info.html',
@@ -164,3 +165,9 @@ def get_donations(request, organization_id, year):
             'info_text': info_text,
         }
     )
+
+def get_export(request, organization_id, year_id):
+    organization = get_object_or_404(Organization, pk=organization_id)
+    year = get_object_or_404(FinancialYear, pk=year_id)
+    response = ExportNVOData(organization, year).get_response()
+    return response
