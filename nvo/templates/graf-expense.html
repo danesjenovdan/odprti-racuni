@@ -3,55 +3,61 @@
 
 <!-- icicle chart generating function, copied from https://observablehq.com/@d3/icicle -->
 <script>
-  function Icicle(data, { // data is either tabular (array of objects) or hierarchy (nested objects)
-    path, // as an alternative to id and parentId, returns an array identifier, imputing internal nodes
-    id = Array.isArray(data) ? d => d.id :
-  null, // if tabular data, given a d in data, returns a unique identifier (string)
-    parentId = Array.isArray(data) ? d => d.parentId :
-  null, // if tabular data, given a node d, returns its parent’s identifier
-    children, // if hierarchical data, given a d in data, returns its children
-    format = ",", // format specifier string or function for values
-    value, // given a node d, returns a quantitative value (for area encoding; null for count)
-    sort = null, // how to sort nodes prior to layout
-    label, // given a node d, returns the name to display on the rectangle
-    title, // given a node d, returns its hover text
-    link, // given a node d, its link (if any)
-    linkTarget = "_blank", // the target attribute for links (if any)
-    width = 430, // outer width, in pixels
-    height = 400, // outer height, in pixels
-    margin = 0, // account for padding
-    marginTop = margin, // top margin, in pixels
-    marginRight = margin, // right margin, in pixels
-    marginBottom = margin, // bottom margin, in pixels
-    marginLeft = margin, // left margin, in pixels
-    padding = 0, // cell padding, in pixels
-    round = false, // whether to round to exact pixels
-    color = ["#feddd6", "#fcbbac", "#d49182"], // colors array
-    fill = "#fa8e75", // fill for node rects (if no color encoding)
-    fillOpacity = 1, // fill opacity for node rects
-  } = {}) {
-
+  function Icicle(
+    data,
+    {
+      // data is either tabular (array of objects) or hierarchy (nested objects)
+      path, // as an alternative to id and parentId, returns an array identifier, imputing internal nodes
+      id = Array.isArray(data) ? (d) => d.id : null, // if tabular data, given a d in data, returns a unique identifier (string)
+      parentId = Array.isArray(data) ? (d) => d.parentId : null, // if tabular data, given a node d, returns its parent’s identifier
+      children, // if hierarchical data, given a d in data, returns its children
+      format = ",", // format specifier string or function for values
+      value, // given a node d, returns a quantitative value (for area encoding; null for count)
+      sort = null, // how to sort nodes prior to layout
+      label, // given a node d, returns the name to display on the rectangle
+      title, // given a node d, returns its hover text
+      link, // given a node d, its link (if any)
+      linkTarget = "_blank", // the target attribute for links (if any)
+      width = 430, // outer width, in pixels
+      height = 400, // outer height, in pixels
+      margin = 0, // account for padding
+      marginTop = margin, // top margin, in pixels
+      marginRight = margin, // right margin, in pixels
+      marginBottom = margin, // bottom margin, in pixels
+      marginLeft = margin, // left margin, in pixels
+      padding = 0, // cell padding, in pixels
+      round = false, // whether to round to exact pixels
+      color = ["#feddd6", "#fcbbac", "#d49182"], // colors array
+      fill = "#fa8e75", // fill for node rects (if no color encoding)
+      fillOpacity = 1, // fill opacity for node rects
+    } = {}
+  ) {
     // If id and parentId options are specified, or the path option, use d3.stratify
     // to convert tabular data to a hierarchy; otherwise we assume that the data is
     // specified as an object {children} with nested objects (a.k.a. the “flare.json”
     // format), and use d3.hierarchy.
-    const root = path != null ? d3.stratify().path(path)(data) :
-      id != null || parentId != null ? d3.stratify().id(id).parentId(parentId)(data) :
-      d3.hierarchy(data, children);
+    const root =
+      path != null
+        ? d3.stratify().path(path)(data)
+        : id != null || parentId != null
+        ? d3.stratify().id(id).parentId(parentId)(data)
+        : d3.hierarchy(data, children);
 
     let focus = root;
 
     // Compute the values of internal nodes by aggregating from the leaves.
-    value == null ? root.count() : root.sum(d => Math.max(0, value(d)));
+    value == null ? root.count() : root.sum((d) => Math.max(0, value(d)));
 
     // Compute the partition layout. Note that x and y are swapped!
-    d3.partition()
-      .size([height, (root.height + 1) * width / 4])
-      (root);    
+    d3.partition().size([height, ((root.height + 1) * width) / 4])(root);
 
     // Add colors and font sizes
     root.customFontSize = "big";
-    if (color != null && color.length > 0 && color.length >= root.children.length) {
+    if (
+      color != null &&
+      color.length > 0 &&
+      color.length >= root.children.length
+    ) {
       const colors = color.slice(0, root.children.length);
       root.children.forEach((child, i) => {
         child.descendants().forEach((descendant) => {
@@ -60,77 +66,103 @@
         });
       });
     } else {
-      console.error(`Color setting is illegal! Minimum colors array length is number of root children (${root.children.length}).`)
+      console.error(
+        `Color setting is illegal!`
+      );
     }
 
-    const svg = d3.create("svg")
+    const svg = d3
+      .create("svg")
       .attr("viewBox", [-marginLeft, -marginTop, width, height])
       .attr("width", width)
       .attr("height", height)
       .attr("style", "max-width: 100%;")
-      .attr("aria-hidden", "true")
+      .attr("aria-hidden", "true");
 
     const cell = svg
       .selectAll("a")
       .data(root.descendants())
       .join("a")
-      .attr("xlink:href", link == null ? null : d => link(d.data, d))
+      .attr("xlink:href", link == null ? null : (d) => link(d.data, d))
       .attr("target", link == null ? null : linkTarget)
-      .attr("transform", d => `translate(${d.y0},${d.x0})`);
+      .attr("transform", (d) => `translate(${d.y0},${d.x0})`);
 
-    const rect = cell.append("rect")
-      .attr("width", d => d.y1 - d.y0)
-      .attr("height", d => rectHeight(d))
-      .attr("fill", d => d.color ? d.color : fill)
+    const rect = cell
+      .append("rect")
+      .attr("width", (d) => d.y1 - d.y0)
+      .attr("height", (d) => rectHeight(d))
+      .attr("fill", (d) => (d.color ? d.color : fill))
       .attr("stroke", "#929aa1")
-      .attr("stroke-width", 0.5)
+      .attr("stroke-width", 0.5);
 
-    const textContainer = cell.append("foreignObject")
-      .attr("width", d => d.y1 - d.y0)
-      .attr("height", d => rectHeight(d))
-      
-      const button = textContainer.append("xhtml:button")
+    const textContainer = cell
+      .append("foreignObject")
+      .attr("width", (d) => d.y1 - d.y0)
+      .attr("height", (d) => rectHeight(d));
+
+    const button = textContainer
+      .append("xhtml:button")
       .on("click", clicked)
-      .attr("aria-labelledby", d => `${d.data.name.replace(/\W/g,'-')}`)
-      
-    button.append("xhtml:h6")
-      .attr("class", d => `font-size-${d.customFontSize}`)
+      .on("mouseenter", hovered, (d) => d.data)
+      .on("mouseleave", unhovered)
+      .attr("aria-labelledby", (d) => `${d.data.name.replace(/\W/g, "-")}`);
+
+    button
+      .append("xhtml:h6")
+      .attr("class", (d) => `font-size-${d.customFontSize}`)
       .style("pointer-events", "none")
       .style("user-select", "none")
-      .text(d => label(d.data));
+      .text((d) => label(d.data));
 
-    button.append("xhtml:p")
-      .text(d => d.value.toLocaleString("sl"))
-      .attr("class", d => `font-size-${d.customFontSize}`)
+    button
+      .append("xhtml:p")
+      .text((d) => d.value.toLocaleString("sl"))
+      .attr("class", (d) => `font-size-${d.customFontSize}`)
       .style("pointer-events", "none")
-      .style("user-select", "none")
+      .style("user-select", "none");
 
-    const back = button.append("xhtml:div")
+    const back = button
+      .append("xhtml:div")
       .attr("class", "back-button")
-      .style("opacity", d => d.depth > 0 && d.x0 == 0 && d.y0 == 0 ? 1 : 0);
+      .style("opacity", (d) => (d.depth > 0 && d.x0 == 0 && d.y0 == 0 ? 1 : 0));
 
-    // const tooltip = textContainer.append("xhtml:div")
-    //   .attr("role", "tooltip")
-    //   .attr("class", "graph-tooltip")
-    //   .attr("id", d => `${d.data.name.replace(/\W/g,'-')}`)
-    //   .text(d => `Odhodki za kategorijo ${d.data.name} so v vrednosti ${d.data.amount} EUR.`)
+    function hovered(event, d) {
+      const tooltip = document.getElementById("graph-tooltip");
+      tooltip.innerHTML = `<h6>${d.data.name}</h6><p>${d.value.toLocaleString("sl")} EUR</p>`;
+      tooltip.style.opacity = 1;
+    }
+
+    function unhovered(event) {
+      document.getElementById("graph-tooltip").style.opacity = 0;
+    }
 
     function clicked(event, p) {
-      focus = focus === p ? p = p.parent : p;
+      focus = focus === p ? (p = p.parent) : p;
 
-      root.each(d => d.target = {
-        x0: (d.x0 - p.x0) / (p.x1 - p.x0) * height,
-        x1: (d.x1 - p.x0) / (p.x1 - p.x0) * height,
-        y0: d.y0 - p.y0,
-        y1: d.y1 - p.y0
-      });
+      root.each(
+        (d) =>
+          (d.target = {
+            x0: ((d.x0 - p.x0) / (p.x1 - p.x0)) * height,
+            x1: ((d.x1 - p.x0) / (p.x1 - p.x0)) * height,
+            y0: d.y0 - p.y0,
+            y1: d.y1 - p.y0,
+          })
+      );
 
-      const t = cell.transition().duration(750).attr("transform", d => `translate(${d.target.y0},${d.target.x0})`);
-      rect.transition(t).attr("height", d => rectHeight(d.target));
-      back.transition().duration(750).style("opacity", d => d.depth > 0 && d.target.x0 == 0 && d.target.y0 == 0 ? 1 : 0);
-      textContainer.transition(t).attr("height", d => rectHeight(d.target));;
+      const t = cell
+        .transition()
+        .duration(750)
+        .attr("transform", (d) => `translate(${d.target.y0},${d.target.x0})`);
+      rect.transition(t).attr("height", (d) => rectHeight(d.target));
+      back
+        .transition()
+        .duration(750)
+        .style("opacity", (d) =>
+          d.depth > 0 && d.target.x0 == 0 && d.target.y0 == 0 ? 1 : 0
+        );
+      textContainer.transition(t).attr("height", (d) => rectHeight(d.target));
     }
-    
+
     function rectHeight(d) {
       return d.x1 - d.x0;
     }
@@ -140,24 +172,45 @@
 </script>
 
 <!-- the container for the icicle charts -->
-<div id="graf-expense" role="img" aria-label="Graf odhodkov" aria-describedby="finances-expense-graph"></div>
+<div
+  id="graf-expense"
+  role="img"
+  aria-label="Graf odhodkov"
+  aria-describedby="finances-expense-graph"
+></div>
+<!-- <div id="graph-tooltip" class="graph-tooltip" role="tooltip"></div> -->
 <p id="finances-expense-graph" hidden="">
-  Graf z informacijami o različnih odhodkih in njihovih vrednostih. Celoten odhodek organizacije je <span id="finances-expense-graph-amount"></span> EUR, za več informacij pa preverite tabelo.
+  Graf z informacijami o različnih odhodkih in njihovih vrednostih. Celoten
+  odhodek organizacije je <span id="finances-expense-graph-amount"></span> EUR,
+  za več informacij pa preverite tabelo.
 </p>
 
 <!-- parse data and display charts -->
 <script>
-  const expenses = JSON.parse(document.getElementById("expenses-data").textContent);
+  const expenses = JSON.parse(
+    document.getElementById("expenses-data").textContent
+  );
   const expensesChart = Icicle(expenses, {
-    value: d => d.value, // size of each node (file); null for internal nodes (folders)
-    label: d => d.name, // display name for each cell
-    title: d => `${d.name}, ${d.amount}`,
+    value: (d) => d.value, // size of each node (file); null for internal nodes (folders)
+    label: (d) => d.name, // display name for each cell
+    title: (d) => `${d.name}, ${d.amount}`,
     // width: 1152,
     // height: 2400
   });
 
-  const containerExpense = document.getElementById('graf-expense');
+  const containerExpense = document.getElementById("graf-expense");
   containerExpense.append(expensesChart);
 
-  document.getElementById('finances-expense-graph-amount').textContent = expenses["amount"];
+  document.getElementById("finances-expense-graph-amount").textContent =
+    expenses["amount"];
+
+  const tooltip = document.getElementById("graph-tooltip");
+  const startPositions = containerIncome.getBoundingClientRect();
+
+  window.onmousemove = function (e) {
+    const x = e.clientX,
+      y = e.clientY;
+    tooltip.style.top = y - startPositions.top + 20 + "px";
+    tooltip.style.left = x - startPositions.left + 20 + "px";
+  }
 </script>
