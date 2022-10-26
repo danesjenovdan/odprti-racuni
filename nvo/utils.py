@@ -355,7 +355,7 @@ class ExportNVOData(object):
             r = p.add_run()
             for icon in project.icons:
                 image_path = self.download_image(icon.url, icon.name)
-                r.add_picture(image_path, height=Inches(1))
+                r.add_picture(image_path, width=Inches(0.5))
 
     def download_image(self, url, name):
         page = requests.get(url)
