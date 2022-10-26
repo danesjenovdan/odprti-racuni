@@ -12,6 +12,8 @@ from babel.numbers import format_decimal
 from django.utils.text import slugify
 from django.http.response import HttpResponse
 
+import requests, os
+
 
 revenue_data = {
     'model': RevenueCategory,
@@ -352,9 +354,15 @@ class ExportNVOData(object):
             p.paragraph_format.left_indent = Inches(0.5)
             r = p.add_run()
             for icon in project.icons:
-                r.add_picture(icon.path, height=Inches(1))
+                image_path = self.download_image(icon.url, icon.name)
+                r.add_picture(image_path, height=Inches(1))
 
-
+    def download_image(self, url, name):
+        page = requests.get(url)
+        file_path = f'media/{name}'
+        with open(file_path, 'wb') as f:
+            f.write(page.content)
+        return file_path
 
     def added_indented_markdown(self, markdown_text, indention=0.5):
         new_parser = HtmlToDocx()
