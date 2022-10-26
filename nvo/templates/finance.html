@@ -165,7 +165,7 @@
                     <i>Prihodki</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.revenue.pre_text }}</b>
+                            <b>{{ info_texts.revenue.pre_text | safe }}</b>
                         </p>
                         {% if info_texts.revenue.text %}
                         <p>
@@ -178,7 +178,7 @@
                     <i>Odhodki</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.expense.pre_text }}</b>
+                            <b>{{ info_texts.expense.pre_text | safe }}</b>
                         </p>
                         {% if info_texts.expense.text %}
                         <p>
@@ -191,7 +191,7 @@
                     <i>Vrednost prostovoljskega dela</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.voluntier.pre_text }}</b>
+                            <b>{{ info_texts.voluntier.pre_text | safe }}</b>
                         </p>
                         {% if info_texts.voluntier.text %}
                         <p>
@@ -204,7 +204,7 @@
                     <i>Izplačila projektnim partnerjem</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.partners.pre_text }}</b>
+                            <b>{{ info_texts.partners.pre_text | safe }}</b>
                         </p>
                         {% if info_texts.partners.text %}
                         <p>
@@ -217,7 +217,7 @@
                     <i>Vplačila v proračun RS</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.state_budget.pre_text }}</b>
+                            <b>{{ info_texts.state_budget.pre_text | safe }}</b>
                         </p>
                         <p>
                             {{ info_texts.state_budget.text }}

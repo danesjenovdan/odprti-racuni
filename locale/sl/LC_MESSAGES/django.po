@@ -495,59 +495,86 @@ msgstr "Navodila za urejanje objekta"
 
 #: nvo/signals.py:23
 msgid "donations purpose info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Organizacija opisno sama obrazloži, za kakšne namene je porabila zbrane donacije fizičnih in pravnih oseb."
 
 #: nvo/signals.py:29
 msgid "one percent tax info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Znesek, ki ga je organizacija prejela s strani 1 % dohodnine. Vsakdo, ki v Sloveniji plačuje dohodnino, lahko do 1 % svoje dohodnine nameni nevladnim in drugim splošno koristnim organizacijam, ki so vpisane na seznam upravičencev."
 
 #: nvo/signals.py:35
 msgid "Organizatin donations text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Prikaz celotne višine donacij, ki jih je organizacija prejela s strani pravnih oseb. Organizacija lahko na tem mestu prikaže celotni zbrani znesek in podatek o številu donatorjev.<br><br>"
+"Poimenski seznam donatorjev, ki so pravne osebe, je seznam posameznih donatorjev, ki jih organizacija želi izpostaviti ali pa so to željo izrazili sami."
 
 #: nvo/signals.py:41
 msgid "Personal donation text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Prikaz celotne višine donacij, ki jih je organizacija prejela s strani fizičnih oseb. Organizacija lahko na tem mestu prikaže celotni zbrani znesek in podatek o številu donatorjev.<br><br>"
+"Poimenski seznam donatorjev, ki so fizične osebe, je seznam posameznih donatorjev, ki jih organizacija želi izpostaviti ali pa so to željo izrazili sami."
 
 #: nvo/signals.py:49
 msgid "projects info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Seznam prikazuje projekte organizacije, ki so v tem finančnem letu prejeli kakršno koli financiranje.<br><br>"
+"Vrednost celotnega projekta (v EUR) prikazuje celoten vrednost projekta, ki se deli med morebitne projekte partnerje ali projektni konzorcij, Delež organizacije od celotnega projekta (v EUR) pa predstavlja znesek, ki pripada organizaciji."
 
 #: nvo/signals.py:57
 msgid "Payment to the state budget info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Višina vplačanih prispevkov, DDV-ja, dohodnine in davka od dobička."
 
 #: nvo/signals.py:63
 msgid "Payments to projects partners info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Celotna skupna vrednost donatorskih sredstev, ki jih je organizacija prenakazala partnerjem. Pri projektih, kjer je organizacija vodja konzorcija oziroma prijavitelj, prejme celotno vrednost projekta, ki jo potem porazdeli med projektne partnerje. Zaradi tega so prihodki organizacije v poročilih višji, kot dejanska višina sredstev, ki je na voljo organizaciji."
 
 #: nvo/signals.py:69
 msgid "Amount of voluntary work info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Podatek je prikazan samo za prostovoljske organizacije, ki prostovoljsko delo ovrednotijo v poročilu o prostovoljstvu."
 
 #: nvo/signals.py:75
 msgid "Expense info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Na tem mestu prikazujemo podatke o odhodkih organizacije v izbranem finančnem letu.<br><br>"
+"Materiali in storitve se delijo na Redno delovanje, Zunanje storitve in izvajalci, Potni stroški in Drugo. Redno delovanje zajema vse stroške delovanja organizacije, ki bi nastali tudi, če organizacija ne bi izvedla nobenega projekta. Ti stroški so odvisni od načina delovanja organizacije in lahko vsebujejo stroške najema, komunalnih storitev, elektrike, računovodstva, čistilnega servisa, serverjev, itd. Vsaka organizacija sama določi, katere kategorije stroškov spadajo pod stroške rednega delovanja. Postavka Potni stroški vsebuje vse stroške izplačanih službenih poti. Pod Zunanje storitve in izvajalci spadajo stroški storitev, med drugim tudi plačila pogodbenim sodelavcem. Od njih so odštete storitve, ki spadajo pod redno delovanje (denimo stroški računovodstva) in potne stroške. Pod postavko Drugo so vneseni vsi drugi stroški, ki ne ustrezajo zgornji kategorizaciji.<br><br>"
+"Plače, Pokojninska in druga socialna zavarovanja in Drugo sestavljajo postavko Delo. Pod Plače spadajo plače zaposlenih, nadomestila plač zaposlenih, regres za letni dopust, povračila in drugi prejemki zaposlenih, bonitete in izplačila nagrad, rezervacije pokojnine, jubilejne nagrade in odpravnine ob upokojitvi. Pod Pokojninska in druga socialna zavarovanja spadajo prispevki, plačilo akontacije dohodnine in prispevki delodajalca ter druge delodajalčeve dajatve od plač. Pod prispevke spadajo vplačila za pokojninsko in zdravstveno zavarovanje, zdravstvo, zaposlovanje, starševsko varstvo in prispevek za poškodbe. Pod Drugo spadajo stroški dela, ki niso del zgornjih dveh kategorij.<br><br>"
+"Postavko Drugi odhodki sestavljajo odpisi vrednosti in drugi poslovni odhodki, ki ne sodijo v zgornje kategorije."
 
 #: nvo/signals.py:81
 msgid "Revenue info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Na tem mestu prikazujemo podatke o prihodkih organizacije v izbranem finančnem letu.<br><br>"
+"Tržna (ali pridobitna) dejavnost zajema sredstva, ki jih organizacija z organizacijo dogodkov, prodajo izdelkov, storitev ali s kakršno koli drugo dejavnostjo zasluži na trgu in predstavljajo nenamenska sredstva (postavka Produkti in storitve). Pod tržno dejavnost spadajo tudi sponzorstva. Sponzorstvo je poslovni dogovor, v katerem se sponzor obveže, da organizaciji izroči določena sredstva, organizacija pa v zameno za prejeta sredstva opravi določeno storitev. Namen sponzoriranja je promovirati sponzorjevo blagovno znamko ali jo povezati z določenimi družbenimi temami.<br><br>"
+"Donacije in subvencije se glede na vir donacije delijo na Donacije fizičnih oseb, Javna sredstva, Zasebne fundacije, Članarine in Drugo. Donacije zajemajo vsa sredstva, ki jih je organizacija prejela od fizičnih in pravnih oseb brez kakršne koli protiusluge. Javna sredstva so vsa sredstva, ki jih je organizacija pridobila iz proračunskih sredstev, ki so lahko državna, občinska, evropska ali sredstva drugih držav. Članarine so denarni prispevki članov organizaciji, ki temelji na članstvu. V primeru nevladnih organizacij so to društva. Članarine niso obvezne za članske organizacije. Pod postavko Drugo so vnesene vse druge donacije in subvencije, ki ne ustrezajo zgornji kategorizaciji.<br><br>"
+"Postavka Drugi prihodki vsebuje vse ostale prihodke, ki ne sodijo v zgornje kategorije."
 
 #: nvo/signals.py:89
 msgid "payment ratio info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Podatki o plačnih razmerjih se beležijo glede na spol kot pravno kategorijo, kamor sodijo različni spoli in spolne identitete, večina oseb znotraj kategorije pa je cisspolnih žensk in cisspolnih moških. V Sloveniji se namreč statistika o višini plač po spolu vodi na podlagi pravne kategorije spola, ki sta dve (ženski in moški spol). Zavedamo se, da tovrstni statistični podatki žal niso uporabni za primerjanje podatkov o višini plač za osebe, ki niso cisspolne, kjer so razlike v višini plač še višje, tudi znotraj ene pravne kategorije."
 
 #: nvo/signals.py:95
 msgid "people info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Redno zaposlene so tiste osebe, ki v organizaciji delujejo v okviru pogodbe o zaposlitvi, ne glede na delež zaposlitve.<br><br>"
+"Drugi stalni sodelavci so tiste osebe, s katerimi organizacija redno sodeluje v kakršni koli drugi pogodbeni obliki (samozaposleni, podjemna pogodba, avtorska pogodba).<br><br>"
+"Redno zaposleni po spolu – delež moških / delež žensk / delež nebinarnih oseb prikazuje redno zaposlene osebe, ki ustrezajo določeni kategoriji.<br><br>"
+"Člani so vpisani za organizacije, ki temeljijo na članstvu, prostovoljci pa so vpisani za organizacije, ki so registrirane kot prostovoljske organizacije."
 
 #: nvo/signals.py:101
 msgid "yearly reports info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Letna poročila, ki jih organizacije lahko objavijo na tem mestu, so: vsebinsko poročilo, finančno poročilo, poročilo o prostovoljskem delu in skupno vsebinsko in finančno poročilo."
 
 #: nvo/signals.py:107
 msgid "basic info info text"
-msgstr "Tukaj pride text ki se bo kazal v adminu za info texte"
+msgstr ""
+"Humanitarne organizacije so tiste organizacije, ki delujejo kot splošne dobrodelne organizacije, organizacije za kronične bolnike in organizacije za samopomoč, izpolnjujejo pogoje in merila, ki jih določa Zakon o humanitarnih organizacijah in jim je bil podeljen ta status s strani Komisije za oceno izpolnjevanja meril za podelitev statusa humanitarne organizacije.<br><br>"
+"Status organizacije v javnem interesu na določenem področju lahko organizacija pridobi, če njeno delovanje na tem področju presega interese njenih ustanoviteljev oziroma članov in je splošno koristno. Vlogo za pridobitev statusa nevladna organizacija poda pri ministrstvu, pristojnem za področje."
 
 #: templates/admin/app_list.html:18
 msgid "Add"

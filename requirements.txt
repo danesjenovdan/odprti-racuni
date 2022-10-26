@@ -13,3 +13,4 @@ sentry-sdk
 python-docx==0.8.11
 babel
 htmldocx
+requests
