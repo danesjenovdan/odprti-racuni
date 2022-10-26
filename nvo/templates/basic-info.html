@@ -149,7 +149,7 @@
                     <i>Osnovni podatki</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.basic_info.pre_text }}</b>
+                            <b>{{ info_texts.basic_info.pre_text | safe }}</b>
                         </p>
                         {% if info_texts.basic_info.text %}
                         <p>
@@ -161,7 +161,7 @@
                     <i>Letna poročila</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.yearly_reports.pre_text }}</b>
+                            <b>{{ info_texts.yearly_reports.pre_text | safe }}</b>
                         </p>
                         {% if info_texts.yearly_reports.text %}
                         <p>
@@ -173,7 +173,7 @@
                     <i>Ljudje</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.people.pre_text }}</b>
+                            <b>{{ info_texts.people.pre_text | safe  }}</b>
                         </p>
                         {% if info_texts.people.text %}
                         <p>
@@ -185,7 +185,7 @@
                     <i>Plačna razmerja</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.payment_ratios.pre_text }}</b>
+                            <b>{{ info_texts.payment_ratios.pre_text | safe  }}</b>
                         </p>
                         <p>
                             {{ info_texts.payment_ratios.text }}
