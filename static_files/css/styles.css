@@ -3,7 +3,7 @@
 }
 
 body {
-    padding: 10px;
+    /* padding: 10px; */
     color: #39444e;
 }
 
@@ -246,7 +246,7 @@ ul {
     border-bottom-left-radius: 13px;
     border-bottom-right-radius: 13px;
     min-height: 544px;
-    max-height: 940px;
+    max-height: 840px;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
@@ -709,6 +709,10 @@ ul {
     line-height: 21px;
 }
 
+.description p:not(:first-child) {
+    margin-top: 12px;
+}
+
 .description ul {
     list-style: none;
     padding: 0;
@@ -896,37 +900,37 @@ ul {
 
 .info,
 .share {
-    position: absolute;
+    /* position: absolute;
     top: 72px;
     left: 20px;
-    right: 20px;
-    transition: all 0.5s ease-in-out;
+    right: 20px; */
+    /* transition: all 0.5s ease-in-out; */
 }
 
 @media (min-width: 992px) {
     .info,
     .share {
-        top: 20px;
-        overflow-y: scroll;
-        max-height: 485px;
+        /* top: 20px; */
+        /* overflow-y: scroll; */
+        /* max-height: 485px; */
     }
 }
 
 .content {
-    transition: all 0.25s ease-in-out;
+    /* transition: all 0.25s ease-in-out; */
 }
 
 .content:not(.active) {
-    opacity: 0;
+    display: none;
     pointer-events: none;
 }
 
 .info:not(.active) {
-    transform: translateX(-1000px);
+    display: none;
 }
 
 .share:not(.active) {
-    transform: translateX(1000px);
+    display: none;
 }
 
 .info-content {
@@ -937,12 +941,17 @@ ul {
 
 @media (min-width: 992px) {
     .info-content {
-        margin: 20px 100px 0 100px;
+        margin: 20px 100px 0 55px;
     }
 }
 
 .info-content i {
     margin-bottom: 6px;
+}
+
+.info-content b {
+    font-weight: 500;
+    font-style: italic;
 }
 
 .info-content p {
