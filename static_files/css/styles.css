@@ -3,7 +3,7 @@
 }
 
 body {
-    padding: 10px;
+    /* padding: 10px; */
     color: #39444e;
 }
 
@@ -246,7 +246,7 @@ ul {
     border-bottom-left-radius: 13px;
     border-bottom-right-radius: 13px;
     min-height: 544px;
-    max-height: 940px;
+    max-height: 840px;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
@@ -709,6 +709,10 @@ ul {
     line-height: 21px;
 }
 
+.description p:not(:first-child) {
+    margin-top: 12px;
+}
+
 .description ul {
     list-style: none;
     padding: 0;
@@ -937,7 +941,7 @@ ul {
 
 @media (min-width: 992px) {
     .info-content {
-        margin: 20px 100px 0 100px;
+        margin: 20px 100px 0 55px;
     }
 }
 

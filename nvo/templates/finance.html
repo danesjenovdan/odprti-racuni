@@ -26,7 +26,11 @@
                     </div>
                     <div>
                         <h4>{{ total_income.name }}</h4>
+                        {% if total_income.amount %}
                         <p>{{ total_income.amount|floatformat:2 }} EUR</p>
+                        {% else %}
+                        <p>0 EUR</p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="finances-table finances-presentation">
@@ -61,7 +65,11 @@
                     </div>
                     <div>
                         <h4>{{ total_expense.name }}</h4>
+                        {% if total_expense.amount %}
                         <p>{{ total_expense.amount|floatformat:2 }} EUR</p>
+                        {% else %}
+                        <p>0 EUR</p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="finances-table finances-presentation">

@@ -54,7 +54,8 @@
     // Add colors and font sizes
     root.customFontSize = "big";
     if (
-      color != null &&
+      color &&
+      root.children &&
       color.length > 0 &&
       color.length >= root.children.length
     ) {
@@ -65,10 +66,6 @@
           descendant.customFontSize = descendant.depth > 1 ? "small" : "big";
         });
       });
-    } else {
-      console.error(
-        `Color setting is illegal!`
-      );
     }
 
     const svg = d3
