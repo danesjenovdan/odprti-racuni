@@ -166,7 +166,7 @@
             // }
             
             $(document).ready(function() {
-                const shareUrl = Document.referrer ? Document.referrer : window.location.href
+                const shareUrl = document.referrer ? document.referrer : window.location.href
                 $("#share-url").val(shareUrl);
 
                 $("#share-url").click((e) => {
