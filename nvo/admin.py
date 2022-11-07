@@ -457,10 +457,16 @@ class InfoTextAdmin(LimitedAdmin):
         'year',
         'card'
     ]
-    fields = ['card', 'pre_text', 'text']
+    fields = ['card', 'get_pretext', 'text']
     list_filter = [SimpleFinanceYearListFilter, 'organization', 'card']
-    readonly_fields = ['year', 'card', 'pre_text']
-    exclude = ['organization']
+    readonly_fields = ['year', 'card', 'get_pretext']
+    #exclude = ['organization']
+
+    def get_pretext(self, obj):
+        return mark_safe(obj.pre_text)
+
+    get_pretext.allow_tags = True
+    get_pretext.short_description = _('Informacijski tekst')
 
 
 class EmbedAdmin(admin.ModelAdmin):
