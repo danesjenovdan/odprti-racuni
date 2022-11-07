@@ -48,7 +48,7 @@
                         {% if project.partners.all %}
                         <p>
                             <i>Partnerji</i>
-                            {% for partner in project.partners.all %}
+                            {% for partner in project.partners.all|dictsort:"id" %}
                                 {% if partner.link %}
                                     <b><a href="{{ partner.link }}" target="_blank">{{ partner.name }}</a></b>
                                 {% else %}
@@ -60,7 +60,7 @@
                         {% if project.financers.all %}
                         <p>
                             <i>Financerji</i>
-                            {% for financer in project.financers.all %}
+                            {% for financer in project.financers.all|dictsort:"id" %}
                                 {% if financer.link %}
                                     <b><a href="{{ financer.link }}" target="_blank">{{ financer.name }}</a></b>
                                 {% else %}
@@ -72,7 +72,7 @@
                         {% if project.cofinancers.all %}
                         <p>
                             <i>Sofinancerji</i>
-                            {% for cofinancer in project.cofinancers.all %}
+                            {% for cofinancer in project.cofinancers.all|dictsort:"id" %}
                                 {% if cofinancer.link %}
                                     <b><a href="{{ cofinancer.link }}" target="_blank">{{ cofinancer.name }}</a></b>
                                 {% else %}
@@ -87,7 +87,7 @@
                             <b>{{ project.self_money|floatformat:2 }} EUR</b>
                         </p>
                         {% endif %}
-                        {% if project.donators.all %}
+                        {% if project.donators.all|dictsort:"id" %}
                         <p>
                             <i>Donatorji</i>
                             {% for donator in project.donators.all %}
