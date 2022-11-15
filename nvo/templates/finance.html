@@ -10,10 +10,16 @@
             <div class="finances-header-button-wrapper">
                 <div class="finances-header-button">
                     <div id="finances-active-presentation" class="graph"></div>
-                    <svg id="finances-graph-button" class="active" aria-labelledby="finances-graph-button-tooltip" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90"><title>Poglej graf</title><g id="Layer_1-2"><g><path class="cls-1" d="M0,35.8V17.1C29.7,17.1,60.3,0,90,0V18.7C60.3,18.7,29.7,35.8,0,35.8"/><path class="cls-1" d="M0,54.2c29.7,0,60.3,17.1,90,17.1v18.7c-29.7,0-60.3-17.1-90-17.1v-18.7"/><path class="cls-1" d="M0,54.2v-18.4H90v18.4c-29.7,0-60.3,0-90,0"/></g></g></svg>
-                    <div id="finances-graph-button-tooltip" hidden="">Graf</div>
-                    <svg id="finances-table-button" aria-labelledby="finances-table-button-tooltip" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.4 75.1"><title>Poglej tabelo</title><g id="Layer_1-2"><path class="cls-1" d="M75,0H9.4C4.2,0,0,4.2,0,9.4v56.3c0,5.2,4.2,9.4,9.4,9.4H75c5.2,0,9.4-4.2,9.4-9.4V9.4c.1-5.2-4.2-9.4-9.4-9.4ZM32.4,45.5v-15.8c0-.2,0-.5-.1-.7h20.2c-.1,.2-.1,.5-.1,.7v15.8h-20Zm20,6.3v17.1h-20v-17.1h20ZM6.3,29H26.2c-.1,.2-.1,.5-.1,.7v15.8H6.3V29Zm52.3,0h19.6v16.6h-19.5v-15.9c0-.3,0-.5-.1-.7ZM9.4,6.3H75c1.7,0,3.1,1.4,3.1,3.1v13.2H6.3V9.4c0-1.7,1.4-3.1,3.1-3.1Zm-3.1,59.5v-14H26.1v17.1H9.4c-1.7,0-3.1-1.4-3.1-3.1Zm68.7,3.1h-16.3v-17.1h19.5v13.9c0,1.8-1.4,3.2-3.2,3.2Z"/></g></svg>
-                    <div id="finances-table-button-tooltip" hidden="">Tabela</div>
+
+                    <div class="finances-graph-option active">
+                        <svg id="finances-graph-button" aria-labelledby="finances-graph-button-tooltip" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90"><title>Poglej graf</title><g id="Layer_1-2"><g><path class="cls-1" d="M0,35.8V17.1C29.7,17.1,60.3,0,90,0V18.7C60.3,18.7,29.7,35.8,0,35.8"/><path class="cls-1" d="M0,54.2c29.7,0,60.3,17.1,90,17.1v18.7c-29.7,0-60.3-17.1-90-17.1v-18.7"/><path class="cls-1" d="M0,54.2v-18.4H90v18.4c-29.7,0-60.3,0-90,0"/></g></g></svg>
+                        <div id="finances-graph-button-tooltip">Graf</div>
+                    </div>
+                    
+                    <div class="finances-table-option">
+                        <svg id="finances-table-button" aria-labelledby="finances-table-button-tooltip" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.4 75.1"><title>Poglej tabelo</title><g id="Layer_1-2"><path class="cls-1" d="M75,0H9.4C4.2,0,0,4.2,0,9.4v56.3c0,5.2,4.2,9.4,9.4,9.4H75c5.2,0,9.4-4.2,9.4-9.4V9.4c.1-5.2-4.2-9.4-9.4-9.4ZM32.4,45.5v-15.8c0-.2,0-.5-.1-.7h20.2c-.1,.2-.1,.5-.1,.7v15.8h-20Zm20,6.3v17.1h-20v-17.1h20ZM6.3,29H26.2c-.1,.2-.1,.5-.1,.7v15.8H6.3V29Zm52.3,0h19.6v16.6h-19.5v-15.9c0-.3,0-.5-.1-.7ZM9.4,6.3H75c1.7,0,3.1,1.4,3.1,3.1v13.2H6.3V9.4c0-1.7,1.4-3.1,3.1-3.1Zm-3.1,59.5v-14H26.1v17.1H9.4c-1.7,0-3.1-1.4-3.1-3.1Zm68.7,3.1h-16.3v-17.1h19.5v13.9c0,1.8-1.4,3.2-3.2,3.2Z"/></g></svg>
+                        <div id="finances-table-button-tooltip">Tabela</div>
+                    </div>
                 </div>
             </div>
             
@@ -173,7 +179,7 @@
                     <i>Prihodki</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.revenue.pre_text | safe }}</b>
+                            {{ info_texts.revenue.pre_text | safe }}
                         </p>
                         {% if info_texts.revenue.text %}
                         <p>
@@ -186,7 +192,7 @@
                     <i>Odhodki</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.expense.pre_text | safe }}</b>
+                            {{ info_texts.expense.pre_text | safe }}
                         </p>
                         {% if info_texts.expense.text %}
                         <p>
@@ -199,7 +205,7 @@
                     <i>Vrednost prostovoljskega dela</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.voluntier.pre_text | safe }}</b>
+                            {{ info_texts.voluntier.pre_text | safe }}
                         </p>
                         {% if info_texts.voluntier.text %}
                         <p>
@@ -212,7 +218,7 @@
                     <i>Izplačila projektnim partnerjem</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.partners.pre_text | safe }}</b>
+                            {{ info_texts.partners.pre_text | safe }}
                         </p>
                         {% if info_texts.partners.text %}
                         <p>
@@ -225,7 +231,7 @@
                     <i>Vplačila v proračun RS</i>
                     <div>
                         <p>
-                            <b>{{ info_texts.state_budget.pre_text | safe }}</b>
+                            {{ info_texts.state_budget.pre_text | safe }}
                         </p>
                         <p>
                             {{ info_texts.state_budget.text }}
@@ -262,23 +268,23 @@
 {% block js %}
 <script>
 $(document).ready(function() {
-    $("#finances-graph-button").click((e) => {
+    $(".finances-graph-option").click((e) => {
         // move the slider
         $("#finances-active-presentation").addClass("graph");
         // change button icon colors
-        $("#finances-graph-button").addClass("active");
-        $("#finances-table-button").removeClass("active");
+        $(".finances-graph-option").addClass("active");
+        $(".finances-table-option").removeClass("active");
         // show the right finances presentation
         $(".finances-graph").addClass("active");
         $(".finances-table").removeClass("active");
     });
 
-    $("#finances-table-button").click((e) => {
+    $(".finances-table-option").click((e) => {
         // move the slider
         $("#finances-active-presentation").removeClass("graph");
         // change button icon colors
-        $("#finances-table-button").addClass("active");
-        $("#finances-graph-button").removeClass("active");
+        $(".finances-table-option").addClass("active");
+        $(".finances-graph-option").removeClass("active");
         // show the right finances presentation
         $(".finances-table").addClass("active");
         $(".finances-graph").removeClass("active");
