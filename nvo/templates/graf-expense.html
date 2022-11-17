@@ -126,11 +126,14 @@
     function hovered(event, d) {
       const tooltip = document.getElementById("graph-tooltip");
       tooltip.innerHTML = `<h6>${d.data.name}</h6><p>${d.value.toLocaleString("sl")} EUR</p>`;
+      tooltip.style.display = 'block';
       tooltip.style.opacity = 1;
     }
 
     function unhovered(event) {
-      document.getElementById("graph-tooltip").style.opacity = 0;
+      const tooltip = document.getElementById("graph-tooltip");
+      tooltip.style.display = 'none';
+      tooltip.style.opacity = 0;
     }
 
     function clicked(event, p) {

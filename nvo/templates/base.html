@@ -166,15 +166,13 @@
             // }
             
             $(document).ready(function() {
-                console.log("document.referrer", document.referrer)
-                console.log("window.location.href", window.location.href)
-                const shareUrl = document.referrer ? document.referrer : window.location.href
-                $("#share-url").val(shareUrl);
+                // const shareUrl = document.referrer ? document.referrer : window.location.href
+                // $("#share-url").val(shareUrl);
 
-                $("#share-url").click((e) => {
-                    $("#share-url").select();
-                    document.execCommand("copy");
-                });
+                // $("#share-url").click((e) => {
+                //     $("#share-url").select();
+                //     document.execCommand("copy");
+                // });
             });
 
             $('.martor-preview pre').each(function(i, block){
