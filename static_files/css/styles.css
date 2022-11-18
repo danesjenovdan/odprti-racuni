@@ -542,7 +542,7 @@ ul {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 80px;
+    width: 160px;
     height: 24px;
     border: 1px solid #39444e;
     border-radius: 13px;
@@ -550,9 +550,29 @@ ul {
     position: relative;
 }
 
+.finances-graph-option,
+.finances-table-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.finances-graph-option div,
+.finances-table-option div {
+    padding-left: 6px;
+    font-size: 14px;
+}
+
+.finances-graph-option.active div,
+.finances-table-option.active div {
+    color: white;
+    z-index: 10;
+}
+
 #finances-active-presentation {
     position: absolute;
-    width: 40px;
+    width: 80px;
     height: 24px;
     background-color: #39444e;
     border: 1px solid #39444e;
@@ -564,7 +584,7 @@ ul {
 
 #finances-active-presentation.graph {
     /* left: 0; */
-    transform: translateX(-40px); /* for the transition animation to work */
+    transform: translateX(-80px); /* for the transition animation to work */
 }
 
 .finances-header-button svg {
@@ -576,11 +596,13 @@ ul {
     z-index: 2;
 }
 
-.finances-header-button svg path {
+.finances-graph-option svg path,
+.finances-table-option svg path {
     fill: #39444e;
 }
 
-.finances-header-button svg.active path {
+.finances-graph-option.active svg path,
+.finances-table-option.active svg path {
     fill: white;
 }
 
@@ -978,7 +1000,7 @@ ul {
 /* GRAFI ZA FINANCE */
 
 .graph-tooltip {
-    opacity: 0;
+    display: none;
     position: absolute;
     color: white;
     background: black;

@@ -124,16 +124,16 @@
       .style("opacity", (d) => (d.depth > 0 && d.x0 == 0 && d.y0 == 0 ? 1 : 0));
 
     function hovered(event, d) {
-      // console.log("HOVEr!");
-      // console.log(d);
       const tooltip = document.getElementById("graph-tooltip");
       tooltip.innerHTML = `<h6>${d.data.name}</h6><p>${d.value.toLocaleString("sl")} EUR</p>`;
       tooltip.style.opacity = 1;
+      tooltip.style.display = 'block';
     }
 
     function unhovered(event) {
-      // console.log("UNHOVEr!");
-      document.getElementById("graph-tooltip").style.opacity = 0;
+      const tooltip = document.getElementById("graph-tooltip");
+      tooltip.style.opacity = 0;
+      tooltip.style.display = 'none';
     }
 
     function clicked(event, p) {
