@@ -323,6 +323,7 @@ class ExportNVOData(object):
         self.add_heading(project.name, level=2)
         p = self.document.add_paragraph()
         p.paragraph_format.left_indent = Inches(0.5)
+        p.add_run('\n')
         p.add_run(f'Vrednost projekta (delež organizacije / celota): {format_decimal(project.organization_share, locale="sl_SI")} EUR / {format_decimal(project.value, locale="sl_SI")} EUR\n')
         p.add_run(f'Trajanje projekta: {months} mesecev{days}, {self.get_formated_date(project.start_date)}–{self.get_formated_date(project.end_date)}\n')
         financers = project.financers.all()
