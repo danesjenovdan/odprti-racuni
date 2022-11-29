@@ -14,11 +14,11 @@
               <th scope="row">{{ model.name }}</th>
             {% endif %}
 
-            {% if model.add_url %}
+            {% comment %} {% if model.add_url %}
               <td><a href="{{ model.add_url }}" class="addlink">{% translate 'Add' %}</a></td>
             {% else %}
               <td></td>
-            {% endif %}
+            {% endif %} {% endcomment %}
 
             {% if model.admin_url and show_changelinks %}
               {% if model.view_only %}

@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: odprti-racuni
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-sandbox"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
     nginx.ingress.kubernetes.io/proxy-body-size: 15m
     nginx.org/client-max-body-size: "15m"
 spec:
@@ -24,7 +24,6 @@ spec:
                 name: odprti-racuni
                 port:
                   number: 8000
-  rules:
     - host: odprtiracuni-nvo.djnd.si
       http:
         paths:
@@ -41,7 +40,7 @@ kind: Ingress
 metadata:
   name: odprti-racuni-nginx
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-sandbox"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
     nginx.ingress.kubernetes.io/cors-allow-origin: "*" # TODO
