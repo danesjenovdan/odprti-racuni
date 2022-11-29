@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: odprti-racuni
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    cert-manager.io/cluster-issuer: "letsencrypt-sandbox"
     nginx.ingress.kubernetes.io/proxy-body-size: 15m
     nginx.org/client-max-body-size: "15m"
 spec:
@@ -11,9 +11,21 @@ spec:
   tls:
     - hosts:
         - odprtiracuni.lb.djnd.si
+        - odprtiracuni-nvo.djnd.si
       secretName: odprti-racuni-tls
   rules:
     - host: odprtiracuni.lb.djnd.si
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: odprti-racuni
+                port:
+                  number: 8000
+  rules:
+    - host: odprtiracuni-nvo.djnd.si
       http:
         paths:
           - path: /
@@ -29,7 +41,7 @@ kind: Ingress
 metadata:
   name: odprti-racuni-nginx
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    cert-manager.io/cluster-issuer: "letsencrypt-sandbox"
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
     nginx.ingress.kubernetes.io/cors-allow-origin: "*" # TODO
@@ -40,9 +52,20 @@ spec:
   tls:
     - hosts:
         - files.odprtiracuni.lb.djnd.si
+        - files.odprtiracuni-nvo.djnd.si
       secretName: odprti-racuni-nginx-tls
   rules:
     - host: files.odprtiracuni.lb.djnd.si
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: odprti-racuni-nginx
+                port:
+                  number: 80
+    - host: files.odprtiracuni-nvo.djnd.si
       http:
         paths:
           - path: /
