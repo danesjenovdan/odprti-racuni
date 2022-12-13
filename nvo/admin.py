@@ -107,6 +107,21 @@ class FinancialYearInline(admin.TabularInline):
 
     izvoz.allow_tags=True
 
+
+class OrganizationForm(forms.ModelForm):
+    class Meta:
+        model = Organization
+        widgets = {
+            'name': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 1}),
+            'post_number': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 1}),
+            'representative': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 1}),
+            'address': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 3}),
+            'registration_number': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 1}),
+            'trr': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 1}),
+            'is_for_the_public_good': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 3}),
+        }
+        fields = '__all__'
+
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = [
         'name'
@@ -115,6 +130,8 @@ class OrganizationAdmin(admin.ModelAdmin):
     inlines = [
         FinancialYearInline
     ]
+
+    form = OrganizationForm
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
