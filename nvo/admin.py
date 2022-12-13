@@ -479,7 +479,7 @@ class EmbedAdmin(admin.ModelAdmin):
     def embed_code(self, obj):
         org_id = obj.organization.id
         return f'''
-        <iframe id="odprti-racuni" frameborder="0" width="996" height="960" src="https://odprtiracuni.lb.djnd.si/{org_id}/"></iframe>
+        <iframe id="odprti-racuni" frameborder="0" width="996" height="960" src="https://odprtiracuni-nvo.djnd.si/{org_id}/"></iframe>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
         <script>iFrameResize({{checkOrigin:false}},'#odprti-racuni');</script>
         '''
