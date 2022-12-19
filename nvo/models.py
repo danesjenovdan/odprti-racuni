@@ -291,13 +291,15 @@ class Project(models.Model):
     description = MartorField(verbose_name=_('Project\'s description'))
     outcomes_and_impacts = MartorField(verbose_name=_('Project\'s outcomes and impacts'))
     link = models.URLField(null=True, blank=True, verbose_name=_('Project\'s link'))
-    value = models.IntegerField(verbose_name=_('Total value'))
-    self_money = models.IntegerField(null=True, blank=True, verbose_name=_('Self money'))
-    organization_share = models.IntegerField(
+    value = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Total value'))
+    self_money = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name=_('Self money'))
+    organization_share = models.DecimalField(
         verbose_name=_('Organization share'),
         validators=[
             MinValueValidator(1)
             ],
+        max_digits=10,
+        decimal_places=2,
     )
     start_date = models.DateField(verbose_name=_('Start date'))
     end_date = models.DateField(verbose_name=_('End date'))
