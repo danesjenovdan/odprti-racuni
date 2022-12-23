@@ -379,9 +379,9 @@ class Donator(models.Model):
 class Donations(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='donations', verbose_name=_('Organization'))
     year = models.ForeignKey('FinancialYear', on_delete=models.PROTECT, related_name='donations', verbose_name=_('Year'))
-    personal_donations_amount = models.IntegerField(null=True, blank=True, verbose_name=_('Personal donation amount'))
+    personal_donations_amount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name=_('Personal donation amount'))
     number_of_personal_donations = models.IntegerField(null=True, blank=True, verbose_name=_('Number of personal donations'))
-    organization_donations_amount = models.IntegerField(null=True, blank=True, verbose_name=_('Organization donations amount'))
+    organization_donations_amount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name=_('Organization donations amount'))
     number_of_organization_donations = models.IntegerField(null=True, blank=True, verbose_name=_('Number od organization donations'))
     one_percent_income_tax = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name=_('1 percent income tax'))
     purpose_of_donations = models.TextField(null=True, blank=True, verbose_name=_('Donation purpose'))
