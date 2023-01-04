@@ -486,8 +486,8 @@ class FinancialYearEmbedInline(admin.TabularInline):
 
 
 class EmbedAdmin(admin.ModelAdmin):
-    fields = ['embed_code']
-    readonly_fields = ['embed_code']
+    fields = ['preview', 'embed_code']
+    readonly_fields = ['preview', 'embed_code',]
     list_display = [
         'organization'
     ]
@@ -498,14 +498,24 @@ class EmbedAdmin(admin.ModelAdmin):
     def embed_code(self, obj):
         org_id = obj.organization.id
         return f'''
-        <iframe id="odprti-racuni" frameborder="0" width="996" height="960" src="https://odprtiracuni-nvo.djnd.si/{org_id}/"></iframe>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
-        <script>iFrameResize({{checkOrigin:false}},'#odprti-racuni');</script>
+            <iframe id="odprti-racuni" frameborder="0" width="996" height="960" src="https://odprtiracuni-nvo.djnd.si/{org_id}/"></iframe>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
+            <script>iFrameResize({{checkOrigin:false}},'#odprti-racuni');</script>
         '''
+
+    def preview(self, obj):
+        return mark_safe(f'''
+        <a href="/{obj.organization.id}/">
+            <button type="button" class="instruction_collapsible" style="margin-top:0px;">{_("Poglej predogled")}</button>
+        </a>
+        ''')
 
 
     embed_code.allow_tags = True
     embed_code.short_description = _('Koda za vdelavo')
+
+    preview.allow_tags = True
+    preview.short_description = _('Predogled prikaza na vašem spletnem mestu')
 
     class Media:
         css = {
