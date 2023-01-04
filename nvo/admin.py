@@ -472,7 +472,7 @@ class InfoTextAdmin(LimitedAdmin):
 
 class FinancialYearEmbedInline(admin.TabularInline):
     readonly_fields = ['financial_year', 'izvoz']
-    exclude = ('organiaztion', )
+    exclude = ('organization', )
     model = OrganizationFinancialYear
     extra = 0
     ordering = ("financial_year__name",)
