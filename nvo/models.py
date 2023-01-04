@@ -65,6 +65,7 @@ class FinancialYear(models.Model):
 class OrganizationFinancialYear(models.Model):
     financial_year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='organiaztion_through', verbose_name=_('Financial year'))
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='financial_year_through', verbose_name=_('Organiaztion'))
+    embed = models.ForeignKey('Embed', on_delete=models.CASCADE, null=True, related_name='financial_year_through', verbose_name=_('Embed'))
     is_active = models.BooleanField(default=False, verbose_name=_('Is active'))
 
     class Meta:

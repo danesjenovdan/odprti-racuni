@@ -12,8 +12,9 @@ from mptt.admin import MPTTModelAdmin
 from nvo.models import (Organization, DocumentCategory, Document, People,
     Employee, User, RevenueCategory, ExpensesCategory, FinancialYear, PaymentRatio,
     Project, Financer, CoFinancer, Partner, Donator, Donations, PersonalDonator,
-    OrganiaztionDonator, Instructions, InfoText, Finance, Embed
+    OrganiaztionDonator, Instructions, InfoText, Finance, Embed, OrganizationFinancialYear
 )
+from nvo.forms import ProjectForm, OrganizationForm, FinanceChangeListForm
 
 import json
 # Register your models here.
@@ -108,28 +109,16 @@ class FinancialYearInline(admin.TabularInline):
     izvoz.allow_tags=True
 
 
-class OrganizationForm(forms.ModelForm):
-    class Meta:
-        model = Organization
-        widgets = {
-            'name': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 1}),
-            'post_number': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 1}),
-            'representative': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 1}),
-            'address': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 3}),
-            'registration_number': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 1}),
-            'trr': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 1}),
-            'is_for_the_public_good': forms.widgets.Textarea(attrs={'cols': 32, 'rows': 3}),
-        }
-        fields = '__all__'
+
 
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = [
         'name'
     ]
 
-    inlines = [
-        FinancialYearInline
-    ]
+    # inlines = [
+    #     FinancialYearInline
+    # ]
 
     form = OrganizationForm
 
@@ -248,13 +237,7 @@ class FinanceAdmin(LimitedAdmin):
     expenses.short_description = _("Expenses")
 
 
-class FinanceChangeListForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(FinanceChangeListForm, self).__init__(*args, **kwargs)
-        instance = kwargs.get('instance')
-        if instance:
-            if not instance.allow_additional_name:
-                self.fields['additional_name'].widget.attrs['hidden'] = 'hidden'
+
 
 
 class FinanceYearListFilter(SimpleFinanceYearListFilter):
@@ -402,6 +385,7 @@ class ProjectYearListFilter(admin.SimpleListFilter):
             return queryset
 
 class ProjectAdmin(LimitedAdmin):
+    form = ProjectForm
     readonly_fields = []
     list_display = [
         'name',
@@ -486,11 +470,29 @@ class InfoTextAdmin(LimitedAdmin):
     get_pretext.short_description = _('Informacijski tekst')
 
 
+class FinancialYearEmbedInline(admin.TabularInline):
+    readonly_fields = ['financial_year', 'izvoz']
+    exclude = ('organiaztion', )
+    model = OrganizationFinancialYear
+    extra = 0
+    ordering = ("financial_year__name",)
+
+    def izvoz(self, obj):
+        url = reverse('export', kwargs={'year_id':obj.financial_year.id, 'organization_id':obj.organization.id})
+        print(url)
+        return mark_safe(f'<a href="{url}">Izvozi</a>')
+
+    izvoz.allow_tags=True
+
+
 class EmbedAdmin(admin.ModelAdmin):
     fields = ['embed_code']
     readonly_fields = ['embed_code']
     list_display = [
         'organization'
+    ]
+    inlines = [
+        FinancialYearEmbedInline
     ]
 
     def embed_code(self, obj):

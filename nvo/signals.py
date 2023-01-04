@@ -110,11 +110,13 @@ def create_models_for_organization(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Organization)
 def create_organization_financial_year_for_organization(sender, instance, created, **kwargs):
     if created:
-        Embed(organization=instance).save()
+        embed = Embed(organization=instance)
+        embed.save()
         for year in FinancialYear.objects.all():
             OrganizationFinancialYear(
                 financial_year=year,
-                organization=instance
+                organization=instance,
+                embed=embed
                 ).save()
 
 @receiver(post_save, sender=FinancialYear)
@@ -123,7 +125,8 @@ def create_organization_financial_year_for_year(sender, instance, created, **kwa
         for organization in Organization.objects.all():
             OrganizationFinancialYear(
                 financial_year=instance,
-                organization=organization
+                organization=organization,
+                embed=organization.embeds.first()
                 ).save()
 
 @receiver(post_save, sender=User)
