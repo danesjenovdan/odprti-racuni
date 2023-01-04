@@ -507,6 +507,11 @@ class EmbedAdmin(admin.ModelAdmin):
     embed_code.allow_tags = True
     embed_code.short_description = _('Koda za vdelavo')
 
+    class Media:
+        css = {
+             'all': ('css/tabular-hide-title.css',),
+       }
+
 
 class AdminSite(admin.AdminSite):
     site_header = _('Odprti računi')
