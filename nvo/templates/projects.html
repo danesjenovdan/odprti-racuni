@@ -39,12 +39,14 @@
                 <div class="sidebar">
                     <p onclick="showHide('{{ forloop.counter }}')">{{ project.organization_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
                     <div class="more">
-                        <div class="horizontal-divider"></div>
                         <i>Trajanje projekta</i>
                         <p>
                             <b>{{ project.duration.months }} mesecev{% if project.duration.days %}, {{ project.duration.days }} dni{% endif %}</b>
                             <b>{{ project.start_date|date:'j. n. Y' }}–{{ project.end_date|date:'j. n. Y' }}</b>
                         </p>
+                        {% if project.partners.all or project.financers.all %}
+                        <div class="horizontal-divider-short"></div>
+                        {% endif %}
                         {% if project.partners.all %}
                         <p>
                             <i>Partnerji</i>
@@ -100,6 +102,7 @@
                         </p>
                         {% endif %}
                         {% if project.link %}
+                        <div class="horizontal-divider-short"></div>
                         <p>
                             <b><a href="{{ project.link }}" target="_blank">Projektno spletno mesto</a></b>
                         </p>

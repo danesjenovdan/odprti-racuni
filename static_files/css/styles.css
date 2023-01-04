@@ -3,7 +3,7 @@
 }
 
 body {
-    /* padding: 10px; */
+    margin: 0;
     color: #39444e;
 }
 
@@ -89,6 +89,7 @@ ul {
     max-width: 90px;
     height: 30px;
     width: auto;
+    object-fit: contain;
 }
 
 .organization-logo {
@@ -106,6 +107,7 @@ ul {
     max-width: 90px;
     height: 30px;
     width: auto;
+    object-fit: contain;
 }
 
 @media (min-width: 992px) {
@@ -414,7 +416,7 @@ ul {
     line-height: 22px;
 }
 
-.minicard p, li {
+.minicard p, li, ul {
     font-size: 16px;
     line-height: 22px;
     margin: 0 0 12px 0;
@@ -762,6 +764,13 @@ ul {
     background-color: #d1d7df;
     height: 1px;
     width: 100%;
+    margin: 20px 0;
+}
+
+.horizontal-divider-short {
+    background-color: #d1d7df;
+    height: 1px;
+    width: 80px;
     margin: 20px 0;
 }
 
