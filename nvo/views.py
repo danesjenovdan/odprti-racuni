@@ -132,7 +132,7 @@ def get_projects(request, organization_id, year):
         is_active=True
     )
 
-    projects = year.get_projects().filter(organization=organization)
+    projects = year.get_projects().filter(organization=organization).order_by('start_date')
 
     info_text = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.PROJECTS).first()
 
