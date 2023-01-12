@@ -476,6 +476,7 @@ class FinancialYearEmbedInline(admin.TabularInline):
     model = OrganizationFinancialYear
     extra = 0
     ordering = ("financial_year__name",)
+    insert_before = 'preview'
 
     def izvoz(self, obj):
         url = reverse('export', kwargs={'year_id':obj.financial_year.id, 'organization_id':obj.organization.id})
@@ -494,6 +495,8 @@ class EmbedAdmin(admin.ModelAdmin):
     inlines = [
         FinancialYearEmbedInline
     ]
+    change_form_template = 'admin/custom/embed_change_form.html'
+
 
     def embed_code(self, obj):
         org_id = obj.organization.id
