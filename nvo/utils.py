@@ -3,6 +3,7 @@ from docx import Document, oxml, opc
 from docx.shared import Inches, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
+from docx.oxml.xmlchemy import OxmlElement
 
 from datetime import datetime
 import markdown
@@ -13,6 +14,7 @@ from django.utils.text import slugify
 from django.http.response import HttpResponse
 
 import requests, os
+from PIL import Image
 
 
 revenue_data = {
@@ -285,8 +287,7 @@ class ExportNVOData(object):
         return response
 
     def add_heading(self, text, level=1):
-        if level==2:
-            self.document.add_paragraph()
+        self.document.add_paragraph()
         heading = self.document.add_heading('', level=level).add_run(text)
         heading.font.color.rgb = RGBColor(0, 0, 0)
         heading.font.name = 'Arial'
@@ -358,7 +359,12 @@ class ExportNVOData(object):
             r = p.add_run()
             for icon in project.icons:
                 image_path = self.download_image(icon.url, icon.name)
-                r.add_picture(image_path, height=Inches(1))
+                im = Image.open(image_path)
+                w, h = im.size
+                if w < h:
+                    r.add_picture(image_path, height=Inches(2))
+                else:
+                    r.add_picture(image_path, width=Inches(2))
 
     def download_image(self, url, name):
         page = requests.get(url)
