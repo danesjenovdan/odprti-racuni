@@ -11,6 +11,7 @@ from datetime import timedelta
 
 from nvo.behaviors.models import Timestampable
 from django.core.exceptions import ValidationError
+import os
 
 
 def document_size_validator(value): # add this to some file where you can import it from
@@ -23,9 +24,13 @@ def image_validator(image):
     if image.size > limit:
         raise ValidationError('Slika je prevelika. Največja možna velikost je 1 MB.')
 
+def validate_image_extension(value):
+    ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
+    valid_extensions = ['.jpg', '.jpeg', '.png']
+    if not ext.lower() in valid_extensions:
+        raise ValidationError('Format slike ni med podprtimi formati. Podprti formati so jpg in png.')
 
-
-# Create your models here.
+# MODELS
 
 class User(AbstractUser, Timestampable):
     organization = models.ForeignKey(
@@ -82,7 +87,7 @@ class Organization(models.Model):
     logo = models.ImageField(
         null=True,
         verbose_name=_('Logo'),
-        validators=[image_validator])
+        validators=[image_validator, validate_image_extension])
     link = models.URLField(null=True, blank=True, verbose_name=_('Organization\'s link'))
     address = models.TextField(null=True, verbose_name=_('Address'))
     post_number = models.TextField(null=True, verbose_name=_('Post number'))
@@ -338,7 +343,12 @@ class Financer(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='financers')
     name = models.TextField(verbose_name=_('Name'))
     link = models.URLField(null=True, blank=True, verbose_name='Povezava do spletnega mesta')
-    logo = models.FileField(null=True, blank=True, verbose_name=_('Logo'))
+    logo = models.ImageField(
+        null=True,
+        blank=True,
+        verbose_name=_('Logo'),
+        validators=[image_validator, validate_image_extension]
+    )
 
     class Meta:
         verbose_name = _('Financer')
@@ -349,7 +359,12 @@ class CoFinancer(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='cofinancers')
     name = models.TextField(verbose_name=_('Name'))
     link = models.URLField(null=True, blank=True, verbose_name=_('CoFinancer\'s link'))
-    logo = models.FileField(null=True, blank=True, verbose_name=_('Logo'))
+    logo = models.ImageField(
+        null=True,
+        blank=True,
+        verbose_name=_('Logo'),
+        validators=[image_validator, validate_image_extension]
+    )
 
     class Meta:
         verbose_name = _('Cofinancer')
