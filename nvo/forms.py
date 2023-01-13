@@ -25,7 +25,7 @@ class ProjectForm(forms.ModelForm):
             raise ValidationError(_('Lastni vložek je večji kot vrednost celotnega projekta.'))
 
         if start_date > end_date:
-            raise ValidationError(_('Datum zaključka projekta je pred začetkom projekta.'))
+            raise ValidationError(_('Datum začetka projekta je trenutno nastavljen po datumu, ki je določen za konec projekta. Preverite pravilnost datumov in jih ustrezno uredite.'))
 
 
 class OrganizationForm(forms.ModelForm):

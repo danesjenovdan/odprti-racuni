@@ -487,7 +487,7 @@ class FinancialYearEmbedInline(admin.TabularInline):
 
 
 class EmbedAdmin(admin.ModelAdmin):
-    fields = ['preview', 'embed_code']
+    #fields = ['preview', 'embed_code']
     readonly_fields = ['preview', 'embed_code',]
     list_display = [
         'organization'
@@ -496,6 +496,11 @@ class EmbedAdmin(admin.ModelAdmin):
         FinancialYearEmbedInline
     ]
     change_form_template = 'admin/custom/embed_change_form.html'
+
+    fieldsets = (
+        (_('PREGLED PRIKAZA NA VEŠEM SPLETENM MESTU'), {'fields': ('preview',)}),
+        (_('KODA ZA VDELAVO NA VAŠE SPLETNO MESTO'), {'fields': ('embed_code', )}),
+    )
 
 
     def embed_code(self, obj):
