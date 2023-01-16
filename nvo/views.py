@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotFound
 
 from nvo.models import (Organization, FinancialYear, Document, OrganizationFinancialYear, People, PaymentRatio, RevenueCategory,
-    ExpensesCategory, Donations, InfoText, Finance)
+    ExpensesCategory, Donations, InfoText, Finance, Embed)
 
 from nvo.utils import clean_chart_data, ExportNVOData
 
@@ -43,6 +43,10 @@ def organization_basic_info(request, organization_id, year):
     # get donations to decide whether to render the Donations menu item
     donations = get_object_or_404(Donations, year=year, organization=organization)
 
+    # get embed url
+    embed = Embed.objects.get(organization=organization)
+    page_of_embed_url = embed.page_of_embed_url if embed and embed.page_of_embed_url else ""
+
     return render(
         request,
         'basic-info.html',
@@ -59,6 +63,7 @@ def organization_basic_info(request, organization_id, year):
                 'payment_ratios': info_text_payment_ratios
             },
             'donation': donations,
+            'page_of_embed_url': page_of_embed_url,
         })
 
 def get_finance(request, organization_id, year):
@@ -98,6 +103,10 @@ def get_finance(request, organization_id, year):
     # get donations to decide whether to render the Donations menu item
     donations = get_object_or_404(Donations, year=year, organization=organization)
 
+    # get embed url
+    embed = Embed.objects.get(organization=organization)
+    page_of_embed_url = embed.page_of_embed_url if embed and embed.page_of_embed_url else ""
+
     return render(
         request,
         'finance.html',
@@ -118,6 +127,7 @@ def get_finance(request, organization_id, year):
             'expenses_json': expenses_chart_data,
             'revenue_json': revenue_chart_data,
             'donation': donations,
+            'page_of_embed_url': page_of_embed_url,
         })
 
 
@@ -139,6 +149,10 @@ def get_projects(request, organization_id, year):
     # get donations to decide whether to render the Donations menu item
     donations = get_object_or_404(Donations, year=year, organization=organization)
 
+    # get embed url
+    embed = Embed.objects.get(organization=organization)
+    page_of_embed_url = embed.page_of_embed_url if embed and embed.page_of_embed_url else ""
+
     return render(
         request,
         'projects.html',
@@ -147,6 +161,7 @@ def get_projects(request, organization_id, year):
             'organization': organization,
             'info_text': info_text,
             'donation': donations,
+            'page_of_embed_url': page_of_embed_url,
         }
     )
 
@@ -169,6 +184,10 @@ def get_donations(request, organization_id, year):
     info_text_one_percent = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.INCOME_TAX).first()
     info_text_purpose = InfoText.objects.filter(year=year, organization=organization, card=InfoText.CardTypes.DONATION_CONSUMPTION).first()
 
+    # get embed url
+    embed = Embed.objects.get(organization=organization)
+    page_of_embed_url = embed.page_of_embed_url if embed and embed.page_of_embed_url else ""
+
     return render(
         request,
         'donations.html',
@@ -181,6 +200,7 @@ def get_donations(request, organization_id, year):
                 'one_percent': info_text_one_percent,
                 'donation_purpose': info_text_purpose
             },
+            'page_of_embed_url': page_of_embed_url,
         }
     )
 

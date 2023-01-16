@@ -494,7 +494,7 @@ class Embed(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='embeds', verbose_name=_('Organization'))
     page_of_embed_url = models.URLField(null=True, blank=True, verbose_name=_('Page where iframe is embeded'))
     def __str__(self):
-        return ''
+        return f"Embed za organizacijo {self.organization}"
     class Meta:
         verbose_name = _('Koda za vdelavo')
         verbose_name_plural = _('Koda za vdelavo')
