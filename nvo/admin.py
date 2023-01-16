@@ -500,6 +500,7 @@ class EmbedAdmin(admin.ModelAdmin):
     fieldsets = (
         (_('PREGLED PRIKAZA NA VEŠEM SPLETENM MESTU'), {'fields': ('preview',)}),
         (_('KODA ZA VDELAVO NA VAŠE SPLETNO MESTO'), {'fields': ('embed_code', )}),
+        (_('POVEZAVA DO SPLETNE STRANI, V KATERO JE NA VAŠEM SPLETNEM MESTU VDELANA APLIKACIJA ODPRTI RAČUNI'), {'fields': ('page_of_embed_url', )})
     )
 
 
