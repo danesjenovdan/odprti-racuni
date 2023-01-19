@@ -325,14 +325,45 @@ ul {
         margin: 0;
     }
 
-    .minicard.show .card-with-sidebar .main h4 {
+    /* .minicard.show .card-with-sidebar .main h4 {
         margin-bottom: 20px;
-    }
+    } */
 }
 
 .card-with-sidebar .main {
-    display: flex;
     flex-grow: 1;
+}
+
+.card-with-sidebar .main .project-desc-header {
+    display: flex;
+    padding: 20px 20px 0 20px;
+    cursor: pointer;
+}
+
+.card-with-sidebar .sidebar .project-desc-header {
+    display: none;
+    padding: 20px;
+    border-left: 1px solid #d1d7df;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .card-with-sidebar .main .project-desc-header {
+        padding: 20px;
+    }
+    .card-with-sidebar .sidebar .project-desc-header {
+        display: flex;
+    }
+}
+
+.card-with-sidebar .sidebar .more {
+    padding: 0 20px;
+}
+
+@media (min-width: 768px) {
+    .card-with-sidebar .sidebar .more {
+        border-left: 1px solid #d1d7df;
+    }
 }
 
 .card-with-sidebar .main i {
@@ -352,27 +383,37 @@ ul {
     transition: transform 0.25s ease-out;
 }
 
-.card-with-sidebar .main .more {
-    margin-left: -28px;
-}
-
 .card-with-sidebar .main .additional-info-mobile p {
     margin-bottom: 0;
 }
 
+.project .card-with-sidebar .main > div:nth-child(2) {
+    padding: 0 20px 20px 20px;
+}
+
 @media (min-width: 768px) {
     .project .card-with-sidebar .sidebar {
-        width: 270px;
-        min-width: 270px;
+        width: 310px;
+        min-width: 310px;
+        display: flex;
+        flex-direction: column;
     }
 
     .project .card-with-sidebar .main > div:nth-child(2) {
-        padding-right: 50px;
+        padding: 0 50px 0 20px;
+    }
+
+    .project.show .card-with-sidebar .main > div:nth-child(2) {
+        padding-bottom: 20px;
     }
 
     .card-with-sidebar .main .additional-info-mobile {
         display: none;
     }
+}
+
+.project.show .project-desc-body {
+    padding-bottom: 20px;
 }
 
 .project .card-with-sidebar .sidebar i {
@@ -405,8 +446,18 @@ ul {
     }
 }
 
-.project.minicard.show .card-with-sidebar .sidebar p {
-    margin-bottom: 20px;
+.project.show .minicard-footer {
+    padding: 0 20px 20px 20px;
+}
+
+@media (min-width: 768px) {
+    .project .horizontal-divider {
+        margin: 0;
+    }
+
+    .project.show .minicard-footer {
+        padding: 20px;
+    }
 }
 
 .minicard h4 {
@@ -832,6 +883,10 @@ ul {
     }
 }
 
+.minicard.project {
+    padding: 0;
+}
+
 .project {
     display: block;
 }
@@ -846,6 +901,7 @@ ul {
 
 .project.show .more {
     display: block;
+    flex: 1;
 }
 
 .project.show .show-hide-button {
