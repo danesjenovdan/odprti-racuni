@@ -14,11 +14,13 @@
         <div id="sidebar-card-{{ forloop.counter }}" class="minicard project">
             <div class="card-with-sidebar">
                 <div class="main">
-                    <div class="show-hide-wrapper">
-                        <img src="{% static '/images/icons/projekti-puscica.svg' %}" class="show-hide-button" alt="Puščica, ki kaže desno. Ob razširitvi kartice se zavrti za 90 stopinj in kaže navzdol." onclick="showHide('{{ forloop.counter }}')" />
+                    <div class="project-desc-header" onclick="showHide('{{ forloop.counter }}')">
+                        <div class="show-hide-wrapper">
+                            <img src="{% static '/images/icons/projekti-puscica.svg' %}" class="show-hide-button" alt="Puščica, ki kaže desno. Ob razširitvi kartice se zavrti za 90 stopinj in kaže navzdol." />
+                        </div>
+                        <h4>{{ project.name }}</h4>
                     </div>
-                    <div>
-                        <h4 onclick="showHide('{{ forloop.counter }}')">{{ project.name }}</h4>
+                    <div class="project-desc-body">
                         <div class="additional-info-mobile">
                             <i>Vrednost projekta (delež organizacije / celota)</i>
                             <p>{{ project.organization_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
@@ -35,9 +37,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="vertical-separator"></div>
+                <!-- <div class="vertical-separator"></div> -->
                 <div class="sidebar">
-                    <p onclick="showHide('{{ forloop.counter }}')">{{ project.organization_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
+                    <div class="project-desc-header" onclick="showHide('{{ forloop.counter }}')">
+                        <p>{{ project.organization_share|floatformat:2 }} EUR / {{ project.value|floatformat:2 }} EUR</p>
+                    </div>
+                    
                     <div class="more">
                         <i>Trajanje projekta</i>
                         <p>
@@ -158,7 +163,7 @@
                 </div>
             </div>
             <div>
-                <h4>Deli povezavo do zavihka Projekti</h4>
+                <h4>Deli povezavo z drugimi.</h4>
                 <div class="info-content">
                     <p style="margin-bottom: 5px;">
                         Kopiraj povezavo
