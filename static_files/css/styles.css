@@ -357,12 +357,13 @@ ul {
 }
 
 .card-with-sidebar .sidebar .more {
-    padding: 0 20px;
+    padding: 0 20px 20px 20px;
 }
 
 @media (min-width: 768px) {
     .card-with-sidebar .sidebar .more {
         border-left: 1px solid #d1d7df;
+        padding: 0 20px;
     }
 }
 
