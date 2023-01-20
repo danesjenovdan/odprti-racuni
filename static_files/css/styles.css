@@ -351,8 +351,13 @@ ul {
     .card-with-sidebar .main .project-desc-header {
         padding: 20px;
     }
+
     .card-with-sidebar .sidebar .project-desc-header {
         display: flex;
+    }
+
+    .project:not(.show) .card-with-sidebar .sidebar .project-desc-header {
+        flex: 1;
     }
 }
 
@@ -363,7 +368,6 @@ ul {
 @media (min-width: 768px) {
     .card-with-sidebar .sidebar .more {
         border-left: 1px solid #d1d7df;
-        padding: 0 20px;
     }
 }
 
