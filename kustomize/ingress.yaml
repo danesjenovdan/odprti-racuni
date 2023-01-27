@@ -51,7 +51,7 @@ spec:
   tls:
     - hosts:
         - files.odprtiracuni.lb.djnd.si
-        - files.odprtiracuni-nvo.djnd.si
+        # - files.odprtiracuni-nvo.djnd.si
       secretName: odprti-racuni-nginx-tls
   rules:
     - host: files.odprtiracuni.lb.djnd.si
@@ -64,13 +64,13 @@ spec:
                 name: odprti-racuni-nginx
                 port:
                   number: 80
-    - host: files.odprtiracuni-nvo.djnd.si
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: odprti-racuni-nginx
-                port:
-                  number: 80
+    # - host: files.odprtiracuni-nvo.djnd.si
+    #   http:
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: odprti-racuni-nginx
+    #             port:
+    #               number: 80
