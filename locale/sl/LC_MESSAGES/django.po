@@ -65,7 +65,7 @@ msgstr ""
 
 #: nvo/admin.py:501
 msgid "PREGLED PRIKAZA NA VEŠEM SPLETENM MESTU"
-msgstr ""
+msgstr "PREDOGLED PRIKAZA NA VAŠEM SPLETNEM MESTU"
 
 #: nvo/admin.py:502
 msgid "KODA ZA VDELAVO NA VAŠE SPLETNO MESTO"
