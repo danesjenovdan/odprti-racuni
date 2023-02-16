@@ -13,11 +13,11 @@ class ProjectForm(forms.ModelForm):
 
     # The clean method gets invoked before the NoteAdmin's save_model method
     def clean(self):
-        value = self.cleaned_data['value']
-        organization_share = self.cleaned_data['organization_share']
-        self_money = self.cleaned_data['self_money']
-        start_date = self.cleaned_data['start_date']
-        end_date = self.cleaned_data['end_date']
+        value = self.cleaned_data.get('value', None)
+        organization_share = self.cleaned_data.get('organization_share', None)
+        self_money = self.cleaned_data.get('self_money', None)
+        start_date = self.cleaned_data.get('start_date', None)
+        end_date = self.cleaned_data.get('end_date', None)
         if organization_share and value and organization_share > value:
             raise ValidationError(_('Delež organizacije od celotnega projekta je večji kot vrednost celotnega projekta.'))
 
