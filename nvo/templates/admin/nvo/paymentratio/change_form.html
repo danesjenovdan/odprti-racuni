@@ -1,0 +1,53 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+
+{% block inline_field_sets %}
+<script type="importmap">
+    {
+        "imports": {
+            "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+        }
+    }
+</script>
+<div id="app">
+    <table>
+        <tr>
+            <th>Zaposleni</th>
+            <th>Plača zadnji mesec v letu</th>
+            <th>Delež zaposlitve</th>
+        </tr>
+        <tr class="employee" v-for="employee in employees">
+            <td><input type="text" @input="calculateRatio"></td>
+            <td><input type="number" class="pay" @input="calculateRatio"></td>
+            <td><input type="number" class="share" @input="calculateRatio"></td>
+        </tr>
+    </table>
+    <button @click.prevent="addEmployee">Dodaj zaposlenega</button>
+</div>
+
+
+<script type="module">
+    import { createApp } from 'vue'
+  
+        createApp({
+            data() {
+                return {
+                    employees: 3
+                }
+            },
+
+            methods: {
+                addEmployee() {
+                    this.employees += 1
+                },
+
+                calculateRatio() {
+                    var employees = document.querySelector('.employee')
+                    // TODO calculate the stuff
+                    document.getElementById('id_highest_absolute_salary').value = 10;
+                    document.getElementById('id_highest_salary').value = 100;
+                }
+            }
+        }).mount('#app')
+  </script>
+{% endblock %}

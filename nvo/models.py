@@ -15,7 +15,7 @@ import os
 
 
 def document_size_validator(value): # add this to some file where you can import it from
-    limit = 10 * 1024 * 1024
+    limit = 10 * 1024 * 1024 # 10 MB
     if value.size > limit:
         raise ValidationError('Datoteka je prevelika. Največja možna velikost je 10 MB.')
 
@@ -180,8 +180,18 @@ class People(models.Model):
 class PaymentRatio(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='payment_ratios', verbose_name=_('Organiaztion'))
     year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='payment_ratios', verbose_name=_('Year'))
+    highest_absolute_salary = models.FloatField(default=1)
+    highest_salary = models.FloatField(default=1)
+    lowest_salary = 1
+    average_salary = 1
 
     def get_statistics(self):
+        return {
+            'highest_absolute': self.highest_absolute_salary,
+            'lowest': self.lowest_salary,
+            'highest': self.highest_salary,
+            'average': self.average_salary,
+        }
         employees = self.employees.all()
         normalized_salaries = [employee.average_gross_salary / employee.job_share * 100 for employee in employees]
         if normalized_salaries == []:
@@ -206,6 +216,7 @@ class PaymentRatio(models.Model):
         verbose_name_plural = _('Payment ratios')
 
 
+# TODO delete
 class Employee(models.Model):
     payment_ratio = models.ForeignKey('PaymentRatio', on_delete=models.CASCADE, related_name='employees')
     note = models.TextField(verbose_name=_('Note'))

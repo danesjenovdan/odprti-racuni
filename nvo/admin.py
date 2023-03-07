@@ -180,6 +180,7 @@ class PeopleAdmin(LimitedAdmin):
     list_filter = [SimpleFinanceYearListFilter, 'organization']
 
 
+# TODO delete
 class EmployeeAdmin(admin.TabularInline):
     list_display = [
         'note',
@@ -198,9 +199,9 @@ class PaymentRatioAdmin(LimitedAdmin):
     list_display = [
         'year'
     ]
-    inlines = [
-        EmployeeAdmin,
-    ]
+    # inlines = [
+    #     EmployeeAdmin,
+    # ]
     list_filter = [SimpleFinanceYearListFilter, 'organization']
     class Media:
         css = {
