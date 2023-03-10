@@ -10,7 +10,7 @@ from django.urls import reverse
 from mptt.admin import MPTTModelAdmin
 
 from nvo.models import (Organization, DocumentCategory, Document, People,
-    Employee, User, RevenueCategory, ExpensesCategory, FinancialYear, PaymentRatio,
+    User, RevenueCategory, ExpensesCategory, FinancialYear, PaymentRatio,
     Project, Financer, CoFinancer, Partner, Donator, Donations, PersonalDonator,
     OrganiaztionDonator, Instructions, InfoText, Finance, Embed, OrganizationFinancialYear
 )
@@ -180,26 +180,10 @@ class PeopleAdmin(LimitedAdmin):
     list_filter = [SimpleFinanceYearListFilter, 'organization']
 
 
-class EmployeeAdmin(admin.TabularInline):
-    list_display = [
-        'note',
-        'average_gross_salary',
-        'job_share',
-    ]
-    model = Employee
-    extra = 0
-    list_filter = [SimpleFinanceYearListFilter, 'organization']
-    formfield_overrides = {
-        models.TextField: {'widget': forms.Textarea(attrs={'rows':1, 'cols':40})},
-    }
-
 
 class PaymentRatioAdmin(LimitedAdmin):
     list_display = [
         'year'
-    ]
-    inlines = [
-        EmployeeAdmin,
     ]
     list_filter = [SimpleFinanceYearListFilter, 'organization']
     class Media:

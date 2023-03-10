@@ -161,6 +161,7 @@ class ExportNVOData(object):
                 f'{doc.category.name}\n', # text
             )
 
+        # TODO LATER deprecate get_statistics
         people_stats = self.organization.people.first().get_statistics() # TODO filter by name
         if people_stats:
             self.write_paragraph(
