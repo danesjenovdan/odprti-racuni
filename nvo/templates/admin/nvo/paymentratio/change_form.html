@@ -10,19 +10,31 @@
     }
 </script>
 <div id="app">
-    <table>
-        <tr>
-            <th>Zaposleni</th>
-            <th>Plača zadnji mesec v letu</th>
-            <th>Delež zaposlitve</th>
-        </tr>
-        <tr class="employee" v-for="employee in employees">
-            <td><input type="text" @input="calculateRatio"></td>
-            <td><input type="number" class="pay" @input="calculateRatio"></td>
-            <td><input type="number" class="share" @input="calculateRatio"></td>
-        </tr>
-    </table>
-    <button @click.prevent="addEmployee">Dodaj zaposlenega</button>
+    <div class="inline-group">
+        <div class="tabular">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Zaposleni</th>
+                        <th>Plača zadnji mesec v letu</th>
+                        <th>Delež zaposlitve</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="employee" v-for="(employee, index) in employees" :key="employee.id">
+                        <td><input type="text" v-model="employee.note" @change="calculateRatio"></td> 
+                        <td><input type="number" @input="changeAvgGrossSalary(employee, $event)"></td>
+                        <td><input type="number" @input="changeJobShare(employee, $event)"></td>
+                        <td><a type="button" :value="index" @click.prevent="removeEmployee(index)" style="cursor: pointer">Odstrani</a></td>
+                    </tr>
+                    <tr class="add-row">
+                        <td colspan="4"><a @click.prevent="addEmployee" style="cursor: pointer">Dodaj zaposlenega</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 
@@ -32,21 +44,94 @@
         createApp({
             data() {
                 return {
-                    employees: 3
+                    /* objekt z zaposlenimi - vmes so lahko prazne vrednosti */
+                    employees: [
+                        { id: 1, note: "", average_gross_salary: null, job_share: null },
+                        { id: 2, note: "", average_gross_salary: null, job_share: null },
+                        { id: 3, note: "", average_gross_salary: null, job_share: null }
+                    ],
+                    idCounter: 4
+                }
+            },
+
+            computed: {
+                normalizedSalaries() {
+                    /* normaliziramo vrednosti plac in upostevamo samo v celoti in pravilno izpolnjene */
+                    const nSalaries = [];
+                    for (const employee of this.employees) {
+                        if (employee.average_gross_salary && employee.job_share) {
+                            nSalaries.push( employee.average_gross_salary / employee.job_share * 100 );
+                        }
+                    }
+                    return nSalaries;
                 }
             },
 
             methods: {
                 addEmployee() {
-                    this.employees += 1
+                    this.employees.push({ id: this.idCounter, note: "", average_gross_salary: null, job_share: null });
+                    this.idCounter++;
+                },
+
+                removeEmployee(index) {
+                    this.employees.splice(index, 1);
+                },
+
+                changeAvgGrossSalary(employee, event) {
+                    const min = 0;
+
+                    const newValue = parseInt(event.target.value);
+                    if (newValue < min) {
+                        employee.average_gross_salary = min;
+                        event.target.value = min;
+                    } 
+                    
+                    else {
+                        employee.average_gross_salary = newValue;
+                    }
+                },
+
+                changeJobShare(employee, event) {
+                    const min = 1;
+                    const max = 100;
+
+                    const newValue = parseInt(event.target.value);
+                    if (newValue < min) {
+                        employee.job_share = min;
+                        event.target.value = min;
+                    }
+
+                    else if (newValue > max) {
+                        employee.job_share = max;
+                        event.target.value = max;
+                    }
+
+                    else {
+                        employee.job_share = newValue;
+                    }
                 },
 
                 calculateRatio() {
-                    var employees = document.querySelector('.employee')
-                    // TODO calculate the stuff
-                    document.getElementById('id_highest_absolute_salary').value = 10;
-                    document.getElementById('id_highest_salary').value = 100;
+                    if (this.normalizedSalaries.length > 0) {
+
+                        const max_salary = Math.max(...this.normalizedSalaries);
+                        const min_salary = Math.min(...this.normalizedSalaries);
+                        const average_salary = this.normalizedSalaries.reduce((a, b) => a + b) / this.normalizedSalaries.length;
+
+                        const highest_absolute_salary = (max_salary / min_salary).toFixed(2);
+                        document.getElementById("id_highest_absolute_salary").value = highest_absolute_salary;
+
+                        const highest_salary = (max_salary / average_salary).toFixed(2);
+                        document.getElementById("id_highest_salary").value = highest_salary;
+                    }
+                    
                 }
+            },
+
+            watch: {
+                normalizedSalaries: function (val) {
+                    this.calculateRatio();
+                },
             }
         }).mount('#app')
   </script>
