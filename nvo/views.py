@@ -55,7 +55,12 @@ def organization_basic_info(request, organization_id, year):
             'documents': documents,
             'people': people,
             'people_statistics': people.get_statistics(),
-            'payment_ratio': payment_ratio.get_statistics(),
+            'payment_ratio': {
+                'highest_absolute': payment_ratio.highest_absolute_salary,
+                'lowest': payment_ratio.lowest_salary,
+                'highest': payment_ratio.highest_salary,
+                'average': payment_ratio.average_salary,
+            },
             'info_texts': {
                 'basic_info': info_text_basic_info,
                 'yearly_reports': info_text_yearly_reports,

@@ -15,7 +15,7 @@ import os
 
 
 def document_size_validator(value): # add this to some file where you can import it from
-    limit = 10 * 1024 * 1024
+    limit = 10 * 1024 * 1024 # 10 MB
     if value.size > limit:
         raise ValidationError('Datoteka je prevelika. Največja možna velikost je 10 MB.')
 
@@ -180,23 +180,10 @@ class People(models.Model):
 class PaymentRatio(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='payment_ratios', verbose_name=_('Organiaztion'))
     year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='payment_ratios', verbose_name=_('Year'))
-
-    def get_statistics(self):
-        employees = self.employees.all()
-        normalized_salaries = [employee.average_gross_salary / employee.job_share * 100 for employee in employees]
-        if normalized_salaries == []:
-            return {}
-        else:
-            average = sum(normalized_salaries) / len(normalized_salaries)
-            min_salary = min(normalized_salaries)
-            max_salary = max(normalized_salaries)
-
-            return {
-                'highest_absolute': round(max_salary / min_salary, 2),
-                'lowest': 1,
-                'highest': round(max_salary / average, 2),
-                'average': 1
-            }
+    highest_absolute_salary = models.FloatField(default=1, verbose_name=_('Highest absolute salary'))
+    highest_salary = models.FloatField(default=1, verbose_name=_('Highest salary'))
+    lowest_salary = 1
+    average_salary = 1
 
     def __str__(self):
         return f'{_("Payment ratio")} {self.year}'
@@ -204,23 +191,6 @@ class PaymentRatio(models.Model):
     class Meta:
         verbose_name = _('Payment ratio')
         verbose_name_plural = _('Payment ratios')
-
-
-class Employee(models.Model):
-    payment_ratio = models.ForeignKey('PaymentRatio', on_delete=models.CASCADE, related_name='employees')
-    note = models.TextField(verbose_name=_('Note'))
-    average_gross_salary = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=_('Average gross selary'))
-    job_share = models.IntegerField(
-        null=True,
-        validators=[
-            MinValueValidator(1)
-            ],
-        verbose_name=_('job share')
-        )
-
-    class Meta:
-        verbose_name = _('Employee')
-        verbose_name_plural = _('Employees')
 
 
 # finance
