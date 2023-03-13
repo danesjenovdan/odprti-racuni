@@ -443,6 +443,7 @@ class InfoText(models.Model):
     class Meta:
         verbose_name = _('Info Text')
         verbose_name_plural = _('Info Texts')
+        ordering = ['-year__name']
 
 
 # settings
