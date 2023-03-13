@@ -280,11 +280,11 @@ msgstr "Ljudje"
 
 #: nvo/models.py:183
 msgid "Highest absolute salary"
-msgstr ""
+msgstr "Razmerje med najvišjo in najnižjo plačo (se izračuna avtomatsko na podlagi podatkov, ki ste jih vnesli spodaj)"
 
 #: nvo/models.py:184
 msgid "Highest salary"
-msgstr ""
+msgstr "Razmerje med najvišjo in povprečno plačo (se izračuna avtomatsko na podlagi podatkov, ki ste jih vnesli spodaj)"
 
 #: nvo/models.py:192
 msgid "Payment ratio"
