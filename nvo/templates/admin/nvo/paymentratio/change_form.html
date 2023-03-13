@@ -1,6 +1,22 @@
 {% extends "admin/change_form.html" %}
 {% load i18n admin_urls %}
 
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    #id_highest_absolute_salary,
+    #id_highest_salary {
+        pointer-events: none;
+    }
+
+    label[for=id_highest_absolute_salary],
+    label[for=id_highest_salary] {
+        width: unset;
+    }
+</style>
+
+{% endblock %}
+
 {% block inline_field_sets %}
 <script type="importmap">
     {
@@ -16,14 +32,14 @@
                 <thead>
                     <tr>
                         <th>Zaposleni</th>
-                        <th>Plača zadnji mesec v letu</th>
-                        <th>Delež zaposlitve</th>
+                        <th>Bruto plača zadnji mesec v letu *</th>
+                        <th>Delež zaposlitve v % *</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="employee" v-for="(employee, index) in employees" :key="employee.id">
-                        <td><input type="text" v-model="employee.note" @change="calculateRatio"></td> 
+                        <td><input type="text" v-model="employee.note" @change="calculateRatio"></td>
                         <td><input type="number" @input="changeAvgGrossSalary(employee, $event)"></td>
                         <td><input type="number" @input="changeJobShare(employee, $event)"></td>
                         <td><a type="button" :value="index" @click.prevent="removeEmployee(index)" style="cursor: pointer">Odstrani</a></td>
