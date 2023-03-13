@@ -63,8 +63,7 @@ class FinancialYear(models.Model):
     class Meta:
         verbose_name = _('Financial year')
         verbose_name_plural = _('Financial years')
-        ordering = ['name']
-
+        ordering = ['-name']
 
 
 class OrganizationFinancialYear(models.Model):
@@ -175,6 +174,7 @@ class People(models.Model):
     class Meta:
         verbose_name = _('People')
         verbose_name_plural = _('People')
+        ordering = ['-year__name']
 
 
 class PaymentRatio(models.Model):
@@ -191,6 +191,7 @@ class PaymentRatio(models.Model):
     class Meta:
         verbose_name = _('Payment ratio')
         verbose_name_plural = _('Payment ratios')
+        ordering = ['-year__name']
 
 
 # finance
@@ -216,6 +217,7 @@ class Finance(models.Model):
     class Meta:
         verbose_name = _('Finance')
         verbose_name_plural = _('Finance')
+        ordering = ['-year__name']
 
 
 class FinancialCategory(MPTTModel):
@@ -378,6 +380,7 @@ class Donations(models.Model):
     class Meta:
         verbose_name = _('Donations')
         verbose_name_plural = _('Donations')
+        ordering = ['-year__name']
 
 
 class PersonalDonator(models.Model):
@@ -440,6 +443,7 @@ class InfoText(models.Model):
     class Meta:
         verbose_name = _('Info Text')
         verbose_name_plural = _('Info Texts')
+        ordering = ['-year__name']
 
 
 # settings
