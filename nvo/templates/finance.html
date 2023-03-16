@@ -268,12 +268,14 @@
 {% block js %}
 <script>
 $(document).ready(function() {
-    console.log("Ready!");
+
     // send analytics
     plausible('Visitor', {
         props: {
-          organizationId: {{ organizatation_id }},
+          organization: {{ organizatation_id }},
           year: {{ year }},
+          organization_and_year: {{ organizatation_id }} + "-" + {{ year }},
+          organization_and_subpage: {{ organizatation_id }} + "-finance"
         }
     });
 

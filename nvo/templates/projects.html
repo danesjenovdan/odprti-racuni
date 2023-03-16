@@ -182,12 +182,18 @@ function showHide(elNumber) {
     $("#sidebar-card-" + elNumber).toggleClass("show");
 }
 
-$( document ).ready(function() {
-    // $(".project .main").click((e) => {
-    //     $(e.target).parent().parent().addClass("show");
-    //     console.log($(e.target).parent().parent())
-    // })
+$(document).ready(function() {
+
+    // send analytics
+    plausible('Visitor', {
+        props: {
+          organization: {{ organizatation_id }},
+          year: {{ year }},
+          organization_and_year: {{ organizatation_id }} + "-" + {{ year }},
+          organization_and_subpage: {{ organizatation_id }} + "-projekti"
+        }
+    });
+    
 });
 </script>
 {% endblock %}
-
