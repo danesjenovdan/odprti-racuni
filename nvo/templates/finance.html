@@ -268,6 +268,16 @@
 {% block js %}
 <script>
 $(document).ready(function() {
+    console.log("Ready!");
+    // send analytics
+    plausible('Visitor', {
+        props: {
+          organizationId: {{ organizatation_id }},
+          year: {{ year }},
+        }
+    });
+
+    // graph event listeners
     $(".finances-graph-option").click((e) => {
         // move the slider
         $("#finances-active-presentation").addClass("graph");

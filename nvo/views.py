@@ -116,6 +116,8 @@ def get_finance(request, organization_id, year):
         request,
         'finance.html',
         {
+            'organizatation_id': organization_id,
+            'year': year,
             'revenues': [revenue.get_json_tree() for revenue in revenues if revenue.amount],
             'expenses': [expense.get_json_tree() for expense in expenses if expense.amount],
             'total_income': total_income,
