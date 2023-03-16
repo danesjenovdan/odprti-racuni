@@ -51,6 +51,8 @@ def organization_basic_info(request, organization_id, year):
         request,
         'basic-info.html',
         {
+            'organizatation_id': organization_id,
+            'year': year,
             'organization': organization,
             'documents': documents,
             'people': people,
@@ -164,6 +166,8 @@ def get_projects(request, organization_id, year):
         request,
         'projects.html',
         {
+            'organizatation_id': organization_id,
+            'year': year,
             'projects': projects,
             'organization': organization,
             'info_text': info_text,
@@ -199,6 +203,8 @@ def get_donations(request, organization_id, year):
         request,
         'donations.html',
         {
+            'organizatation_id': organization_id,
+            'year': year,
             'donation': donations,
             'organization': organization,
             'info_texts': {

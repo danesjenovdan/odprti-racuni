@@ -218,3 +218,21 @@
     </div>
 </div>
 {% endblock %}
+
+{% block js %}
+<script>
+$(document).ready(function() {
+
+    // send analytics
+    plausible('Visitor', {
+        props: {
+          organization: {{ organizatation_id }},
+          year: {{ year }},
+          organization_and_year: {{ organizatation_id }} + "-" + {{ year }},
+          organization_and_subpage: {{ organizatation_id }} + "-izkaznica"
+        }
+    });
+    
+});
+</script>
+{% endblock %}
