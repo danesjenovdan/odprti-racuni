@@ -189,8 +189,10 @@ $(document).ready(function() {
         props: {
           organization: {{ organizatation_id }},
           year: {{ year }},
+          subpage: "projekti",
           organization_and_year: {{ organizatation_id }} + "-" + {{ year }},
-          organization_and_subpage: {{ organizatation_id }} + "-projekti"
+          organization_and_subpage: {{ organizatation_id }} + "-projekti",
+          year_and_subpage: {{ year }} + "-projekti"
         }
     });
     
