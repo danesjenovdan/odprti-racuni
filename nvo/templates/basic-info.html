@@ -228,8 +228,10 @@ $(document).ready(function() {
         props: {
           organization: {{ organizatation_id }},
           year: {{ year }},
+          subpage: "izkaznica",
           organization_and_year: {{ organizatation_id }} + "-" + {{ year }},
-          organization_and_subpage: {{ organizatation_id }} + "-izkaznica"
+          organization_and_subpage: {{ organizatation_id }} + "-izkaznica",
+          year_and_subpage: {{ year }} + "-izkaznica"
         }
     });
     

@@ -185,8 +185,10 @@ $(document).ready(function() {
         props: {
           organization: {{ organizatation_id }},
           year: {{ year }},
+          subpage: "donacije",
           organization_and_year: {{ organizatation_id }} + "-" + {{ year }},
-          organization_and_subpage: {{ organizatation_id }} + "-donacije"
+          organization_and_subpage: {{ organizatation_id }} + "-donacije",
+          year_and_subpage: {{ year }} + "-donacije"
         }
     });
     
