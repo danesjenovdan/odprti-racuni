@@ -287,13 +287,21 @@ class FinacialFormSet(forms.BaseModelFormSet):
 class FinancialCategoryMPTTModelAdmin(LimitedAdmin, MPTTModelAdmin):
     # specify pixel amount for this ModelAdmin only:
     mptt_level_indent = 40
-    list_display = ['name', 'amount', 'year', 'additional_name']
+    mptt_indent_field = 'name_and_aop'
+    list_display = ['name_and_aop', 'amount', 'year', 'additional_name']
     list_editable = ['amount', 'additional_name']
     list_filter = [FinanceYearListFilter]
 
+    def name_and_aop(self, obj):
+        if obj.aop:
+            return f"{obj.name} (AOP {obj.aop})"
+        return obj.name
+    
+    name_and_aop.short_description = _('Name')
+    
     def get_list_display_links(self, request, list_display):
         if request.user.is_superuser:
-            return ['name']
+            return ['name_and_aop']
         else:
             return None
 
