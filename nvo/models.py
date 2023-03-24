@@ -224,6 +224,7 @@ class FinancialCategory(MPTTModel):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='%(class)s_related', verbose_name=_('Organiaztion'))
     year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE,null=True, blank=True, related_name='%(class)s_related', verbose_name=_('Year'))
     name = models.CharField(max_length=256, verbose_name=_('Name'))
+    aop = models.CharField(max_length=256, blank=True, verbose_name=_('AOP'))
     additional_name = models.CharField(max_length=256, null=True, blank=True, verbose_name=_('Additional name'))
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='categories_children', verbose_name=_('Parent'))
     amount = models.DecimalField(decimal_places=2, max_digits=10, null=True, verbose_name=_('Amount'))
