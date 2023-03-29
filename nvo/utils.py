@@ -162,7 +162,7 @@ class ExportNVOData(object):
             )
 
         # TODO LATER deprecate get_statistics
-        people_stats = self.organization.people.first().get_statistics() # TODO filter by name
+        people_stats = self.organization.people.filter(year=self.year).first().get_statistics()
         if people_stats:
             self.write_paragraph(
                 title='Ljudje',
@@ -173,7 +173,7 @@ class ExportNVOData(object):
                 add_newline=True
             )
 
-        payment_ratios = self.organization.payment_ratios.first().get_statistics()
+        payment_ratios = self.organization.payment_ratios.filter(year=self.year).first().get_statistics()
         if payment_ratios:
             self.write_paragraph(
                 title='Plačna razmerja',
