@@ -188,6 +188,14 @@ class PaymentRatio(models.Model):
     def __str__(self):
         return f'{_("Payment ratio")} {self.year}'
 
+    def get_statistics(self):
+        return {
+            'lowest': self.lowest_salary,
+            'average': self.average_salary,
+            'highest_absolute': self.highest_absolute_salary if self.highest_absolute_salary else 1,
+            'highest': self.highest_salary if self.highest_salary else 1
+        }
+
     class Meta:
         verbose_name = _('Payment ratio')
         verbose_name_plural = _('Payment ratios')
