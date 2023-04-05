@@ -9,7 +9,7 @@ from nvo.utils import clean_chart_data, ExportNVOData
 
 def index(request, organization_id):
     organization = get_object_or_404(Organization, pk=organization_id)
-    financial_year_through = organization.financial_year_through.filter(is_active=True).last()
+    financial_year_through = organization.financial_year_through.filter(is_active=True).order_by("financial_year__name").last()
     if financial_year_through:
         return redirect('info', organization_id=organization_id, year=financial_year_through.financial_year.name)
     else:
