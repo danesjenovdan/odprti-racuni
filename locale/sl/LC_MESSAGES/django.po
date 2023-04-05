@@ -83,7 +83,7 @@ msgstr "Objava podatkov na vašem spletnem mestu"
 
 #: nvo/admin.py:511
 msgid "Predogled prikaza na vašem spletnem mestu"
-msgstr ""
+msgstr "Predogled prikaza (povezava deluje tudi brez prijave v administratorski vmesnik in jo lahko uporabite za deljenje na družbenih omrežjih)"
 
 #: nvo/admin.py:520
 msgid "Odprti računi"
