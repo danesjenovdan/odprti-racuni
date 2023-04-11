@@ -18,6 +18,54 @@
     }
   }
 
+  .login #container {
+    background: none;
+    border: none;
+  }
+
+  .login #container #content {
+    background-color: white;
+    border: 1px solid #e8e8e8;
+    padding: 50px 20px 20px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .login #container #content {
+      background-color: #121212;
+      border: 1px solid #272727;
+    }
+  }
+
+  .login #header {
+    background-color: transparent;
+    background-image: url('{% static "/images/OR-logo.svg" %}');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 20px 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .login #header {
+      background-image: url('{% static "/images/OR-logo-dark.svg" %}');
+    }
+  }
+
+  .login #footer {
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .login #footer hr {
+    margin: 20px 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .login #footer hr {
+      background-color: #eeeeee;
+    }
+  }
+
   .instruction_collapsible {
     margin: 20px 15px 0;
     padding: 3px 12px;
