@@ -12,6 +12,24 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Odprti računi: {{ organization.name }}">
+        <meta property="og:description" content="Enostaven in transparenten prikaz finančnega poslovanja in projektov nevladnih organizacij. Odprti računi, dobri prijatelji!">
+        <meta property="og:image" content="{% static '/images/og-OR-NVO.jpg' %}">
+    
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Odprti računi: {{ organization.name }}">
+        <meta name="twitter:description" content="Enostaven in transparenten prikaz finančnega poslovanja in projektov nevladnih organizacij. Odprti računi, dobri prijatelji!">
+        <meta name="twitter:image" content="{% static '/images/og-OR-NVO.jpg' %}">
+    
+        <meta name="author" content="Odprti računi">
+        <meta name="description" content="Enostaven in transparenten prikaz finančnega poslovanja in projektov nevladnih organizacij. Odprti računi, dobri prijatelji!">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static 'site.webmanifest' %}">
+
         <script defer data-domain="odprtiracuni-nvo.djnd.si" src="https://plausible.lb.djnd.si/js/plausible.js"></script>
         <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
         
@@ -71,19 +89,16 @@
                         <img src="{% static '/images/icons/zapri.svg' %}" />
                         <span>Zapri</span>
                     </button>
-                        <!-- {{ info_text.text }} -->
                     <button id="footer-share-button">
                         <img src="{% static '/images/icons/deli.svg' %}" />
                         <span>Deli</span>
                     </button>
-                        <!-- href="{{ request.get_full_path }}" -->
                 </div>
             </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script type="text/javascript" src="{% static 'plugins/js/highlight.min.js' %}"></script>
         <script>
-
             function showInfo() {
                 // show the right content
                 $(".info").addClass("active");
@@ -95,7 +110,6 @@
                 $("#footer-close-button").css("width", "145px")
                 $("#footer-share-button").show();
             }
-
             function showContent() {
                 // show the right content
                 $(".info").removeClass("active");
@@ -106,7 +120,6 @@
                 $("#footer-close-button").hide();
                 $("#footer-share-button").show();
             }
-
             function showShare() {
                 // show the right content
                 $(".info").removeClass("active");
@@ -118,66 +131,6 @@
                 $("#footer-close-button").css("width", "82px")
                 $("#footer-share-button").hide();
             }
-
-            // hide swiping
-            // const body = Array.from(document.getElementsByClassName('body'));
-
-            // body.forEach(el => {
-            //     el.addEventListener('touchstart', function (event) {
-            //         touchstartX = event.changedTouches[0].screenX;
-            //         touchstartY = event.changedTouches[0].screenY;
-            //     }, false);
-
-            //     el.addEventListener('touchend', function (event) {
-            //         touchendX = event.changedTouches[0].screenX;
-            //         touchendY = event.changedTouches[0].screenY;
-                    
-            //         if ($(".content").hasClass("active")) {
-            //             handleGestureContent();
-            //         } else if ($(".info").hasClass("active")) {
-            //             handleGestureInfo();
-            //         } else if ($(".share").hasClass("active")) {
-            //             handleGestureShare();
-            //         }
-                    
-            //     }, false);
-            // });
-
-            // function handleGestureContent() {
-            //     if (Math.abs(touchendY - touchstartY) < 50 && touchendX < touchstartX - 50) {
-            //         // console.log('Swiped Left');
-            //         showShare();
-            //     }
-
-            //     if (Math.abs(touchendY - touchstartY) < 50 && touchendX > touchstartX + 50) {
-            //         // console.log('Swiped Right');
-            //         showInfo();
-            //     }
-            // }
-
-            // function handleGestureInfo() {
-            //     if (Math.abs(touchendY - touchstartY) < 50 && touchendX < touchstartX - 50) {
-            //         // console.log('Swiped Left');
-            //         showContent();
-            //     }
-            // }
-
-            // function handleGestureShare() {
-            //     if (Math.abs(touchendY - touchstartY) < 50 && touchendX > touchstartX + 50) {
-            //         // console.log('Swiped Right');
-            //         showContent();
-            //     }
-            // }
-            
-            $(document).ready(function() {
-                // const shareUrl = document.referrer ? document.referrer : window.location.href
-                // $("#share-url").val(shareUrl);
-
-                // $("#share-url").click((e) => {
-                //     $("#share-url").select();
-                //     document.execCommand("copy");
-                // });
-            });
 
             $('.martor-preview pre').each(function(i, block){
                 hljs.highlightBlock(block);

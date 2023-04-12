@@ -12,6 +12,18 @@
     label[for=id_highest_absolute_salary],
     label[for=id_highest_salary] {
         width: unset;
+        font-weight: 700;
+    }
+
+    #reset-payment-ratios-button {
+        margin-top: -20px;
+        margin-bottom: 30px;
+        margin-left: 10px;
+    }
+
+    #reset-payment-ratios-button a {
+        cursor: pointer;
+        font-size: 13px;
     }
 </style>
 
@@ -26,6 +38,9 @@
     }
 </script>
 <div id="app">
+    <div id="reset-payment-ratios-button">
+        <a class="deletelink" type="button" @click="resetPaymentRatios">Ponastavi vrednosti plačnih razmerij</a>
+    </div>
     <div class="inline-group">
         <div class="tabular">
             <table>
@@ -42,7 +57,7 @@
                         <td><input type="text" v-model="employee.note" @change="calculateRatio"></td>
                         <td><input type="number" @input="changeAvgGrossSalary(employee, $event)"></td>
                         <td><input type="number" @input="changeJobShare(employee, $event)"></td>
-                        <td><a type="button" :value="index" @click.prevent="removeEmployee(index)" style="cursor: pointer">Odstrani</a></td>
+                        <td><a type="button" :value="index" @click.prevent="removeEmployee(index)" style="cursor: pointer" class="deletelink">Odstrani</a></td>
                     </tr>
                     <tr class="add-row">
                         <td colspan="4"><a @click.prevent="addEmployee" style="cursor: pointer">Dodaj zaposlenega</a></td>
@@ -135,12 +150,16 @@
                         const average_salary = this.normalizedSalaries.reduce((a, b) => a + b) / this.normalizedSalaries.length;
 
                         const highest_absolute_salary = (max_salary / min_salary).toFixed(2);
-                        document.getElementById("id_highest_absolute_salary").value = highest_absolute_salary;
+                        document.getElementById("id_highest_absolute_salary").value = parseFloat(highest_absolute_salary);
 
                         const highest_salary = (max_salary / average_salary).toFixed(2);
-                        document.getElementById("id_highest_salary").value = highest_salary;
+                        document.getElementById("id_highest_salary").value = parseFloat(highest_salary);
                     }
-                    
+                },
+
+                resetPaymentRatios() {
+                    document.getElementById("id_highest_absolute_salary").value = null;
+                    document.getElementById("id_highest_salary").value = null;
                 }
             },
 

@@ -527,6 +527,9 @@ class EmbedAdmin(admin.ModelAdmin):
 class AdminSite(admin.AdminSite):
     site_header = _('Odprti računi')
     site_url = None
+    login_template = 'admin/custom/login.html'
+
+
     def __init__(self, *args, **kwargs):
         super(AdminSite, self).__init__(*args, **kwargs)
         self._registry.update(admin.site._registry)
