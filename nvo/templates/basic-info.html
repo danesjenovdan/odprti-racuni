@@ -65,7 +65,9 @@
             </div>
         </div>
     </div>
+    {% if payment_ratio.highest_absolute and payment_ratio.highest or people.full_time_employees or people.other_employees or people_statistics or people.volunteers or people.members %}
     <div class="body-column">
+        {% if people.full_time_employees or people.other_employees or people_statistics or people.volunteers or people.members %}
         <div class="minicard">
             <div>
                 <div class="icon">
@@ -112,6 +114,8 @@
                 {% endif %}
             </div>
         </div>
+        {% endif %}
+        {% if payment_ratio.highest_absolute and payment_ratio.highest %}
         <div class="minicard">
             <div>
                 <div class="icon">
@@ -132,7 +136,9 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
+    {% endif %}
 </div>
 
 <div class="body-row info">

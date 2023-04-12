@@ -180,8 +180,8 @@ class People(models.Model):
 class PaymentRatio(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='payment_ratios', verbose_name=_('Organiaztion'))
     year = models.ForeignKey('FinancialYear', on_delete=models.CASCADE, related_name='payment_ratios', verbose_name=_('Year'))
-    highest_absolute_salary = models.FloatField(default=1, verbose_name=_('Highest absolute salary'))
-    highest_salary = models.FloatField(default=1, verbose_name=_('Highest salary'))
+    highest_absolute_salary = models.FloatField(null=True, blank=True, verbose_name=_('Highest absolute salary'))
+    highest_salary = models.FloatField(null=True, blank=True, verbose_name=_('Highest salary'))
     lowest_salary = 1
     average_salary = 1
 
