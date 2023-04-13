@@ -20,11 +20,11 @@ from PIL import Image
 revenue_data = {
     'model': RevenueCategory,
     'nodes': [
-        {'name': 'Skupni prihodki (AOP 126)', 'order': 1, 'allow_additional_name': False},
-        {'name': 'Tržna dejavnost (AOP 110)', 'parent': 0, 'order': 2, 'allow_additional_name': False},
+        {'name': 'Skupni prihodki', 'aop': '126', 'order': 1, 'allow_additional_name': False},
+        {'name': 'Tržna dejavnost', 'aop': '110', 'parent': 0, 'order': 2, 'allow_additional_name': False},
         {'name': 'Sponzorstva', 'order': 3, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Produkti in storitve', 'order': 4, 'parent': 1, 'allow_additional_name': False},
-        {'name': 'Donacije in subvencije (AOP 124)', 'parent': 0, 'order': 5, 'allow_additional_name': False},
+        {'name': 'Donacije in subvencije', 'aop': '124', 'parent': 0, 'order': 5, 'allow_additional_name': False},
         {'name': 'Donacije fizičnih oseb', 'order': 6, 'parent': 4, 'allow_additional_name': False},
         {'name': 'Javna sredstva', 'order': 7, 'parent': 4, 'allow_additional_name': False},
         {'name': 'Državna sredstva', 'order': 8, 'parent': 6, 'allow_additional_name': False},
@@ -34,23 +34,23 @@ revenue_data = {
         {'name': 'Zasebne fundacije', 'order': 12, 'parent': 4, 'allow_additional_name': False},
         {'name': 'Članarine', 'order': 13, 'parent': 4, 'allow_additional_name': False},
         {'name': 'Drugo', 'order': 14, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo poleg texta Drugo <vaš text>', 'parent': 4, 'allow_additional_name': True},
-        {'name': 'Drugi prihodki (AOP 121, 122, 123, 125)', 'order': 15, 'parent': 0, 'allow_additional_name': True, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo'},
+        {'name': 'Drugi prihodki', 'aop': '121, 122, 123, 125', 'order': 15, 'parent': 0, 'allow_additional_name': True, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo'},
 ]}
 
 expenses_data = {
     'model': ExpensesCategory,
     'nodes': [
-        {'name': 'Skupni odhodki (AOP 127)', 'order': 1, 'allow_additional_name': False},
-        {'name': 'Materiali in storitve (AOP 128)', 'parent': 0,'order': 2, 'allow_additional_name': False},
+        {'name': 'Skupni odhodki', 'aop': '127', 'order': 1, 'allow_additional_name': False},
+        {'name': 'Materiali in storitve', 'aop': '128', 'parent': 0,'order': 2, 'allow_additional_name': False},
         {'name': 'Redno delovanje', 'order': 3, 'parent': 1, 'allow_additional_name': False},
-        {'name': 'Zunanje storitve in izvajalci (AOP 134)', 'order': 4, 'parent': 1, 'allow_additional_name': False},
+        {'name': 'Zunanje storitve in izvajalci', 'aop': '134', 'order': 4, 'parent': 1, 'allow_additional_name': False},
         {'name': 'Potni stroški', 'order': 5, 'parent': 1, 'allow_additional_name': False},
-        {'name': 'Drugo (AOP 129, 130)', 'order': 6, 'parent': 1, 'allow_additional_name': True},
-        {'name': 'Delo (AOP 139)', 'order': 7, 'parent': 0, 'allow_additional_name': False},
-        {'name': 'Plače (AOP 140)', 'order': 8, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Pokojninska in druga socialna zavarovanja (AOP 141, 142)', 'order': 9, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Drugo (AOP 143)', 'order': 10, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Drugi odhodki (AOP 144, 148)', 'order': 11, 'parent': 0, 'allow_additional_name': True, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo'},
+        {'name': 'Drugo', 'aop': '129, 130', 'order': 6, 'parent': 1, 'allow_additional_name': True},
+        {'name': 'Delo', 'aop': '139', 'order': 7, 'parent': 0, 'allow_additional_name': False},
+        {'name': 'Plače', 'aop': '140', 'order': 8, 'parent': 6, 'allow_additional_name': False},
+        {'name': 'Pokojninska in druga socialna zavarovanja', 'aop': '141, 142', 'order': 9, 'parent': 6, 'allow_additional_name': False},
+        {'name': 'Drugo', 'aop': '143', 'order': 10, 'parent': 6, 'allow_additional_name': False},
+        {'name': 'Drugi odhodki', 'aop': '144, 148', 'order': 11, 'parent': 0, 'allow_additional_name': True, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo'},
 ]}
 financial_data = [revenue_data, expenses_data]
 
@@ -76,6 +76,8 @@ def create_financial_tree_for_model(data, model, year_id, organization_id):
             order=element['order'],
             parent=parent,
             allow_additional_name=element['allow_additional_name'])
+        if 'aop' in element.keys():
+            obj.aop = element['aop']
         obj.save()
         element['object'] = obj
         if 'instructions' in element.keys():
