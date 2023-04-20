@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'site.webmanifest' %}">
+
+  <title>Odprti računi</title>
+  <meta name="twitter:title" content="Odprti računi">
+  <meta property="og:title" content="Odprti računi">
+
+  <meta name="description" content="Enostaven in transparenten prikaz finančnega poslovanja in projektov nevladnih organizacij. Odprti računi, dobri prijatelji!">
+  <meta name="twitter:description" content="Enostaven in transparenten prikaz finančnega poslovanja in projektov nevladnih organizacij. Odprti računi, dobri prijatelji!">
+  <meta property="og:description" content="Enostaven in transparenten prikaz finančnega poslovanja in projektov nevladnih organizacij. Odprti računi, dobri prijatelji!">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:image" content="{% static '/images/og-OR-NVO.jpg' %}">
+  <meta property="og:image" content="{% static '/images/og-OR-NVO.jpg' %}">
+
+  <meta name="twitter:creator" content="@danesjenovdan">
+  <meta name="author" content="Danes je nov dan">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,700i&amp;subset=latin-ext">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+</head>
+<body>
+  <div class="page-padding">
+    <div class="container-fluid">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light justify-content-center" data-aos="fade">
+          <a href="/">
+            <img src="{% static 'images/OR-logo.svg' %}" alt="odprti računi" style="height: 3rem;">
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container-fluid bg-primary">
+      <div class="container position-relative">
+        <div class="jumbotron jumbotron-fluid bg-transparent">
+          <div class="row align-items-center">
+            <div class="col-md-6" data-aos="fade-up">
+              <h1>Enostaven, razumljiv in transparenten prikaz finančnega poslovanja ter projektov nevladnih in civilnodružbenih organizacij</h1>
+              <p class="lead">
+                Brezplačna aplikacija Odprti računi za NVO vam omogoča, da s proaktivno finančno transparentnostjo delovanja krepite zaupanje v vaše delo. Vi vnesete podatke, aplikacija pa jih sistematizira in prikaže na javnosti prijazen in razumljiv način. Tako lahko brez programerskega znanja in z malo vloženega časa izboljšate transparentnost svoje organizacije!
+              </p>
+            </div>
+            <div class="col-md-6">
+              <div class="jumbo-image" data-aos="fade-up" data-aos-delay="150">
+                <img src="{% static 'images/predstavitev.png' %}" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid spaced-container">
+      <div class="container">
+        <div class="row lead-boxes">
+          <div class="col-lg-4 col-sm-12">
+            <div class="lead-box" data-aos="fade-up" data-aos-delay="200">
+              <div class="lead-box-icon">
+                <img src="{% static 'icons/transparentnost.svg' %}" alt="" style="height: 6.25rem;">
+              </div>
+              <h3>Večja finančna transparentnost</h3>
+              <hr>
+              <p>
+                Izboljšajte finančno transparentnost svoje organizacije in objavite rezultate na javnosti prijazen način – brez programerskega znanja in z malo vloženega časa.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-12">
+            <div class="lead-box" data-aos="fade-up" data-aos-delay="300">
+              <div class="lead-box-icon">
+                <img src="{% static 'icons/enostavno.svg' %}" alt="" style="height: 6.25rem;">
+              </div>
+              <h3>Brezplačna in enostavna uporaba</h3>
+              <hr>
+              <p>
+                Uporaba aplikacije je brezplačna in ne prinaša dodatnih finančnih bremen. Le vnesite podatke o organizaciji, zaposlenih, prihodkih, odhodkih, donacijah in financiranih projektih, aplikacija pa jih bo sama sistematizirala in vizualizirala.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-12">
+            <div class="lead-box" data-aos="fade-up" data-aos-delay="400">
+              <div class="lead-box-icon">
+                <img src="{% static 'icons/zaupanje.svg' %}" alt="" style="height: 6.25rem;">
+              </div>
+              <h3>Okrepljeno zaupanje javnosti</h3>
+              <hr>
+              <p>
+                Z uporabo aplikacije boste okrepili zaupanje javnosti v vaše delovanje in finančno poslovanje, obenem pa izboljšali tudi pripravljenost na diskreditacije nevladnega sektorja, saj se boste lahko na očitke odzvali ažurno in na podlagi dejstev.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid bg-secondary spaced-container">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <h2 class="text-center" data-aos="fade-up">
+              V aplikacijo vnesete podatke, mi pa vam omogočimo, da jih lahko preprosto prikažete na svojem spletnem mestu ali družbenih omrežjih!
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <p class="lead text-center" data-aos="fade" data-aos-delay="300">Primer prikaza podatkov na spletnem mestu:</p>
+            <div class="embed-container" data-aos="fade" data-aos-delay="500">
+              <iframe id="odprti-racuni" frameborder="0" width="996" height="700" src="https://odprtiracuni-nvo.djnd.si/6/"></iframe>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
+              <script>iFrameResize({checkOrigin:false},'#odprti-racuni');</script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid spaced-container">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <h2 class="text-center" data-aos="fade-up">
+              Potrebujete več informacij ali pa želite uporabljati aplikacijo Odprti računi za NVO?
+            </h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <p class="lead text-center contact-text" data-aos="fade-up" data-aos-delay="300">
+              Pošljite sporočilo na <a href="mailto:odprtiracuni@danesjenovdan.si" target="_blank">odprtiracuni@danesjenovdan.si</a>. V najkrajšem možnem času vas bomo kontaktirali z navodili in vam posredovali uporabniško ime in geslo za dostop do administratorskega sistema aplikacije, v katerega boste vpisovali podatke.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid footer" data-aos="fade-up">
+      <hr class="my-0">
+      <div class="footer-padding">
+        <div class="row justify-content-center">
+          <div class="col-12 footer-col text-center">
+            <div>
+              <p>
+                Aplikacijo je razvil
+              </p>
+              <div>
+                <a href="https://danesjenovdan.si" target="_blank">
+                  <img src="{% static 'images/djnd-logo.svg' %}" alt="Danes je nov dan" style="height: 3.75rem;">
+                </a>
+              </div>
+            </div>
+            <div>
+              <p class="mt-5">
+                Kontakt: <a href="mailto:odprtiracuni@danesjenovdan.si" target="_blank">odprtiracuni@danesjenovdan.si</a>
+              </p>
+            </div>
+            <div>
+              <hr class="my-5">
+            </div>
+            <div class="mb-5">
+              <a href="https://www.gov.si/drzavni-organi/ministrstva/ministrstvo-za-javno-upravo/" target="_blank">
+                <img src="{% static 'images/mju-logo.svg' %}" alt="Ministrstvo za javno upravo" style="height: 2.1875rem;">
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-12 footer-col-wide text-center">
+            <p class="small mb-4">
+              Aplikacija je razvita v sklopu projekta Odprti računi: S transparentno porabo sredstev do večjega zaupanja in vključenosti javnosti, ki je podprt s strani Sklada za NVO Ministrstva za javno upravo.
+            </p>
+            <p class="small">
+              Projekt izvajajo
+              <a href="https://danesjenovdan.si/" target="_blank">Danes je nov dan, Inštitut za druga vprašanja</a>,
+              <a href="http://dopd.si/" target="_blank">Društvo Organizacija za participatorno družbo</a>,
+              <a href="https://www.mcp.si/" target="_blank">Zveza društev Mladinski center Postojna</a> in
+              <a href="https://servis8.com/" target="_blank">Servis 8, zavod za inovacije, izobraževanje in delavnice oblikovanja storitev</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>AOS.init({ duration: 800 });</script>
+</body>
+</html>

@@ -7,6 +7,9 @@ from nvo.models import (Organization, FinancialYear, Document, OrganizationFinan
 from nvo.utils import clean_chart_data, ExportNVOData
 
 
+def landing(request):
+    return render(request, 'landing.html')
+
 def index(request, organization_id):
     organization = get_object_or_404(Organization, pk=organization_id)
     financial_year_through = organization.financial_year_through.filter(is_active=True).order_by("financial_year__name").last()
