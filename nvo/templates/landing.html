@@ -36,12 +36,15 @@
 <body>
   <div class="page-padding">
     <div class="container-fluid">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light justify-content-center" data-aos="fade">
-          <a href="/">
-            <img src="{% static 'images/OR-logo.svg' %}" alt="odprti računi" style="height: 3rem;">
-          </a>
-        </nav>
+      <div class="row">
+        <div class="col-12">
+          <nav class="navbar navbar-expand-lg navbar-light justify-content-center" data-aos="fade">
+            <a href="/">
+              <img src="{% static 'images/OR-logo.svg' %}" alt="odprti računi" style="height: 3rem;">
+            </a>
+            <a href="/admin" class="position-absolute d-none d-md-block" style="right: -15px; background: #39444e; border-radius: 5em; padding: 0.45em 1.25em; color: #fff; text-decoration: none;">Prijava v administratorski del</a>
+          </nav>
+        </div>
       </div>
     </div>
 
@@ -50,7 +53,7 @@
         <div class="jumbotron jumbotron-fluid bg-transparent">
           <div class="row align-items-center">
             <div class="col-md-6" data-aos="fade-up">
-              <h1>Enostaven, razumljiv in transparenten prikaz finančnega poslovanja ter projektov nevladnih in civilnodružbenih organizacij</h1>
+              <h1>Enostaven in transparenten prikaz delovanja nevladnih organizacij</h1>
               <p class="lead">
                 Brezplačna aplikacija Odprti računi za NVO vam omogoča, da s proaktivno finančno transparentnostjo delovanja krepite zaupanje v vaše delo. Vi vnesete podatke, aplikacija pa jih sistematizira in prikaže na javnosti prijazen in razumljiv način. Tako lahko brez programerskega znanja in z malo vloženega časa izboljšate transparentnost svoje organizacije!
               </p>
@@ -121,7 +124,7 @@
           <div class="col-12">
             <p class="lead text-center" data-aos="fade" data-aos-delay="300">Primer prikaza podatkov na spletnem mestu:</p>
             <div class="embed-container" data-aos="fade" data-aos-delay="500">
-              <iframe id="odprti-racuni" frameborder="0" width="996" height="700" src="https://odprtiracuni-nvo.djnd.si/6/"></iframe>
+              <iframe id="odprti-racuni" frameborder="0" width="996" height="960" src="https://odprtiracuni-nvo.djnd.si/6/"></iframe>
               <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
               <script>iFrameResize({checkOrigin:false},'#odprti-racuni');</script>
             </div>
