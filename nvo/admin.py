@@ -1,11 +1,11 @@
-from django.contrib import admin
 from django.db import models
 from django.contrib.auth.admin import UserAdmin
-from django.contrib import messages
+from django.contrib import messages, admin
 from django.utils.translation import gettext_lazy as _
 from django import forms
 from django.utils.safestring import mark_safe
 from django.urls import reverse
+from django.shortcuts import redirect
 
 from mptt.admin import MPTTModelAdmin
 
@@ -134,6 +134,9 @@ class OrganizationAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         messages.success(request, _("Changes are successful saved"))
+
+    def response_change(self, request, obj):
+        return redirect('/admin/')
 
     class Media:
         css = {
@@ -495,6 +498,21 @@ class EmbedAdmin(admin.ModelAdmin):
         (_('POVEZAVA DO SPLETNE STRANI, V KATERO JE NA VAŠEM SPLETNEM MESTU VDELANA APLIKACIJA ODPRTI RAČUNI'), {'fields': ('page_of_embed_url', )})
     )
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if not request.user.organization or request.user.is_superuser:
+            return qs
+        return qs.filter(organization_id=request.user.organization.id)
+
+    def response_change(self, request, obj):
+        return redirect('/admin/')
+
+    def message_user(self, *args):
+        pass
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        messages.success(request, _(f'Objava podatkov na vašem spletnem mestu {obj.organization.name} je bila uspešno spremenjena.'))
 
     def embed_code(self, obj):
         org_id = obj.organization.id
