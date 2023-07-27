@@ -24,7 +24,7 @@ class ProjectForm(forms.ModelForm):
         if self_money and value and self_money > value:
             raise ValidationError(_('Lastni vložek je večji kot vrednost celotnega projekta.'))
 
-        if start_date > end_date:
+        if start_date and end_date and start_date > end_date:
             raise ValidationError(_('Datum začetka projekta je trenutno nastavljen po datumu, ki je določen za konec projekta. Preverite pravilnost datumov in jih ustrezno uredite.'))
 
 
