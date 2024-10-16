@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0024_embed_page_of_embed_url'),
+        ("nvo", "0024_embed_page_of_embed_url"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='paymentratio',
-            name='highest_absolute_salary',
+            model_name="paymentratio",
+            name="highest_absolute_salary",
             field=models.FloatField(default=1),
         ),
         migrations.AddField(
-            model_name='paymentratio',
-            name='highest_salary',
+            model_name="paymentratio",
+            name="highest_salary",
             field=models.FloatField(default=1),
         ),
     ]

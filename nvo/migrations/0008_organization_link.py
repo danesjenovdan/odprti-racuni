@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0007_alter_organization_options_remove_organization_city_and_more'),
+        ("nvo", "0007_alter_organization_options_remove_organization_city_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='organization',
-            name='link',
-            field=models.URLField(blank=True, null=True, verbose_name="Organization's link"),
+            model_name="organization",
+            name="link",
+            field=models.URLField(
+                blank=True, null=True, verbose_name="Organization's link"
+            ),
         ),
     ]

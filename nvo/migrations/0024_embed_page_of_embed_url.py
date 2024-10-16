@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0023_alter_cofinancer_logo_alter_financer_logo_and_more'),
+        ("nvo", "0023_alter_cofinancer_logo_alter_financer_logo_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='embed',
-            name='page_of_embed_url',
-            field=models.URLField(blank=True, null=True, verbose_name='Page where iframe is embeded'),
+            model_name="embed",
+            name="page_of_embed_url",
+            field=models.URLField(
+                blank=True, null=True, verbose_name="Page where iframe is embeded"
+            ),
         ),
     ]

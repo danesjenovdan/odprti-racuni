@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0027_alter_donations_options_alter_finance_options_and_more'),
+        ("nvo", "0027_alter_donations_options_alter_finance_options_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='paymentratio',
-            name='highest_absolute_salary',
-            field=models.FloatField(null=True, verbose_name='Highest absolute salary'),
+            model_name="paymentratio",
+            name="highest_absolute_salary",
+            field=models.FloatField(null=True, verbose_name="Highest absolute salary"),
         ),
         migrations.AlterField(
-            model_name='paymentratio',
-            name='highest_salary',
-            field=models.FloatField(null=True, verbose_name='Highest salary'),
+            model_name="paymentratio",
+            name="highest_salary",
+            field=models.FloatField(null=True, verbose_name="Highest salary"),
         ),
     ]

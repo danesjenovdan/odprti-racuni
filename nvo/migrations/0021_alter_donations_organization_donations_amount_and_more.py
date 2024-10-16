@@ -6,18 +6,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0020_alter_project_organization_share_and_more'),
+        ("nvo", "0020_alter_project_organization_share_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='donations',
-            name='organization_donations_amount',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True, verbose_name='Organization donations amount'),
+            model_name="donations",
+            name="organization_donations_amount",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=10,
+                null=True,
+                verbose_name="Organization donations amount",
+            ),
         ),
         migrations.AlterField(
-            model_name='donations',
-            name='personal_donations_amount',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True, verbose_name='Personal donation amount'),
+            model_name="donations",
+            name="personal_donations_amount",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=10,
+                null=True,
+                verbose_name="Personal donation amount",
+            ),
         ),
     ]
