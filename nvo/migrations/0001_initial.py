@@ -3,11 +3,11 @@
 import django.contrib.auth.models
 import django.contrib.auth.validators
 import django.core.validators
-from django.db import migrations, models
 import django.db.models.deletion
 import django.utils.timezone
 import martor.models
 import mptt.fields
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
