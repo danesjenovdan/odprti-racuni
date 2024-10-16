@@ -7,13 +7,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0021_alter_donations_organization_donations_amount_and_more'),
+        ("nvo", "0021_alter_donations_organization_donations_amount_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='organizationfinancialyear',
-            name='embed',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='financial_year_through', to='nvo.embed', verbose_name='Embed'),
+            model_name="organizationfinancialyear",
+            name="embed",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="financial_year_through",
+                to="nvo.embed",
+                verbose_name="Embed",
+            ),
         ),
     ]

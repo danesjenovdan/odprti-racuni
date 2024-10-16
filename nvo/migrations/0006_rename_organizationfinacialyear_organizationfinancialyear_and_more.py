@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0005_alter_financialyear_options_and_more'),
+        ("nvo", "0005_alter_financialyear_options_and_more"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='OrganizationFinacialYear',
-            new_name='OrganizationFinancialYear',
+            old_name="OrganizationFinacialYear",
+            new_name="OrganizationFinancialYear",
         ),
         migrations.AlterModelOptions(
-            name='people',
-            options={'verbose_name': 'People', 'verbose_name_plural': 'People'},
+            name="people",
+            options={"verbose_name": "People", "verbose_name_plural": "People"},
         ),
     ]

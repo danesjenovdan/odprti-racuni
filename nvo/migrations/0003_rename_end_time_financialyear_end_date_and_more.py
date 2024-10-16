@@ -6,22 +6,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0002_donations_organizationfinacialyear_and_more'),
+        ("nvo", "0002_donations_organizationfinacialyear_and_more"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='financialyear',
-            old_name='end_time',
-            new_name='end_date',
+            model_name="financialyear",
+            old_name="end_time",
+            new_name="end_date",
         ),
         migrations.RenameField(
-            model_name='financialyear',
-            old_name='start_time',
-            new_name='start_date',
+            model_name="financialyear",
+            old_name="start_time",
+            new_name="start_date",
         ),
         migrations.RemoveField(
-            model_name='project',
-            name='year',
+            model_name="project",
+            name="year",
         ),
     ]

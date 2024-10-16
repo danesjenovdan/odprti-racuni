@@ -6,13 +6,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0018_alter_finance_organization_alter_finance_year'),
+        ("nvo", "0018_alter_finance_organization_alter_finance_year"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='infotext',
-            name='card',
-            field=models.CharField(choices=[('BI', 'BasicInfo'), ('YR', 'Documents'), ('PE', 'People'), ('PS', 'Payment ratios'), ('PR', 'Projects'), ('DO', 'Personal donation'), ('OD', 'Organizatin donations'), ('IT', '1 percent income tax'), ('DC', 'Donation purpose'), ('FI', 'Revenue'), ('EX', 'Expanse'), ('CO', 'Amount of voluntary work'), ('PP', 'Payments to projects partners'), ('SB', 'Payment to the state budget')], default='BI', max_length=2, verbose_name='Card'),
+            model_name="infotext",
+            name="card",
+            field=models.CharField(
+                choices=[
+                    ("BI", "BasicInfo"),
+                    ("YR", "Documents"),
+                    ("PE", "People"),
+                    ("PS", "Payment ratios"),
+                    ("PR", "Projects"),
+                    ("DO", "Personal donation"),
+                    ("OD", "Organizatin donations"),
+                    ("IT", "1 percent income tax"),
+                    ("DC", "Donation purpose"),
+                    ("FI", "Revenue"),
+                    ("EX", "Expanse"),
+                    ("CO", "Amount of voluntary work"),
+                    ("PP", "Payments to projects partners"),
+                    ("SB", "Payment to the state budget"),
+                ],
+                default="BI",
+                max_length=2,
+                verbose_name="Card",
+            ),
         ),
     ]

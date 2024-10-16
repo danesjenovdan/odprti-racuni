@@ -7,33 +7,63 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0015_alter_employee_job_share'),
+        ("nvo", "0015_alter_employee_job_share"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='finance',
-            name='amount_voluntary_work',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True, verbose_name='Amount of voluntary work'),
+            model_name="finance",
+            name="amount_voluntary_work",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=10,
+                null=True,
+                verbose_name="Amount of voluntary work",
+            ),
         ),
         migrations.AlterField(
-            model_name='finance',
-            name='difference_payment_state_budget',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True, verbose_name='Difference payment state budget'),
+            model_name="finance",
+            name="difference_payment_state_budget",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=10,
+                null=True,
+                verbose_name="Difference payment state budget",
+            ),
         ),
         migrations.AlterField(
-            model_name='finance',
-            name='payment_state_budget',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True, verbose_name='Payment to the state budget'),
+            model_name="finance",
+            name="payment_state_budget",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=10,
+                null=True,
+                verbose_name="Payment to the state budget",
+            ),
         ),
         migrations.AlterField(
-            model_name='finance',
-            name='payments_project_partners',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True, verbose_name='Payments to projects partners'),
+            model_name="finance",
+            name="payments_project_partners",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=10,
+                null=True,
+                verbose_name="Payments to projects partners",
+            ),
         ),
         migrations.AlterField(
-            model_name='finance',
-            name='year',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='%(class)s_related', to='nvo.financialyear', verbose_name='Year'),
+            model_name="finance",
+            name="year",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="%(class)s_related",
+                to="nvo.financialyear",
+                verbose_name="Year",
+            ),
         ),
     ]

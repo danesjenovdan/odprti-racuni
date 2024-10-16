@@ -7,18 +7,32 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0017_rename_difference_payment_state_budget_finance_acquired_state_budget'),
+        (
+            "nvo",
+            "0017_rename_difference_payment_state_budget_finance_acquired_state_budget",
+        ),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='finance',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='finances', to='nvo.organization', verbose_name='Organiaztion'),
+            model_name="finance",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="finances",
+                to="nvo.organization",
+                verbose_name="Organiaztion",
+            ),
         ),
         migrations.AlterField(
-            model_name='finance',
-            name='year',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='finances', to='nvo.financialyear', verbose_name='Year'),
+            model_name="finance",
+            name="year",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="finances",
+                to="nvo.financialyear",
+                verbose_name="Year",
+            ),
         ),
     ]

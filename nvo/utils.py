@@ -1,98 +1,239 @@
-from nvo.models import RevenueCategory, ExpensesCategory
-from docx import Document, oxml, opc
-from docx.shared import Inches, RGBColor
+import os
+from datetime import datetime
+
+import markdown
+import requests
+from babel.numbers import format_decimal
+from django.http.response import HttpResponse
+from django.utils.text import slugify
+from docx import Document, opc, oxml
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml.xmlchemy import OxmlElement
-
-from datetime import datetime
-import markdown
+from docx.shared import Inches, RGBColor
 from htmldocx import HtmlToDocx
-from babel.numbers import format_decimal
-
-from django.utils.text import slugify
-from django.http.response import HttpResponse
-
-import requests, os
 from PIL import Image
 
+from nvo.models import ExpensesCategory, RevenueCategory
 
 revenue_data = {
-    'model': RevenueCategory,
-    'nodes': [
-        {'name': 'Skupni prihodki', 'aop': '126', 'order': 1, 'allow_additional_name': False},
-        {'name': 'Tržna dejavnost', 'aop': '110', 'parent': 0, 'order': 2, 'allow_additional_name': False},
-        {'name': 'Sponzorstva', 'order': 3, 'parent': 1, 'allow_additional_name': False},
-        {'name': 'Produkti in storitve', 'order': 4, 'parent': 1, 'allow_additional_name': False},
-        {'name': 'Donacije in subvencije', 'aop': '124', 'parent': 0, 'order': 5, 'allow_additional_name': False},
-        {'name': 'Donacije fizičnih oseb', 'order': 6, 'parent': 4, 'allow_additional_name': False},
-        {'name': 'Javna sredstva', 'order': 7, 'parent': 4, 'allow_additional_name': False},
-        {'name': 'Državna sredstva', 'order': 8, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Občinska sredstva', 'order': 9, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Evropska sredstva', 'order': 10, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Sredstva drugih držav', 'order': 11, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Zasebne fundacije', 'order': 12, 'parent': 4, 'allow_additional_name': False},
-        {'name': 'Članarine', 'order': 13, 'parent': 4, 'allow_additional_name': False},
-        {'name': 'Drugo', 'order': 14, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo poleg texta Drugo <vaš text>', 'parent': 4, 'allow_additional_name': True},
-        {'name': 'Drugi prihodki', 'aop': '121, 122, 123, 125', 'order': 15, 'parent': 0, 'allow_additional_name': True, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo'},
-]}
+    "model": RevenueCategory,
+    "nodes": [
+        {
+            "name": "Skupni prihodki",
+            "aop": "126",
+            "order": 1,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Tržna dejavnost",
+            "aop": "110",
+            "parent": 0,
+            "order": 2,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Sponzorstva",
+            "order": 3,
+            "parent": 1,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Produkti in storitve",
+            "order": 4,
+            "parent": 1,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Donacije in subvencije",
+            "aop": "124",
+            "parent": 0,
+            "order": 5,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Donacije fizičnih oseb",
+            "order": 6,
+            "parent": 4,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Javna sredstva",
+            "order": 7,
+            "parent": 4,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Državna sredstva",
+            "order": 8,
+            "parent": 6,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Občinska sredstva",
+            "order": 9,
+            "parent": 6,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Evropska sredstva",
+            "order": 10,
+            "parent": 6,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Sredstva drugih držav",
+            "order": 11,
+            "parent": 6,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Zasebne fundacije",
+            "order": 12,
+            "parent": 4,
+            "allow_additional_name": False,
+        },
+        {"name": "Članarine", "order": 13, "parent": 4, "allow_additional_name": False},
+        {
+            "name": "Drugo",
+            "order": 14,
+            "instructions": "Vnesi dodatno ime ki se bo prikazovalo poleg texta Drugo <vaš text>",
+            "parent": 4,
+            "allow_additional_name": True,
+        },
+        {
+            "name": "Drugi prihodki",
+            "aop": "121, 122, 123, 125",
+            "order": 15,
+            "parent": 0,
+            "allow_additional_name": True,
+            "instructions": "Vnesi dodatno ime ki se bo prikazovalo",
+        },
+    ],
+}
 
 expenses_data = {
-    'model': ExpensesCategory,
-    'nodes': [
-        {'name': 'Skupni odhodki', 'aop': '127', 'order': 1, 'allow_additional_name': False},
-        {'name': 'Materiali in storitve', 'aop': '128', 'parent': 0,'order': 2, 'allow_additional_name': False},
-        {'name': 'Redno delovanje', 'order': 3, 'parent': 1, 'allow_additional_name': False},
-        {'name': 'Zunanje storitve in izvajalci', 'aop': '134', 'order': 4, 'parent': 1, 'allow_additional_name': False},
-        {'name': 'Potni stroški', 'order': 5, 'parent': 1, 'allow_additional_name': False},
-        {'name': 'Drugo', 'aop': '129, 130', 'order': 6, 'parent': 1, 'allow_additional_name': True},
-        {'name': 'Delo', 'aop': '139', 'order': 7, 'parent': 0, 'allow_additional_name': False},
-        {'name': 'Plače', 'aop': '140', 'order': 8, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Pokojninska in druga socialna zavarovanja', 'aop': '141, 142', 'order': 9, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Drugo', 'aop': '143', 'order': 10, 'parent': 6, 'allow_additional_name': False},
-        {'name': 'Drugi odhodki', 'aop': '144, 148', 'order': 11, 'parent': 0, 'allow_additional_name': True, 'instructions': 'Vnesi dodatno ime ki se bo prikazovalo'},
-]}
+    "model": ExpensesCategory,
+    "nodes": [
+        {
+            "name": "Skupni odhodki",
+            "aop": "127",
+            "order": 1,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Materiali in storitve",
+            "aop": "128",
+            "parent": 0,
+            "order": 2,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Redno delovanje",
+            "order": 3,
+            "parent": 1,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Zunanje storitve in izvajalci",
+            "aop": "134",
+            "order": 4,
+            "parent": 1,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Potni stroški",
+            "order": 5,
+            "parent": 1,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Drugo",
+            "aop": "129, 130",
+            "order": 6,
+            "parent": 1,
+            "allow_additional_name": True,
+        },
+        {
+            "name": "Delo",
+            "aop": "139",
+            "order": 7,
+            "parent": 0,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Plače",
+            "aop": "140",
+            "order": 8,
+            "parent": 6,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Pokojninska in druga socialna zavarovanja",
+            "aop": "141, 142",
+            "order": 9,
+            "parent": 6,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Drugo",
+            "aop": "143",
+            "order": 10,
+            "parent": 6,
+            "allow_additional_name": False,
+        },
+        {
+            "name": "Drugi odhodki",
+            "aop": "144, 148",
+            "order": 11,
+            "parent": 0,
+            "allow_additional_name": True,
+            "instructions": "Vnesi dodatno ime ki se bo prikazovalo",
+        },
+    ],
+}
 financial_data = [revenue_data, expenses_data]
+
 
 def create_financial_tree(year_id, organization_id):
     for item in financial_data:
         create_financial_tree_for_model(
-            item['nodes'],
-            item['model'],
-            year_id,
-            organization_id
+            item["nodes"], item["model"], year_id, organization_id
         )
+
 
 def create_financial_tree_for_model(data, model, year_id, organization_id):
     for element in data:
-        if 'parent' in element.keys():
-            parent = parent=data[element['parent']]['object']
+        if "parent" in element.keys():
+            parent = parent = data[element["parent"]]["object"]
         else:
             parent = None
         obj = model(
-            name=element['name'],
+            name=element["name"],
             organization_id=organization_id,
             year_id=year_id,
-            order=element['order'],
+            order=element["order"],
             parent=parent,
-            allow_additional_name=element['allow_additional_name'])
-        if 'aop' in element.keys():
-            obj.aop = element['aop']
+            allow_additional_name=element["allow_additional_name"],
+        )
+        if "aop" in element.keys():
+            obj.aop = element["aop"]
         obj.save()
-        element['object'] = obj
-        if 'instructions' in element.keys():
-            obj.instructions=element['instructions']
+        element["object"] = obj
+        if "instructions" in element.keys():
+            obj.instructions = element["instructions"]
         obj.save()
 
+
 def clean_chart_data(data):
-    '''
+    """
     Recursively cleans financial data to be able to draw the chart.
-    '''
-    if len(data['children']) > 0:
-        data['value'] = None
-        data['children'] = [clean_chart_data(child) for child in data['children']]
-    elif 'amount' in data.keys():
-        data['value'] = data['amount']
+    """
+    if len(data["children"]) > 0:
+        data["value"] = None
+        data["children"] = [clean_chart_data(child) for child in data["children"]]
+    elif "amount" in data.keys():
+        data["value"] = data["amount"]
 
     return data
 
@@ -116,97 +257,108 @@ class ExportNVOData(object):
 
         self.insertHR(paragraph)
 
-        self.add_heading('Osebna izkaznica\n')
+        self.add_heading("Osebna izkaznica\n")
 
         self.write_paragraph(
             title=self.organization.name,
+            lines=[self.organization.address, self.organization.post_number],
+        )
+
+        self.write_paragraph(
             lines=[
-                self.organization.address,
-                self.organization.post_number
+                f"Davčna številka: {self.organization.post_number}",
+                f"Matična številka: {self.organization.post_number}",
             ]
         )
 
         self.write_paragraph(
             lines=[
-                f'Davčna številka: {self.organization.post_number}',
-                f'Matična številka: {self.organization.post_number}'
+                f"Kontakt: {self.organization.email}, {self.organization.phone_number}",
+                f"Zastopnik_ca: {self.organization.representative}",
             ]
         )
 
-        self.write_paragraph(
-            lines=[
-                f'Kontakt: {self.organization.email}, {self.organization.phone_number}',
-                f'Zastopnik_ca: {self.organization.representative}'
-            ]
-        )
-
-        self.write_paragraph(
-            lines=[
-                f'TRR: {self.organization.trr}'
-            ]
-        )
+        self.write_paragraph(lines=[f"TRR: {self.organization.trr}"])
 
         if self.organization.is_for_the_public_good:
             self.write_paragraph(
                 lines=[
-                    f'Organizacija ima status humanitarne organizacije in organizacije v javnem interesu na področju {self.organization.is_for_the_public_good}'
+                    f"Organizacija ima status humanitarne organizacije in organizacije v javnem interesu na področju {self.organization.is_for_the_public_good}"
                 ],
-                add_newline=True
+                add_newline=True,
             )
 
         p = self.document.add_paragraph()
-        p.add_run(f'Letna poročila\n').bold = True
-        for doc in self.organization.documents.all(): # TODO filter by year
+        p.add_run(f"Letna poročila\n").bold = True
+        for doc in self.organization.documents.all():  # TODO filter by year
             hyperlink = self.add_hyperlink(
                 p,
-                f'{doc.file.url}',
-                f'{doc.category.name}\n', # text
+                f"{doc.file.url}",
+                f"{doc.category.name}\n",  # text
             )
 
         # TODO LATER deprecate get_statistics
-        people_stats = self.organization.people.filter(year=self.year).first().get_statistics()
+        people_stats = (
+            self.organization.people.filter(year=self.year).first().get_statistics()
+        )
         if people_stats:
             self.write_paragraph(
-                title='Ljudje',
+                title="Ljudje",
                 lines=[
-                    f'Število redno zaposlenih: ',
-                    f'Redno zaposleni po spolu: {format_decimal(people_stats["men"], locale="sl_SI")} % moških, {format_decimal(people_stats["women"], locale="sl_SI")} % žensk, {format_decimal(people_stats["nonbinary"], locale="sl_SI")} % nebinarnih oseb'
+                    f"Število redno zaposlenih: ",
+                    f'Redno zaposleni po spolu: {format_decimal(people_stats["men"], locale="sl_SI")} % moških, {format_decimal(people_stats["women"], locale="sl_SI")} % žensk, {format_decimal(people_stats["nonbinary"], locale="sl_SI")} % nebinarnih oseb',
                 ],
-                add_newline=True
+                add_newline=True,
             )
 
-        payment_ratios = self.organization.payment_ratios.filter(year=self.year).first().get_statistics()
+        payment_ratios = (
+            self.organization.payment_ratios.filter(year=self.year)
+            .first()
+            .get_statistics()
+        )
         if payment_ratios:
             self.write_paragraph(
-                title='Plačna razmerja',
+                title="Plačna razmerja",
                 lines=[
                     f'Najvišja plača: Najnižja plača: {format_decimal(payment_ratios["highest_absolute"], locale="sl_SI")}:{format_decimal(payment_ratios["lowest"], locale="sl_SI")}',
-                    f'Najvišja plača: Povprečna plača: {format_decimal(payment_ratios["highest"], locale="sl_SI")}:{format_decimal(payment_ratios["average"], locale="sl_SI")}'
-                ]
+                    f'Najvišja plača: Povprečna plača: {format_decimal(payment_ratios["highest"], locale="sl_SI")}:{format_decimal(payment_ratios["average"], locale="sl_SI")}',
+                ],
             )
         self.document.add_page_break()
 
         # FINANCE
-        self.add_heading('Finance\n')
+        self.add_heading("Finance\n")
 
-        reveues = self.organization.revenuecategory_related.filter(year=self.year).exclude(level=0)
-        total_income = RevenueCategory.objects.get(year=self.year, organization=self.organization, level=0)
+        reveues = self.organization.revenuecategory_related.filter(
+            year=self.year
+        ).exclude(level=0)
+        total_income = RevenueCategory.objects.get(
+            year=self.year, organization=self.organization, level=0
+        )
         if total_income.amount:
             self.write_paragraph(
                 title=f'Skupni prihodki: {format_decimal(total_income.amount, locale="sl_SI")} EUR\n',
                 lines=[
-                    f'{"    " * revenue.level} {revenue.name}: {format_decimal(revenue.amount, locale="sl_SI")} EUR' for revenue in reveues if revenue.amount > 0
-                ]
+                    f'{"    " * revenue.level} {revenue.name}: {format_decimal(revenue.amount, locale="sl_SI")} EUR'
+                    for revenue in reveues
+                    if revenue.amount > 0
+                ],
             )
 
-        expenses = self.organization.expensescategory_related.filter(year=self.year).exclude(level=0)
-        total_expense = ExpensesCategory.objects.get(year=self.year, organization=self.organization, level=0)
+        expenses = self.organization.expensescategory_related.filter(
+            year=self.year
+        ).exclude(level=0)
+        total_expense = ExpensesCategory.objects.get(
+            year=self.year, organization=self.organization, level=0
+        )
         if total_expense.amount:
             self.write_paragraph(
                 title=f'\nSkupni odhodki: {format_decimal(total_expense.amount, locale="sl_SI")} EUR\n',
                 lines=[
-                    f'{"    " * expense.level} {expense.name}: {format_decimal(expense.amount, locale="sl_SI")} EUR' for expense in expenses if expense.amount > 0
-                ]
+                    f'{"    " * expense.level} {expense.name}: {format_decimal(expense.amount, locale="sl_SI")} EUR'
+                    for expense in expenses
+                    if expense.amount > 0
+                ],
             )
 
         finance = self.organization.finances.get(year=self.year)
@@ -216,143 +368,167 @@ class ExportNVOData(object):
                 lines=[
                     f'Izplačila projektnim partnerjem: {format_decimal(finance.payments_project_partners, locale="sl_SI")} EUR'
                 ],
-                hr=True
+                hr=True,
             )
 
         if finance.payment_state_budget:
             self.write_paragraph(
                 lines=[
                     f'Vplačila v proračun RS: {format_decimal(finance.payment_state_budget, locale="sl_SI")} EUR',
-                    f'Razlika med vplačanimi in pridobljenimi proračunskimi sredstvi v RS: {format_decimal(finance.difference_state_budget, locale="sl_SI")} EUR'
+                    f'Razlika med vplačanimi in pridobljenimi proračunskimi sredstvi v RS: {format_decimal(finance.difference_state_budget, locale="sl_SI")} EUR',
                 ],
-                hr=True
+                hr=True,
             )
 
         self.document.add_page_break()
 
         # PROJECTS
-        self.add_heading('Projekti')
+        self.add_heading("Projekti")
 
         projects = self.year.get_projects().filter(organization=self.organization)
         for project in projects:
             self.write_projects_paragraph(project)
             self.document.add_page_break()
 
-
         # DONATIONS
         donations = self.organization.donations.get(year=self.year)
-        if donations.personal_donations_amount or donations.organization_donations_amount or donations.one_percent_income_tax or donations.purpose_of_donations:
-            self.add_heading('Donacije\n')
+        if (
+            donations.personal_donations_amount
+            or donations.organization_donations_amount
+            or donations.one_percent_income_tax
+            or donations.purpose_of_donations
+        ):
+            self.add_heading("Donacije\n")
 
             if donations.personal_donations_amount:
                 self.write_paragraph(
-                    title='Donacije fizičnih oseb',
+                    title="Donacije fizičnih oseb",
                     lines=[
                         f'Višina zbranih donacij fizičnih oseb: {format_decimal(donations.personal_donations_amount, locale="sl_SI")} EUR',
-                        f'Število donatorjev: {donations.number_of_personal_donations}'
-                    ]
+                        f"Število donatorjev: {donations.number_of_personal_donations}",
+                    ],
                 )
                 self.write_list_of_donors(donations.personal_donators.all())
 
             donations = self.organization.donations.get(year=self.year)
             if donations.organization_donations_amount:
                 self.write_paragraph(
-                    title='Donacije pravnih oseb',
+                    title="Donacije pravnih oseb",
                     lines=[
                         f'Višina zbranih donacij fizičnih oseb: {format_decimal(donations.organization_donations_amount, locale="sl_SI")} EUR',
-                        f'Število donatorjev: {donations.number_of_organization_donations}'
+                        f"Število donatorjev: {donations.number_of_organization_donations}",
                     ],
-                    hr=True
+                    hr=True,
                 )
                 self.write_list_of_donors(donations.organiaztion_donators.all())
 
             if donations.one_percent_income_tax:
                 self.insertDashes()
                 p = self.document.add_paragraph()
-                p.add_run('Višina zbranih donacij z 1% dohodnine: ').bold = True
-                p.add_run(f'{format_decimal(donations.one_percent_income_tax, locale="sl_SI")} EUR')
-
+                p.add_run("Višina zbranih donacij z 1% dohodnine: ").bold = True
+                p.add_run(
+                    f'{format_decimal(donations.one_percent_income_tax, locale="sl_SI")} EUR'
+                )
 
             if donations.purpose_of_donations:
                 self.write_paragraph(
-                    title='Kako smo porabili zbrane donacije',
+                    title="Kako smo porabili zbrane donacije",
                     lines=[
                         donations.purpose_of_donations,
-
                     ],
-                    hr=True
+                    hr=True,
                 )
 
-        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-        response['Content-Disposition'] = f'attachment; filename={slugify(self.organization.name)}_{self.year.name}.docx'
+        response = HttpResponse(
+            content_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
+        response["Content-Disposition"] = (
+            f"attachment; filename={slugify(self.organization.name)}_{self.year.name}.docx"
+        )
         self.document.save(response)
 
         return response
 
     def add_heading(self, text, level=1):
         self.document.add_paragraph()
-        heading = self.document.add_heading('', level=level).add_run(text)
+        heading = self.document.add_heading("", level=level).add_run(text)
         heading.font.color.rgb = RGBColor(0, 0, 0)
-        heading.font.name = 'Arial'
+        heading.font.name = "Arial"
 
     def write_paragraph(self, title=None, lines=[], hr=False, add_newline=False):
         if hr:
             self.insertDashes()
         p = self.document.add_paragraph()
         if title:
-            p.add_run(f'{title}\n').bold = True
+            p.add_run(f"{title}\n").bold = True
         for i, line in enumerate(lines):
-            if i < len(lines)-1 or add_newline:
-                text = f'{line}\n'
+            if i < len(lines) - 1 or add_newline:
+                text = f"{line}\n"
             else:
-                text = f'{line}'
+                text = f"{line}"
             p.add_run(text)
 
     def write_list_of_donors(self, donors):
         p = self.document.add_paragraph()
-        p.add_run('Poimenski seznam donatorjev')
+        p.add_run("Poimenski seznam donatorjev")
         p = self.document.add_paragraph()
         p.paragraph_format.left_indent = Inches(0.5)
         for donor in donors:
-            p.add_run(f'{donor.name}: {format_decimal(donor.amount, locale="sl_SI")} EUR\n')
+            p.add_run(
+                f'{donor.name}: {format_decimal(donor.amount, locale="sl_SI")} EUR\n'
+            )
 
     def write_projects_paragraph(self, project):
         duration = project.duration
         months = duration["months"]
         days = duration["days"]
         if days:
-            days = f' in {days} dni'
+            days = f" in {days} dni"
         else:
-            days = ''
+            days = ""
         self.add_heading(project.name, level=2)
         p = self.document.add_paragraph()
         p.paragraph_format.left_indent = Inches(0.5)
-        p.add_run('\n')
-        p.add_run(f'Vrednost projekta (delež organizacije / celota): {format_decimal(project.organization_share, locale="sl_SI")} EUR / {format_decimal(project.value, locale="sl_SI")} EUR\n')
-        p.add_run(f'Trajanje projekta: {months} mesecev{days}, {self.get_formated_date(project.start_date)}–{self.get_formated_date(project.end_date)}\n')
+        p.add_run("\n")
+        p.add_run(
+            f'Vrednost projekta (delež organizacije / celota): {format_decimal(project.organization_share, locale="sl_SI")} EUR / {format_decimal(project.value, locale="sl_SI")} EUR\n'
+        )
+        p.add_run(
+            f"Trajanje projekta: {months} mesecev{days}, {self.get_formated_date(project.start_date)}–{self.get_formated_date(project.end_date)}\n"
+        )
         financers = project.financers.all()
         if financers:
-            p.add_run(f'Financerji: {", ".join([financer.name for financer in financers])}\n')
+            p.add_run(
+                f'Financerji: {", ".join([financer.name for financer in financers])}\n'
+            )
         cofinancers = project.cofinancers.all()
         if cofinancers:
-            p.add_run(f'Sofinancerji: {", ".join([cofinancer.name for cofinancer in cofinancers])}\n')
+            p.add_run(
+                f'Sofinancerji: {", ".join([cofinancer.name for cofinancer in cofinancers])}\n'
+            )
         partners = project.partners.all()
         if partners:
-            p.add_run(f'Partnerji: {", ".join([partner.name for partner in partners])}\n')
+            p.add_run(
+                f'Partnerji: {", ".join([partner.name for partner in partners])}\n'
+            )
         donators = project.donators.all()
         if donators:
-            p.add_run(f'Donatorji: {", ".join([donator.name for donator in donators])}\n')
+            p.add_run(
+                f'Donatorji: {", ".join([donator.name for donator in donators])}\n'
+            )
 
         if project.self_money:
-            p.add_run(f'Lastni vložek: {format_decimal(project.self_money, locale="sl_SI")} EUR\n')
+            p.add_run(
+                f'Lastni vložek: {format_decimal(project.self_money, locale="sl_SI")} EUR\n'
+            )
         if project.link:
-            self.add_hyperlink(p, project.link, 'Projektno spletno mesto')
+            self.add_hyperlink(p, project.link, "Projektno spletno mesto")
 
         self.added_indented_markdown(project.description)
 
         p = self.document.add_paragraph()
         p.paragraph_format.left_indent = Inches(0.5)
-        p.add_run(f'Predvideni rezultati in učinki:')
+        p.add_run(f"Predvideni rezultati in učinki:")
         self.added_indented_markdown(project.outcomes_and_impacts, 1)
 
         if project.icons:
@@ -371,8 +547,8 @@ class ExportNVOData(object):
 
     def download_image(self, url, name):
         page = requests.get(url)
-        file_path = f'media/{name}'
-        with open(file_path, 'wb') as f:
+        file_path = f"media/{name}"
+        with open(file_path, "wb") as f:
             f.write(page.content)
         return file_path
 
@@ -385,9 +561,9 @@ class ExportNVOData(object):
             self.document.paragraphs[i].paragraph_format.left_indent = Inches(indention)
 
     def get_formated_date(self, date):
-        return datetime.strftime(date, '%d. %m. %Y')
+        return datetime.strftime(date, "%d. %m. %Y")
 
-    def add_hyperlink(self, paragraph, url, text, color='0000EE', underline=False):
+    def add_hyperlink(self, paragraph, url, text, color="0000EE", underline=False):
         """
         A function that places a hyperlink within a paragraph object.
 
@@ -399,28 +575,33 @@ class ExportNVOData(object):
 
         # This gets access to the document.xml.rels file and gets a new relation id value
         part = paragraph.part
-        r_id = part.relate_to(url, opc.constants.RELATIONSHIP_TYPE.HYPERLINK, is_external=True)
+        r_id = part.relate_to(
+            url, opc.constants.RELATIONSHIP_TYPE.HYPERLINK, is_external=True
+        )
 
         # Create the w:hyperlink tag and add needed values
-        hyperlink = oxml.shared.OxmlElement('w:hyperlink')
-        hyperlink.set(oxml.shared.qn('r:id'), r_id, )
+        hyperlink = oxml.shared.OxmlElement("w:hyperlink")
+        hyperlink.set(
+            oxml.shared.qn("r:id"),
+            r_id,
+        )
 
         # Create a w:r element
-        new_run = oxml.shared.OxmlElement('w:r')
+        new_run = oxml.shared.OxmlElement("w:r")
 
         # Create a new w:rPr element
-        rPr = oxml.shared.OxmlElement('w:rPr')
+        rPr = oxml.shared.OxmlElement("w:rPr")
 
         # Add color if it is given
         if not color is None:
-            c = oxml.shared.OxmlElement('w:color')
-            c.set(oxml.shared.qn('w:val'), color)
+            c = oxml.shared.OxmlElement("w:color")
+            c.set(oxml.shared.qn("w:val"), color)
             rPr.append(c)
 
         # Remove underlining if it is requested
         if not underline:
-            u = oxml.shared.OxmlElement('w:u')
-            u.set(oxml.shared.qn('w:val'), 'none')
+            u = oxml.shared.OxmlElement("w:u")
+            u.set(oxml.shared.qn("w:val"), "none")
             rPr.append(u)
 
         # Join all the xml elements together add add the required text to the w:r element
@@ -433,60 +614,83 @@ class ExportNVOData(object):
         return hyperlink
 
     def set_arial(self):
-        font = self.document.styles['Normal'].font
-        font.name = 'Arial'
+        font = self.document.styles["Normal"].font
+        font.name = "Arial"
 
     def insertHR(self, paragraph):
         p = paragraph._p  # p is the <w:p> XML element
         pPr = p.get_or_add_pPr()
-        pBdr = oxml.shared.OxmlElement('w:pBdr')
-        pPr.insert_element_before(pBdr,
-            'w:shd', 'w:tabs', 'w:suppressAutoHyphens', 'w:kinsoku', 'w:wordWrap',
-            'w:overflowPunct', 'w:topLinePunct', 'w:autoSpaceDE', 'w:autoSpaceDN',
-            'w:bidi', 'w:adjustRightInd', 'w:snapToGrid', 'w:spacing', 'w:ind',
-            'w:contextualSpacing', 'w:mirrorIndents', 'w:suppressOverlap', 'w:jc',
-            'w:textDirection', 'w:textAlignment', 'w:textboxTightWrap',
-            'w:outlineLvl', 'w:divId', 'w:cnfStyle', 'w:rPr', 'w:sectPr',
-            'w:pPrChange'
+        pBdr = oxml.shared.OxmlElement("w:pBdr")
+        pPr.insert_element_before(
+            pBdr,
+            "w:shd",
+            "w:tabs",
+            "w:suppressAutoHyphens",
+            "w:kinsoku",
+            "w:wordWrap",
+            "w:overflowPunct",
+            "w:topLinePunct",
+            "w:autoSpaceDE",
+            "w:autoSpaceDN",
+            "w:bidi",
+            "w:adjustRightInd",
+            "w:snapToGrid",
+            "w:spacing",
+            "w:ind",
+            "w:contextualSpacing",
+            "w:mirrorIndents",
+            "w:suppressOverlap",
+            "w:jc",
+            "w:textDirection",
+            "w:textAlignment",
+            "w:textboxTightWrap",
+            "w:outlineLvl",
+            "w:divId",
+            "w:cnfStyle",
+            "w:rPr",
+            "w:sectPr",
+            "w:pPrChange",
         )
-        bottom = oxml.shared.OxmlElement('w:bottom')
-        bottom.set(qn('w:val'), 'single')
-        bottom.set(qn('w:sz'), '2')
-        bottom.set(qn('w:space'), '10')
-        bottom.set(qn('w:color'), 'auto')
+        bottom = oxml.shared.OxmlElement("w:bottom")
+        bottom.set(qn("w:val"), "single")
+        bottom.set(qn("w:sz"), "2")
+        bottom.set(qn("w:space"), "10")
+        bottom.set(qn("w:color"), "auto")
         pBdr.append(bottom)
 
     def insertDashes(self, indent=None):
         p = self.document.add_paragraph()
         if indent:
             p.paragraph_format.left_indent = Inches(0.5)
-        p.add_run('---------------------')
+        p.add_run("---------------------")
 
 
 def fix_names():
     revenues_fixes = [
-        ('Skupni prihodki', '(AOP 126)'),
-        ('Tržna dejavnost', '(AOP 110)'),
-        ('Donacije in subvencije', '(AOP 124)'),
-        ('Drugi prihodki', '(AOP 121, 122, 123, 125)')]
+        ("Skupni prihodki", "(AOP 126)"),
+        ("Tržna dejavnost", "(AOP 110)"),
+        ("Donacije in subvencije", "(AOP 124)"),
+        ("Drugi prihodki", "(AOP 121, 122, 123, 125)"),
+    ]
 
     expenses_fixes = [
-        ('Skupni odhodki', '(AOP 127)'),
-        ('Materiali in storitve', '(AOP 128)'),
-        ('Zunanje storitve in izvajalci', '(AOP 134)'),
-        ('Drugo', '(AOP 129, 130)'),
-        ('Delo', '(AOP 139)'),
-        ('Plače', '(AOP 140)'),
-        ('Pokojninska in druga socialna zavarovanja', '(AOP 141, 142)'),
-        ('Drugo', '(AOP 143)'),
-        ('Drugi odhodki', '(AOP 144, 148)')]
+        ("Skupni odhodki", "(AOP 127)"),
+        ("Materiali in storitve", "(AOP 128)"),
+        ("Zunanje storitve in izvajalci", "(AOP 134)"),
+        ("Drugo", "(AOP 129, 130)"),
+        ("Delo", "(AOP 139)"),
+        ("Plače", "(AOP 140)"),
+        ("Pokojninska in druga socialna zavarovanja", "(AOP 141, 142)"),
+        ("Drugo", "(AOP 143)"),
+        ("Drugi odhodki", "(AOP 144, 148)"),
+    ]
 
     for revenue_str in revenues_fixes:
         RevenueCategory.objects.filter(name=revenue_str[0]).update(
-            name=f'{revenue_str[0]} {revenue_str[1]}'
+            name=f"{revenue_str[0]} {revenue_str[1]}"
         )
 
     for expanse_str in expenses_fixes:
         ExpensesCategory.objects.filter(name=expanse_str[0]).update(
-            name=f'{expanse_str[0]} {expanse_str[1]}'
+            name=f"{expanse_str[0]} {expanse_str[1]}"
         )

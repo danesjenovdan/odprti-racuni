@@ -8,42 +8,66 @@ import nvo.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nvo', '0011_infotext_pre_text_alter_document_file_and_more'),
+        ("nvo", "0011_infotext_pre_text_alter_document_file_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Embed',
+            name="Embed",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Koda za vdelavo',
-                'verbose_name_plural': 'Koda za vdelavo',
+                "verbose_name": "Koda za vdelavo",
+                "verbose_name_plural": "Koda za vdelavo",
             },
         ),
         migrations.AlterModelOptions(
-            name='finance',
-            options={'verbose_name': 'Finance', 'verbose_name_plural': 'Finance'},
+            name="finance",
+            options={"verbose_name": "Finance", "verbose_name_plural": "Finance"},
         ),
         migrations.AlterField(
-            model_name='document',
-            name='file',
-            field=models.FileField(upload_to='', validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx', 'xlsx', 'xls']), nvo.models.document_size_validator], verbose_name='File'),
+            model_name="document",
+            name="file",
+            field=models.FileField(
+                upload_to="",
+                validators=[
+                    django.core.validators.FileExtensionValidator(
+                        allowed_extensions=["pdf", "doc", "docx", "xlsx", "xls"]
+                    ),
+                    nvo.models.document_size_validator,
+                ],
+                verbose_name="File",
+            ),
         ),
         migrations.AlterField(
-            model_name='financer',
-            name='link',
-            field=models.URLField(blank=True, null=True, verbose_name='Povezava do spletnega mesta'),
+            model_name="financer",
+            name="link",
+            field=models.URLField(
+                blank=True, null=True, verbose_name="Povezava do spletnega mesta"
+            ),
         ),
         migrations.AlterField(
-            model_name='infotext',
-            name='text',
-            field=models.TextField(blank=True, default='', verbose_name='Text'),
+            model_name="infotext",
+            name="text",
+            field=models.TextField(blank=True, default="", verbose_name="Text"),
         ),
         migrations.AlterField(
-            model_name='organization',
-            name='logo',
-            field=models.ImageField(null=True, upload_to='', validators=[nvo.models.image_validator], verbose_name='Logo'),
+            model_name="organization",
+            name="logo",
+            field=models.ImageField(
+                null=True,
+                upload_to="",
+                validators=[nvo.models.image_validator],
+                verbose_name="Logo",
+            ),
         ),
     ]
