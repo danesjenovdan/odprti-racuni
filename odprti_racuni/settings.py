@@ -42,6 +42,7 @@ ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
     "https://odprtiracuni.lb.djnd.si",
     "https://odprtiracuni-nvo.djnd.si",
+    "https://odprtiracuni-nvo.danesjenovdan.si",
 ]
 
 
