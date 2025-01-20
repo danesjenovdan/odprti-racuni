@@ -9,7 +9,6 @@ from django.utils.text import slugify
 from docx import Document, opc, oxml
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
-from docx.oxml.xmlchemy import OxmlElement
 from docx.shared import Inches, RGBColor
 from htmldocx import HtmlToDocx
 from PIL import Image
