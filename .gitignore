@@ -67,3 +67,4 @@ secrets.yaml
 sentry.yaml
 
 db*.dump
+*.dump
