@@ -497,6 +497,9 @@ class InstructionsAdmin(admin.ModelAdmin):
         # else:
         super().save_model(request, obj, form, change)
 
+    class Media:
+        css = {"all": ("css/admin-extra.css",)}
+
 
 class InfoTextAdmin(LimitedAdmin):
     list_display = ["year", "card"]
