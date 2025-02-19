@@ -76,12 +76,6 @@ class Command(BaseCommand):
         permissions = self.get_permissions("paymentratio", ct, self.edit_options)
         nvo_group.permissions.add(*permissions)
 
-        ct = ContentType.objects.get_for_model(models.Employee)
-        permissions = self.get_permissions(
-            "employee", ct, self.edit_create_delete_options
-        )
-        nvo_group.permissions.add(*permissions)
-
         ct = ContentType.objects.get_for_model(models.RevenueCategory)
         permissions = self.get_permissions("revenuecategory", ct, self.edit_options)
         nvo_group.permissions.add(*permissions)
