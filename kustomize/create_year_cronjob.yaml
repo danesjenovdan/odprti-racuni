@@ -23,6 +23,6 @@ spec:
                 value: odprti_racuni.settings
             envFrom:
               - secretRef:
-                name: odprti-racuni-credentials
+                  name: odprti-racuni-credentials
 
           restartPolicy: Never
