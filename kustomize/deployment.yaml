@@ -95,11 +95,11 @@ spec:
               value: "https://files.odprtiracuni.lb.djnd.si/static/"
           resources:
             requests:
-              memory: 400Mi
+              memory: 200Mi
               cpu: 100m
             limits:
-              memory: 400Mi
-              cpu: 200m
+              memory: 300Mi
+              cpu: 500m
         - name: odprti-racuni-nginx
           ports:
             - name: http
