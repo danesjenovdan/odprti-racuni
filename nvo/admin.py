@@ -588,13 +588,11 @@ class EmbedAdmin(admin.ModelAdmin):
         """
 
     def preview(self, obj):
-        return mark_safe(
-            f"""
+        return mark_safe(f"""
         <a href="/{obj.organization.id}/">
             <button type="button" class="instruction_collapsible" style="margin-top:0px;">{_("Poglej predogled")}</button>
         </a>
-        """
-        )
+        """)
 
     embed_code.allow_tags = True
     embed_code.short_description = _("Koda za vdelavo")
