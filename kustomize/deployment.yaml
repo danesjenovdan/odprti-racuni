@@ -106,6 +106,7 @@ spec:
               containerPort: 80
               protocol: TCP
           image: nginx:alpine
+          imagePullPolicy: Always
           volumeMounts:
             - name: odprti-racuni-shared-storage
               mountPath: /usr/share/nginx/html
