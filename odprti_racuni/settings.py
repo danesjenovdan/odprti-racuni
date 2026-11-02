@@ -59,10 +59,12 @@ INSTALLED_APPS = [
     "martor",
     # apps
     "nvo",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",  # Django debug toolbar
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -209,3 +211,7 @@ if sentry_url := os.getenv("DJANGO_SENTRY_URL", False):
         send_client_reports=False,
         auto_session_tracking=False,
     )
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": lambda request: DEBUG,
+}
