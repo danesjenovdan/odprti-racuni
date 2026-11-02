@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.SCW_SECRET_TOKEN }}
       -
         name: Build and push odprti racuni
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: true
