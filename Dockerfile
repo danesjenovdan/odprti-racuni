@@ -33,7 +33,7 @@ WORKDIR /app
 
 ENV UV_PROJECT_ENVIRONMENT=/opt/venv \
 	PATH="/opt/venv/bin:$PATH" \
-	DJANGO_SETTINGS_MODULE=ppp.settings
+	DJANGO_SETTINGS_MODULE=odprti_racuni.settings
 
 COPY --from=builder /opt/venv /opt/venv
 COPY --from=builder /app /app
