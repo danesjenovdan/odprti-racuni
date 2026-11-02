@@ -28,9 +28,9 @@ dependencies = [
 [dependency-groups]
 dev = [
     "black==26.10.1",
-    "django-stubs==5.2.2",
+    "django-stubs==6.1.2",
     "django-stubs-ext==6.1.2",
-    "ipython==9.17.1",
+    "ipython==9.18.0",
     "isort",
     "django-debug-toolbar==8.0.0",
 ]
