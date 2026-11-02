@@ -15,12 +15,12 @@
         <meta property="og:type" content="website">
         <meta property="og:title" content="Odprti računi: {{ organization.name }}">
         <meta property="og:description" content="Enostaven in transparenten prikaz finančnega poslovanja in projektov nevladnih organizacij. Odprti računi, dobri prijatelji!">
-        <meta property="og:image" content="{% static '/images/og-OR-NVO.jpg' %}">
+        <meta property="og:image" content="{% static 'images/og-OR-NVO.jpg' %}">
 
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Odprti računi: {{ organization.name }}">
         <meta name="twitter:description" content="Enostaven in transparenten prikaz finančnega poslovanja in projektov nevladnih organizacij. Odprti računi, dobri prijatelji!">
-        <meta name="twitter:image" content="{% static '/images/og-OR-NVO.jpg' %}">
+        <meta name="twitter:image" content="{% static 'images/og-OR-NVO.jpg' %}">
 
         <meta name="author" content="Odprti računi">
         <meta name="description" content="Enostaven in transparenten prikaz finančnega poslovanja in projektov nevladnih organizacij. Odprti računi, dobri prijatelji!">
@@ -41,7 +41,7 @@
             <div class="header">
                 <div class="header-left">
                     <div class="or-logo">
-                        <img src="{% static '/images/OR-logo.svg' %}" alt="Logo odprtih računov, ki je stiliziran tekst s povečevalnim steklom namesto prvega O-ja.">
+                        <img src="{% static 'images/OR-logo.svg' %}" alt="Logo odprtih računov, ki je stiliziran tekst s povečevalnim steklom namesto prvega O-ja.">
                     </div>
                     <select id="year-select" name="years">
                         {% for year in organization.get_years %}

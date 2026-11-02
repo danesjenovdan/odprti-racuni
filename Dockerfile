@@ -1,25 +1,43 @@
-FROM python:3.12
+FROM python:3.14-slim AS builder
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 
 RUN apt-get update && \
-    apt-get upgrade -y
+    apt-get install -y --no-install-recommends \
+    gettext && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install --yes python3-pip \
-                        gettext
-
-RUN /usr/local/bin/python -m pip install --upgrade pip
-
-RUN mkdir /app
 WORKDIR /app
 
-COPY requirements.txt /app/
-RUN pip install -r requirements.txt
+ENV UV_COMPILE_BYTECODE=1 \
+	UV_LINK_MODE=copy \
+	UV_PYTHON_DOWNLOADS=0 \
+	UV_PROJECT_ENVIRONMENT=/opt/venv \
+	PATH="/opt/venv/bin:$PATH"
 
-COPY . /app
+# Install dependencies first (cached separately from app code changes).
+COPY pyproject.toml uv.lock ./
+RUN --mount=type=cache,target=/root/.cache/uv \
+	uv sync --locked --no-dev --no-install-project
+
+COPY . .
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+	uv sync --locked --no-dev
 
 RUN python3 manage.py compilemessages
 
+FROM python:3.14-slim AS runtime
+
+WORKDIR /app
+
+ENV UV_PROJECT_ENVIRONMENT=/opt/venv \
+	PATH="/opt/venv/bin:$PATH" \
+	DJANGO_SETTINGS_MODULE=ppp.settings
+
+COPY --from=builder /opt/venv /opt/venv
+COPY --from=builder /app /app
+
 EXPOSE 8000
 
-ENV DJANGO_SETTINGS_MODULE=odprti_racuni.settings
-
-CMD exec python manage.py runserver 0.0.0.0:8000
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
