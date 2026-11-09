@@ -76,32 +76,37 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/58/9d/40b6267367182187139a4000b82a3b287d84d745bccd808e75d916920e9d/bleach-6.4.0-py3-none-any.whl", hash = "sha256:4b6b6a54fff2e69a3dde9d21cc6301220bee3c3cb792187d11403fd795031081", size = 165109, upload-time = "2026-06-05T13:01:12.504Z" },
 ]
 
+[package.optional-dependencies]
+css = [
+    { name = "tinycss2" },
+]
+
 [[package]]
 name = "boto3"
-version = "1.43.122"
+version = "1.43.125"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "botocore" },
     { name = "jmespath" },
     { name = "s3transfer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d3/0b/6fb3820f86bf7d65313e85f7fb360147eb35170b5c306753eca69539b24f/boto3-1.43.122.tar.gz", hash = "sha256:c923650d09e4c445564ca14d5ce89466c3083884b6f6c189f0f445fc17f02eb5", size = 112646, upload-time = "2026-10-29T19:19:55.597Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f2/c2/9285c749ca49c213ad90aa239884d0c5cbbdc58f02c4c44bcc4a3bf59023/boto3-1.43.125.tar.gz", hash = "sha256:5a635a0fbbd51f319e465b809cf043668705defbb9dddaf26ae66747f70b2a49", size = 112651, upload-time = "2026-11-05T20:24:13.843Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ee/fd/fef3d36be7875f413d8ef3a17c1743b64f9686693d1aed8d5126e7fa1dcd/boto3-1.43.122-py3-none-any.whl", hash = "sha256:cca51b3650080594a1df344b8a2e76007eab6d5fa50504a0b622dfdc14cdeaa1", size = 140042, upload-time = "2026-10-29T19:19:54.241Z" },
+    { url = "https://files.pythonhosted.org/packages/b5/12/1e295c564a8319e6e27353c4c849ec31b0e3857b2614c36c7cc050ca1b9c/boto3-1.43.125-py3-none-any.whl", hash = "sha256:101fe3ee99664e671efb9af65c8e98ec0bceddf6de922ea89685da4adc8c6907", size = 140043, upload-time = "2026-11-05T20:24:12.048Z" },
 ]
 
 [[package]]
 name = "botocore"
-version = "1.43.122"
+version = "1.43.126"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jmespath" },
     { name = "python-dateutil" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/90/56/30404d13529fd3fc0a142f9ec2b6680778c0b8183eeef932401e7954dc9c/botocore-1.43.122.tar.gz", hash = "sha256:2fc53b68b35314b1738cad46e6170d0556496863913451428fc3afccb8c7fa95", size = 16478232, upload-time = "2026-10-29T19:19:51.025Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/69/3d/c76e2be7d71ed9e47d5b27f735443fca7bdbb330bae3c8da88fd19846495/botocore-1.43.126.tar.gz", hash = "sha256:96996af07d8b703c3cdf44863f69c0b4b8b2d1cb6976c641986ced3e38c072f3", size = 16533421, upload-time = "2026-11-06T20:48:08.5Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8b/ee/bde83952daa267697a73c0c0dada587127e5022056c802bf07e0a9ad8b95/botocore-1.43.122-py3-none-any.whl", hash = "sha256:668e608edf8847fc4c3c6b38688e183c3bcf19b8a1f7f58d33c03a6f3039bd49", size = 16178674, upload-time = "2026-10-29T19:19:47.726Z" },
+    { url = "https://files.pythonhosted.org/packages/ad/e2/c51360cea33895b187f50603f1abcababe76a68f05de273d47f0293c6f42/botocore-1.43.126-py3-none-any.whl", hash = "sha256:2f2239a47025a2fa173cd145ab8803ac02b76114864bf5b66475ff1cb88e6b0a", size = 16235818, upload-time = "2026-11-06T20:48:04.454Z" },
 ]
 
 [[package]]
@@ -280,14 +285,14 @@ wheels = [
 
 [[package]]
 name = "django-mptt"
-version = "0.21.0"
+version = "0.21.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django-js-asset" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/02/bc/c9887b8003013bd94957b3d932488e9a66933bf45edcd3a193bc29fbad8b/django_mptt-0.21.0.tar.gz", hash = "sha256:0796064448aa874f74a8b35e6f516e489199d37892191f917cc0012850b39363", size = 74464, upload-time = "2026-10-27T10:47:00.261Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/93/0a/a78da1ff3ef753c9eedeede0c84fb641eabf680fd375767c58232cf227d7/django_mptt-0.21.1.tar.gz", hash = "sha256:dda7e42bce6dc77bccef44c5c58263c435bf7b7272ea8534e194c355fc73c746", size = 74436, upload-time = "2026-11-03T12:03:20.15Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c6/f3/8b393051b4f1b2b0d85f0b2e136fac8bc20bcff24992edf9bb36be9cf23c/django_mptt-0.21.0-py3-none-any.whl", hash = "sha256:be7ef577f82229a0cf5c29c03cdc041866ab8fafa05c57c8e2b3dada121dcd50", size = 121992, upload-time = "2026-10-27T10:46:58.883Z" },
+    { url = "https://files.pythonhosted.org/packages/78/f7/abeb943f2b42ab375463a0d30162043cd39154283a3219aaa9d966c0a80f/django_mptt-0.21.1-py3-none-any.whl", hash = "sha256:6f4dc3d26f0e0422fb185698a03351e7200b2a1222969af879e383adc4c292b8", size = 121970, upload-time = "2026-11-03T12:03:18.676Z" },
 ]
 
 [[package]]
@@ -372,7 +377,7 @@ wheels = [
 
 [[package]]
 name = "ipython"
-version = "9.18.0"
+version = "9.18.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama", marker = "sys_platform == 'win32'" },
@@ -386,9 +391,9 @@ dependencies = [
     { name = "stack-data" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c6/9d/fea7fe7e360b6a4992f00600445849374675d82d665ffc194aee50c314ab/ipython-9.18.0.tar.gz", hash = "sha256:93ec98e27d5ce494c962758111c7dff1ef45f9efdd55604ae70a7d4cabb3e1ea", size = 4436921, upload-time = "2026-10-30T08:33:14.247Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/38/04/0d945c72d5b77527273ecb4c66aa2436de7a3b3bbe3da345bf053232b886/ipython-9.18.1.tar.gz", hash = "sha256:6319c0f5372c196397899479e6db1783dd7937abae06815d1317e8d5d51aaaaf", size = 4437314, upload-time = "2026-11-02T09:19:55.55Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/55/7e/61834f817d193fe48ebe4bf1f9bb24c145143423db019897387c30c8f80a/ipython-9.18.0-py3-none-any.whl", hash = "sha256:d9b8e19267e811cafbc9d72e794a130c3fc60518108d20f5e1f05dae74f619ec", size = 649604, upload-time = "2026-10-30T08:33:12.016Z" },
+    { url = "https://files.pythonhosted.org/packages/bb/1c/91da4a1c541b75e97eb99d09c6a9b0534de55bb4a466669d1170e39b915c/ipython-9.18.1-py3-none-any.whl", hash = "sha256:997ce9140d374531a61069c70c0f9ef299d6dd3559ea0f94b8af589726e3c1d5", size = 649819, upload-time = "2026-11-02T09:19:53.32Z" },
 ]
 
 [[package]]
@@ -539,10 +544,10 @@ wheels = [
 
 [[package]]
 name = "martor"
-version = "1.8.2"
+version = "1.8.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "bleach" },
+    { name = "bleach", extra = ["css"] },
     { name = "django" },
     { name = "markdown" },
     { name = "requests" },
@@ -550,9 +555,9 @@ dependencies = [
     { name = "urllib3" },
     { name = "zipp" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/04/43/77fc39ceab603ded0dcaa2766ee4b59d529c7fdb6a752f7ca3dc4d5f6a2a/martor-1.8.2.tar.gz", hash = "sha256:4e6ac65e8a3c36ecd6d6f797e69b8394f40b320fe8b208cf2e9a6122d522fb8d", size = 1508778, upload-time = "2026-06-22T15:00:41.325Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e6/79/82a4edeca3cf423790d93193aef0cb623a21818315c1890816e478faaa47/martor-1.8.5.tar.gz", hash = "sha256:52837c1b22e19f10d782373aaf8caf1c3729303c2d0fd53109a8c1fc89cc0b19", size = 1715205, upload-time = "2026-10-31T15:33:45.848Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/8d/e423f7abea95d130b5ee55c22b88ad79b8f975cbfe0cd18a1b0b70826e62/martor-1.8.2-py3-none-any.whl", hash = "sha256:62ca67288a4c40c3b980a7ecc6870abe0af334b6d9a1c541f359fee89d6e81da", size = 1554880, upload-time = "2026-06-22T15:00:39.91Z" },
+    { url = "https://files.pythonhosted.org/packages/64/e7/8732bdee91eb4a25ac9530a44d0d0b44ad719c7e1261a288be4eec19e8e3/martor-1.8.5-py3-none-any.whl", hash = "sha256:2e6936db994cd0a6384c8697beef35fb955855d8c72a97b99f77a668766daa63", size = 1755939, upload-time = "2026-10-31T15:33:43.998Z" },
 ]
 
 [[package]]
@@ -612,21 +617,21 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "babel", specifier = "==2.18.0" },
-    { name = "boto3", specifier = "==1.43.122" },
+    { name = "boto3", specifier = "==1.43.125" },
     { name = "django", specifier = "==6.1.2" },
     { name = "django-debug-toolbar", specifier = "==8.0.0" },
     { name = "django-markdownx", specifier = "==4.0.11" },
-    { name = "django-mptt", specifier = "==0.21.0" },
+    { name = "django-mptt", specifier = "==0.21.1" },
     { name = "django-storages", specifier = "==1.14.6" },
     { name = "gunicorn", specifier = "==26.2.0" },
     { name = "htmldocx", specifier = "==0.0.6" },
-    { name = "martor", specifier = "==1.8.2" },
+    { name = "martor", specifier = "==1.8.5" },
     { name = "pillow", specifier = "==13.0.0" },
     { name = "psycopg2-binary", specifier = "==2.9.13" },
     { name = "python-dateutil", specifier = "==2.9.0" },
     { name = "python-docx", specifier = "==1.2.0" },
     { name = "requests", specifier = "==2.34.2" },
-    { name = "sentry-sdk", specifier = "==2.73.0" },
+    { name = "sentry-sdk", specifier = "==2.74.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -635,7 +640,7 @@ dev = [
     { name = "django-debug-toolbar", specifier = "==8.0.0" },
     { name = "django-stubs", specifier = "==6.1.2" },
     { name = "django-stubs-ext", specifier = "==6.1.2" },
-    { name = "ipython", specifier = "==9.18.0" },
+    { name = "ipython", specifier = "==9.18.1" },
     { name = "isort" },
 ]
 
@@ -901,15 +906,15 @@ wheels = [
 
 [[package]]
 name = "sentry-sdk"
-version = "2.73.0"
+version = "2.74.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "certifi" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c5/3b/1e47acf2456781c26e12007379ecc154bf310b8f64d40390d78b791d55c3/sentry_sdk-2.73.0.tar.gz", hash = "sha256:4a2ab97b16e4693c325ab361c7bbbb346dbc7d0bc0150922d795a25bac8d5280", size = 1079078, upload-time = "2026-10-22T09:08:49.63Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8e/7f/1b16ab4aee53cc5db976bac12e6df5d562aae3880965200cef812e7121d9/sentry_sdk-2.74.0.tar.gz", hash = "sha256:dd91d75aacaef636006b579ac3ddb2fdbc9dce35f00f4b353b6b1b110c6b256a", size = 1081514, upload-time = "2026-11-05T14:50:27.444Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b2/88/cabf98d017d7b940720e514e5f8ee02e3e6f7495caf93c30735a38387ec4/sentry_sdk-2.73.0-py3-none-any.whl", hash = "sha256:0bcfa6928ea5adbb89591858b514d27adac27c7a3cccc31b20ed10e0b09eda9e", size = 549011, upload-time = "2026-10-22T09:08:47.88Z" },
+    { url = "https://files.pythonhosted.org/packages/55/b1/736d4b4b308694b0071844a533522ac06669ad61751687b94edfbf863f17/sentry_sdk-2.74.0-py3-none-any.whl", hash = "sha256:40b205af015649df3ec9986e057ce24ce85956bee3fb75efa72c93aa7036bdff", size = 549800, upload-time = "2026-11-05T14:50:25.767Z" },
 ]
 
 [[package]]
@@ -951,6 +956,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/28/e3/55dcc2cfbc3ca9c29519eb6884dd1415ecb53b0e934862d3559ddcb7e20b/stack_data-0.6.3.tar.gz", hash = "sha256:836a778de4fec4dcd1dcd89ed8abff8a221f58308462e1c4aa2a3cf30148f0b9", size = 44707, upload-time = "2023-09-30T13:58:05.479Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f1/7b/ce1eafaf1a76852e2ec9b22edecf1daa58175c090266e9f6c64afcd81d91/stack_data-0.6.3-py3-none-any.whl", hash = "sha256:d5558e0c25a4cb0853cddad3d77da9891a08cb85dd9f9f91b9f8cd66e511e695", size = 24521, upload-time = "2023-09-30T13:58:03.53Z" },
+]
+
+[[package]]
+name = "tinycss2"
+version = "1.5.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "webencodings" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a3/ae/2ca4913e5c0f09781d75482874c3a95db9105462a92ddd303c7d285d3df2/tinycss2-1.5.1.tar.gz", hash = "sha256:d339d2b616ba90ccce58da8495a78f46e55d4d25f9fd71dfd526f07e7d53f957", size = 88195, upload-time = "2025-11-23T10:29:10.082Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/60/45/c7b5c3168458db837e8ceab06dc77824e18202679d0463f0e8f002143a97/tinycss2-1.5.1-py3-none-any.whl", hash = "sha256:3415ba0f5839c062696996998176c4a3751d18b7edaaeeb658c9ce21ec150661", size = 28404, upload-time = "2025-11-23T10:29:08.676Z" },
 ]
 
 [[package]]
