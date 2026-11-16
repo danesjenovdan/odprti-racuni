@@ -1,4 +1,4 @@
-FROM python:3.14-slim AS builder
+FROM python:3.15-slim AS builder
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 
@@ -27,7 +27,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 RUN python3 manage.py compilemessages
 
-FROM python:3.14-slim AS runtime
+FROM python:3.15-slim AS runtime
 
 WORKDIR /app
 
